@@ -1,0 +1,19 @@
+html{
+
+}
+
+body {
+
+}
+
+.solid_1px_black_border{
+    border: 1px solid black;
+}
+
+.width_400{
+    width: 400px;
+}
+
+.height_200{
+    height: 200px;
+}
