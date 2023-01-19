@@ -16,4 +16,6 @@ It's a web application you can use if you want to observe and check what someone
 - ejs
 - html
 - css
-- socket.io
+- socket.io   
+- mocha  
+- TDD
