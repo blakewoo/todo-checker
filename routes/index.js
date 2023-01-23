@@ -1,9 +1,13 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index');
+  if(req.session.login) {
+    return res.render('index');
+  }
+  else {
+    return res.render('login');
+  }
 });
 
 module.exports = router;

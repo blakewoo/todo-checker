@@ -1,5 +1,22 @@
-if(process.env.NODE_ENV === 'production'){
-    module.exports = require('./production');
-} else {
-    module.exports = require('./development');
+module.exports = {
+    LOGIN_DATABASE:{
+        URL:process.env.LOGIN_DATABASE_URL,
+        PORT:process.env.LOGIN_DATABASE_PORT,
+        DATABASE:process.env.LOGIN_DATABASE_DATABASE,
+        ID:process.env.LOGIN_DATABASE_ID,
+        PASSWORD:process.env.LOGIN_DATABASE_PASSWORD
+    },
+    DATA_DATABASE:{
+        URL:process.env.DATA_DATABASE_URL,
+        PORT:process.env.DATA_DATABASE_PORT,
+        DATABASE:process.env.DATA_DATABASE_DATABASE,
+        ID:process.env.DATA_DATABASE_ID,
+        PASSWORD:process.env.DATA_DATABASE_PASSWORD
+    },
+    COOKIE_SECRET_KEY:process.env.COOKIE_SECRET_KEY,
+    SESSION_KEY:process.env.SESSION_SECRET_KEY,
+    AWS_KEY : {
+        ACCESS_KEY:process.env.AWS_KEY_ACCESS_KEY,
+        SECRET_KEY:process.env.AWS_KEY_SECRET_KEY,
+    }
 }
