@@ -5,13 +5,13 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const config = require('./config/config')
 const mariadb = require("./connectors/mariadb")
+const mongodb = require("./connectors/mongodb")
 
 var indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login')
 const userRouter = require('./routes/user')
 const session = require('express-session');
 const MemoryStore = require('memorystore')(session);
-
 
 var app = express();
 
@@ -29,8 +29,8 @@ const sessionObj = {
 app.use(session(sessionObj));
 
 //DB connect
-mariadb.connect()
-
+mariadb()
+mongodb()
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

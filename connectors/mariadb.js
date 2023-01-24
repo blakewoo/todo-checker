@@ -7,4 +7,15 @@ const pool = mariadb.createPool({
     connectionLimit: 5
 });
 
-module.exports = pool
+async function main () {
+    await pool.getConnection(function (err,connection) {
+        if(err) {
+            console.log("[SYSTEM] MariaDB not connected")
+        }
+        else {
+            console.log("[SYSTEM] MariaDB connected!")
+        }
+    })
+}
+
+module.exports = main

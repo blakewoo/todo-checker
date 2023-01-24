@@ -1,3 +1,6 @@
+const dotenv = require("dotenv")
+dotenv.config()
+
 module.exports = {
     LOGIN_DATABASE:{
         URL:process.env.LOGIN_DATABASE_URL,
