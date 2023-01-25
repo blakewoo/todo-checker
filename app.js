@@ -28,8 +28,10 @@ const sessionObj = {
 
 app.use(session(sessionObj));
 
-//DB connect
-mariadb()
+// DB 연결
+mariadb.getConnection()
+    .then(result =>{ console.log("[SYSTEM] Maria DB connected")})
+    .catch(error =>{ console.log(error); console.log("[SYSTEM] Maria DB not connected")})
 mongodb()
 
 // view engine setup
