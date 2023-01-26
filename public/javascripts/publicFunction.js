@@ -1,10 +1,15 @@
-function requestFunction(method_type,url,send_data,callback) {
+function requestFunction(method_type,url,send_data,responseType="JSON",callback) {
     let xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = function () {
         if(xhr.readyState === xhr.DONE) {
             if (xhr.status === 200 || xhr.status === 201) {
-                callback(xhr.responseText);
+                if(responseType==="JSON") {
+                    callback(JSON.parse(xhr.responseText));
+                }
+                else{
+                    callback(xhr.responseText);
+                }
             }
             else {
                 console.error(xhr.responseText);
