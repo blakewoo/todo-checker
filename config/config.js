@@ -18,6 +18,7 @@ module.exports = {
     },
     COOKIE_SECRET_KEY:process.env.COOKIE_SECRET_KEY,
     SESSION_KEY:process.env.SESSION_SECRET_KEY,
+    SALT_ROUND:process.env.SALT_ROUND,
     AWS_KEY : {
         ACCESS_KEY:process.env.AWS_KEY_ACCESS_KEY,
         SECRET_KEY:process.env.AWS_KEY_SECRET_KEY,

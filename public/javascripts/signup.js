@@ -4,7 +4,7 @@ window.onload = function () {
         let PASSWORD = document.getElementById("PASSWORD_input").value
         let EMAIL = document.getElementById("EMAIL_input").value
 
-        requestFunction("POST","/signup",{ID:ID,PASSWORD:PASSWORD,EMAIL:EMAIL},"JSON",function (result) {
+        requestFunction("POST","/user",{ID:ID,PASSWORD:PASSWORD,EMAIL:EMAIL},"JSON",function (result) {
             if(result.status) {
                 location.href = location.protocol+"//"+location.host+"/"
             }

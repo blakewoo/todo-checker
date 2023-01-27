@@ -7,9 +7,9 @@ const config = require('./config/config')
 const mariadb = require("./connectors/mariadb")
 const mongodb = require("./connectors/mongodb")
 
-var indexRouter = require('./routes/index');
+var indexRouter = require('./routes/r_index');
 const loginRouter = require('./routes/login')
-const userRouter = require('./routes/user')
+const userRouter = require('./routes/r_user')
 const session = require('express-session');
 const MemoryStore = require('memorystore')(session);
 
