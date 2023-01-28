@@ -3,7 +3,7 @@ window.onload = function () {
         let ID = document.getElementById("idInput").value
         let PASSWORD = document.getElementById("passwordInput").value
 
-        requestFunction("POST","/login",{ID:ID,PASSWORD:PASSWORD},"JSON",function (result) {
+        requestFunction("POST","/login/verified-user",{ID:ID,PASSWORD:PASSWORD},"JSON",function (result) {
             if(result.status) {
                 location.reload()
             }
