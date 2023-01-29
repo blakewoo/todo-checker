@@ -53,3 +53,13 @@ exports.verifyUser = async function (ID,PASSWORD) {
         return {status:false,reason:"ID or Password"}
     }
 }
+
+exports.verifyEmail = function (EMAIL) {
+    let emailReg = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
+    if(emailReg.test(EMAIL)) {
+        return false
+    }
+    else {
+        return true
+    }
+}

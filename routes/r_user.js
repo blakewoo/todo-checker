@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const userModule = require("../module/m_user")
+const m_user = require("../module/m_user")
 
 router.get('/', function(req, res, next) {
     
@@ -9,7 +9,10 @@ router.get('/', function(req, res, next) {
 
 router.post('/', async function(req, res, next) {
     try{
-        let result = await userModule.addUser(req.body.ID,req.body.PASSWORD,req.body.EMAIL);
+        if(m_user.verifyEmail(req.body.EMAIL)){
+            return res.send({status:false,reason:"malformed email"})
+        }
+        let result = await m_user.addUser(req.body.ID,req.body.PASSWORD,req.body.EMAIL);
         return res.send(result)
     }
     catch(e){
