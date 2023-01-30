@@ -1,19 +1,45 @@
 html{
-
+    height: 100%;
+    box-sizing: border-box;
 }
 
 body {
-
+    height: 100%;
+    box-sizing: border-box;
+    background-image: url("/images/login_background.jpg");
+    background-size: cover;
 }
 
-.solid_1px_black_border{
-    border: 1px solid black;
+.login_paper{
+    float: right;
+    box-sizing: border-box;
+    height: 100%;
+    width: 40%;
+    background-color: #591902;
+    border-left: 3px double #591902;
+    color: white;
+    text-align: center;
+}
+.login_inner_box{
+    margin-top: 50%;
 }
 
-.width_400{
-    width: 400px;
+.login_title{
+    font-size: 30pt;
 }
-
-.height_200{
-    height: 200px;
+.login_label{
+    font-weight: bold;
+    font-size: 20pt;
+}
+.login_input_text{
+    font-weight: bold;
+    font-size: 15pt;
+}
+.login_input_button{
+    width: 100px;
+    height: 30px;
+    box-sizing: border-box;
+    border: 3px solid #591902;
+    font-size: 10pt;
+    font-weight: bold;
 }

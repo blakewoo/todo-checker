@@ -12,6 +12,7 @@ window.onload = function () {
                     event.currentTarget.parentNode.remove()
                 })
             });
+            return;
         }
 
         if(!passwordReg.test(PASSWORD)) {
@@ -20,6 +21,7 @@ window.onload = function () {
                     event.currentTarget.parentNode.remove()
                 })
             });
+            return;
         }
 
 
