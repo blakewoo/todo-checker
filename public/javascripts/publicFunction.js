@@ -45,23 +45,31 @@ function okCancelModal(message,width=400,height=200,callback) {
     toastMessageDiv.style.height =height+"px"
     toastMessageDiv.style.top = "calc(50% - "+height/2+"px)"
     toastMessageDiv.style.left = "calc(50% - "+width/2+"px)"
-    toastMessageDiv.style.border = "#10ff00 1px solid"
-    toastMessageDiv.style.background = "black"
+    toastMessageDiv.style.border = "#ffffff 1px solid"
+    toastMessageDiv.style.background = "#591902"
     toastMessageDiv.style.textAlign = "center"
 
-    let title = document.createElement("h2")
+    let titleDiv = document.createElement("div")
+
+    let title = document.createElement("label")
     title.innerText=message
+    title.style.fontSize="30pt"
+    title.style.color = "white"
+    titleDiv.appendChild(title)
+
     let okButton = document.createElement("input")
     okButton.type="button"
     okButton.value="OK"
     okButton.id="okThisButton"
+    okButton.classList.add("public_button")
 
     let cancelButton = document.createElement("input")
     cancelButton.type="button"
     cancelButton.value="Cancel"
     cancelButton.id="cancelThisButton"
+    cancelButton.classList.add("public_button")
 
-    toastMessageDiv.appendChild(title)
+    toastMessageDiv.appendChild(titleDiv)
     toastMessageDiv.appendChild(okButton)
     toastMessageDiv.appendChild(cancelButton)
     html.appendChild(toastMessageDiv)

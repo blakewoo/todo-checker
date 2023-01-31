@@ -16,7 +16,7 @@ window.onload = function () {
                     });
                 }
                 else {
-                    okCancelModal("Login error",400,200,function (target) {
+                    okCancelModal("Login error",400,100,function (target) {
                         target.addEventListener("click",function (event) {
                             event.currentTarget.parentNode.remove()
                         })

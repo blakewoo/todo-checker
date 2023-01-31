@@ -1,0 +1,10 @@
+.public_button {
+    border: 1px solid #cccccc;
+    background-color: #591902;
+    font-size: 20px;
+}
+
+.public_button:hover {
+    cursor: pointer;
+    font-weight: bold;
+}

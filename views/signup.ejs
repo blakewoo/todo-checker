@@ -4,28 +4,41 @@
     <title>Todo overseer</title>
     <link rel='stylesheet' href='/stylesheets/init.css' />
     <link rel='stylesheet' href='/stylesheets/signup.css' />
+    <link rel='stylesheet' href='/stylesheets/public.css' />
     <script src='/javascripts/publicFunction.js'></script>
     <script src='/javascripts/signup.js'></script>
 </head>
 <body>
-    <div>
-        <h1>
-           회원 가입
-        </h1>
-        <label>
-            아이디 :
-        </label>
-        <input type="text" id="ID_input"/>
-        <label>
-            비밀번호 :
-        </label>
-        <input type="password" id="PASSWORD_input"/>
-        <label>
-            이메일
-        </label>
-        <input type="text" id="EMAIL_input"/>
-        <input type="button" value="회원가입" id="signup_button">
-        <input type="button" value="취소" id="cancel_button">
+    <div class="signup_paper">
+        <div class="signup_inner_box">
+            <div>
+                <label class="signup_title">
+                    회원 가입
+                </label>
+            </div>
+            <div>
+                <label class="signup_label">
+                    아이디 :
+                </label>
+                <input class="signup_input_text"  type="text" id="ID_input"/>
+            </div>
+            <div>
+                <label class="signup_label">
+                    비밀번호 :
+                </label>
+                <input class="signup_input_text"  type="password" id="PASSWORD_input"/>
+            </div>
+            <div>
+                <label class="signup_label">
+                    이메일
+                </label>
+                <input class="signup_input_text" type="text" id="EMAIL_input"/>
+            </div>
+            <div>
+                <input class="signup_input_button" type="button" value="회원가입" id="signup_button">
+                <input class="signup_input_button" type="button" value="취소" id="cancel_button">
+            </div>
+        </div>
     </div>
 </body>
 </html>
