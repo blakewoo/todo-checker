@@ -1,4 +1,16 @@
 window.onload = function () {
+    document.getElementById("idInput").addEventListener("keyup",function (event) {
+        if(event.key === "Enter") {
+            document.getElementById("login_button").click()
+        }
+    })
+
+    document.getElementById("passwordInput").addEventListener("keyup",function (event) {
+        if(event.key === "Enter") {
+            document.getElementById("login_button").click()
+        }
+    })
+
     document.getElementById("login_button").addEventListener("click",function (event){
         let ID = document.getElementById("idInput").value
         let PASSWORD = document.getElementById("passwordInput").value

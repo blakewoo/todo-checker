@@ -53,7 +53,7 @@ function okCancelModal(message,width=400,height=200,callback) {
 
     let title = document.createElement("label")
     title.innerText=message
-    title.style.fontSize="30pt"
+    title.style.fontSize="15pt"
     title.style.color = "white"
     titleDiv.appendChild(title)
 

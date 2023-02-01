@@ -4,10 +4,10 @@ window.onload = function () {
         let PASSWORD = document.getElementById("PASSWORD_input").value
         let EMAIL = document.getElementById("EMAIL_input").value
         let emailReg = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
-        let passwordReg = new RegExp("^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{9,}$");
+        let passwordReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{9,25}$/;
 
         if(!emailReg.test(EMAIL)) {
-            okCancelModal("적절하지 않은 메일 형태입니다.",400,200,function (target) {
+            okCancelModal("적절하지 않은 메일 형태입니다.",400,70,function (target) {
                 target.addEventListener("click",function (event) {
                     event.currentTarget.parentNode.remove()
                 })
@@ -16,7 +16,7 @@ window.onload = function () {
         }
 
         if(!passwordReg.test(PASSWORD)) {
-            okCancelModal("비밀번호는 영문자,숫자,특수문자를 포함해서 9자리 이상이어야합니다.",400,200,function (target) {
+            okCancelModal("비밀번호는 영문자,숫자,특수문자를 포함해서 9~25자리여야합니다.",400,100,function (target) {
                 target.addEventListener("click",function (event) {
                     event.currentTarget.parentNode.remove()
                 })
