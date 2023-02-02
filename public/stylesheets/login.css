@@ -43,3 +43,93 @@ body {
     font-size: 10pt;
     font-weight: bold;
 }
+
+@media (max-width: 1440px)  {
+    html{
+        font-size: 16px;
+    }
+
+    body {
+        background-position-x: 20%;
+    }
+
+    .login_paper{
+        box-sizing: border-box;
+        position: absolute;
+        top:30rem;
+        height: 30%;
+        width: 100%;
+        background-color: #591902;
+        border-left: 3px double #591902;
+        color: white;
+        text-align: center;
+    }
+    .login_inner_box{
+        margin-top: 10%;
+    }
+
+    .login_title{
+        font-size: 8rem;
+    }
+    .login_label{
+        font-weight: bold;
+        font-size: 3rem;
+    }
+    .login_input_text{
+        font-weight: bold;
+        font-size: 2rem;
+        width: 30rem;
+        height: 3rem;
+    }
+    .login_input_button{
+        width: 30rem;
+        height: 5rem;
+        box-sizing: border-box;
+        border: 3px solid #591902;
+        font-size: 3rem;
+        font-weight: bold;
+    }
+}
+
+@media (max-width: 720px)  {
+    html{
+        font-size: 8px;
+    }
+
+    .login_paper{
+        box-sizing: border-box;
+        position: absolute;
+        top:30rem;
+        height: 30%;
+        width: 100%;
+        background-color: #591902;
+        border-left: 3px double #591902;
+        color: white;
+        text-align: center;
+    }
+    .login_inner_box{
+        margin-top: 10%;
+    }
+
+    .login_title{
+        font-size: 8rem;
+    }
+    .login_label{
+        font-weight: bold;
+        font-size: 3rem;
+    }
+    .login_input_text{
+        font-weight: bold;
+        font-size: 2rem;
+        width: 30rem;
+        height: 3rem;
+    }
+    .login_input_button{
+        width: 30rem;
+        height: 5rem;
+        box-sizing: border-box;
+        border: 3px solid #591902;
+        font-size: 3rem;
+        font-weight: bold;
+    }
+}
