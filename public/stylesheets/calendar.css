@@ -7,3 +7,26 @@
 .day_tr > td{
     width: 14%;
 }
+
+.day_label{
+    
+}
+
+.day_label:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.day_selected{
+    background-color: #ffff99;
+}
+
+#calendar_prevMonth:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#calendar_nextMonth:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
