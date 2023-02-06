@@ -8,17 +8,32 @@
     width: 14%;
 }
 
-.day_label{
-    
+.day_td{
+    text-align: left;
+    border: 1px solid black;
 }
 
-.day_label:hover{
+.day_td:hover{
     cursor: pointer;
-    font-weight: bold;
+    background-color: #ffffd7;
+}
+
+.day_td:active{
+    background-color: #ffff99;
+}
+
+.day_label{
+    margin-top: 10px;
+    margin-left: 10px;
 }
 
 .day_selected{
     background-color: #ffff99;
+}
+
+.day_head_tr>td{
+    height: 50px;
+    vertical-align: middle;
 }
 
 #calendar_prevMonth:hover{
@@ -29,4 +44,12 @@
 #calendar_nextMonth:hover{
     cursor: pointer;
     font-weight: bold;
+}
+
+.blue_font{
+    color: blue;
+}
+
+.red_font{
+    color: red;
 }

@@ -27,7 +27,16 @@ function calendar(targetDiv,targetDate) {
             str += "<tr>"
         }
         cnt+=1
-        str += "<td class='day_td'><label class='day_label'>"+i+"</label></td>"
+        if(cnt%7===6) {
+            str += "<td class='day_td blue_font'><br><label class='day_label'>"+i+"</label></td>"
+        }
+        else if(cnt%7===0) {
+            str += "<td class='day_td red_font'><br><label class='day_label'>"+i+"</label></td>"
+        }
+        else {
+            str += "<td class='day_td'><br><label class='day_label'>"+i+"</label></td>"
+        }
+
         if(cnt%7===0) {
             str += "</tr>"
         }
@@ -43,8 +52,8 @@ function calendar(targetDiv,targetDate) {
             "<td colspan='5'>"+year+"년 "+month+"월</td>" +
             "<td id='calendar_nextMonth'>></td>" +
             "</tr>" +
-            "<tr class='day_tr'>" +
-            "<td>월</td><td>화</td><td>수</td><td>목</td><td>금</td><td>토</td><td>일</td>" +
+            "<tr class='day_head_tr'>" +
+            "<td>월</td><td>화</td><td>수</td><td>목</td><td>금</td><td class='blue_font'>토</td><td class='red_font'>일</td>" +
             "</tr>" +
             "</thead>" +
             "<tbody id='calendar_table_tbody'>" +
@@ -79,7 +88,7 @@ function calendar(targetDiv,targetDate) {
         for(let i=0;i<temp.length;i++) {
             temp[i].classList.remove("day_selected")
         }
-        event.currentTarget.querySelector("label").classList.add("day_selected")
+        event.currentTarget.classList.add("day_selected")
     }
 
 }
