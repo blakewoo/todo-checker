@@ -10,6 +10,7 @@ const mongodb = require("./connectors/mongodb")
 var indexRouter = require('./routes/r_index');
 const loginRouter = require('./routes/login')
 const userRouter = require('./routes/r_user')
+const todolistRouter = require('./routes/r_todolist')
 const session = require('express-session');
 const MemoryStore = require('memorystore')(session);
 
@@ -49,6 +50,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/user', userRouter);
+app.use('/todolist', todolistRouter);
 //
 
 
