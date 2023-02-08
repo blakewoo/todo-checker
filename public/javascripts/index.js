@@ -1,5 +1,5 @@
 window.onload = function (event) {
-    calendar(document.getElementById("calendar_div"),new Date())
+    new JH_calendar(document.getElementById("calendar_div"),new Date())
     printTodoList(new Date())
 }
 
