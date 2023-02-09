@@ -1,7 +1,7 @@
 const JH_calendar = (function () {
     function JH_calendar (targetDiv,targetDate) {
         if(targetDiv===null || targetDiv===undefined){
-            console.error("targetDiv is not provided")
+            console.error("[JH_calendar error]targetDiv is not provided")
             return;
         }
 
@@ -11,19 +11,17 @@ const JH_calendar = (function () {
 
         this.targetDiv = targetDiv
         this.targetDate = targetDate
-        this.thisMonthFirstDay = new Date(targetDate.getFullYear(), targetDate.getMonth(), 1);
-        this.thisMonthLastDay = new Date(targetDate.getFullYear(), targetDate.getMonth() + 1, 0);
 
-        this.setPaintTarget()
+        this.setPaintTarget(targetDate)
     }
 
-    JH_calendar.prototype.setPaintTarget = function () {
-        this.targetDiv.innerHTML = this.paint(this.targetDate)
-        this.drawTbody()
-        this.buttonEvent()
+    JH_calendar.prototype.setPaintTarget = function (targetDate) {
+        this.paint(targetDate)
+        this.drawTbody(targetDate)
+        this.buttonEvent(targetDate)
     }
     JH_calendar.prototype.paint = function (targetDate) {
-        return this.drawTable(targetDate.getFullYear(),targetDate.getMonth()+1)
+        this.targetDiv.innerHTML = this.drawTable(targetDate.getFullYear(),targetDate.getMonth()+1)
     }
 
     JH_calendar.prototype.drawTable = function (year,month) {
@@ -45,15 +43,18 @@ const JH_calendar = (function () {
         return html;
     }
 
-    JH_calendar.prototype.drawTbody = function () {
+    JH_calendar.prototype.drawTbody = function (targetDate) {
+        let thisMonthFirstDay = new Date(targetDate.getFullYear(), targetDate.getMonth(), 1);
+        let thisMonthLastDay = new Date(targetDate.getFullYear(), targetDate.getMonth() + 1, 0);
+
         let tbody = document.getElementById("calendar_table_tbody")
         let cnt = 0;
         let str = "<tr>"
-        for(let i=0;i<this.thisMonthFirstDay.getDay();i++) {
+        for(let i=0;i<thisMonthFirstDay.getDay();i++) {
             str += "<td></td>"
             cnt += 1
         }
-        for(let i=1;i<this.thisMonthLastDay.getDate();i++) {
+        for(let i=1;i<thisMonthLastDay.getDate();i++) {
             if(cnt%7===0) {
                 str += "<tr>"
             }
@@ -75,8 +76,15 @@ const JH_calendar = (function () {
         tbody.innerHTML = str;
     }
 
-    JH_calendar.prototype.buttonEvent = function () {
+    JH_calendar.prototype.buttonEvent = function (targetDate) {
+        let target = this
+        document.getElementById("calendar_prevMonth").addEventListener("click",function (event){
+        })
+        
+        document.getElementById("calendar_nextMonth").addEventListener("click",function (event){
+        })
 
+        //일 선택
     }
 
     return JH_calendar;
