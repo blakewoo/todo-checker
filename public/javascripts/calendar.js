@@ -80,7 +80,7 @@ const JH_calendar = (function () {
         let target = this
         document.getElementById("calendar_prevMonth").addEventListener("click",function (event){
         })
-        
+
         document.getElementById("calendar_nextMonth").addEventListener("click",function (event){
         })
 

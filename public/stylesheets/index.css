@@ -43,6 +43,17 @@ body {
     cursor: pointer;
     font-weight: bold;
 }
+.todo_div{
+    box-sizing: border-box;
+    border: 1px solid black;
+    width: 100%;
+    height: 95%;
+}
+.todo_input{
+    box-sizing: border-box;
+    width: 100%;
+    height: 5%;
+}
 
 
 @media (max-width: 1440px)  {
@@ -64,6 +75,17 @@ body {
 
     .headline_tab_div{
         font-size: 2.5rem;
+    }
+
+    .todo_div{
+        box-sizing: border-box;
+        width: 100%;
+        height: 90%;
+    }
+    .todo_input{
+        box-sizing: border-box;
+        width: 100%;
+        height: 10%;
     }
 }
 
