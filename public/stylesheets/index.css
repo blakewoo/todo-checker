@@ -43,18 +43,54 @@ body {
     cursor: pointer;
     font-weight: bold;
 }
-.todo_div{
+.todo_container_div{
     box-sizing: border-box;
     border: 1px solid black;
     width: 100%;
-    height: 95%;
+    height: calc(100% - 2rem);
 }
 .todo_input{
     box-sizing: border-box;
     width: 100%;
-    height: 5%;
+    height: 2rem;
 }
 
+.todo_div{
+    box-sizing: border-box;
+    border:1px solid black;
+    width: 100%;
+    height: 2rem;
+    vertical-align: middle;
+}
+
+.todo_label{
+    vertical-align: middle;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.todo_modify{
+    float: right;
+    vertical-align: middle;
+    height: 100%;
+    margin-right: 5px;
+}
+
+.todo_modify:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.todo_delete{
+    float: right;
+    vertical-align: middle;
+    height: 100%;
+}
+
+.todo_delete:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
 
 @media (max-width: 1440px)  {
     .headline_div{
@@ -77,7 +113,7 @@ body {
         font-size: 1.5rem;
     }
 
-    .todo_div{
+    .todo_container_div{
         box-sizing: border-box;
         width: 100%;
         height: 90%;
