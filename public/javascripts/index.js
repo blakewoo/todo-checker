@@ -14,6 +14,10 @@ function printTodoList (date) {
 function todoInputEvent(event) {
     if(event.key==="Enter") {
         let Data = event.currentTarget.value
+
+        if(Data===""){
+            return
+        }
         event.currentTarget.value = ""
         addTodo(Data)
     }
@@ -33,7 +37,7 @@ function addFrontTodo(todo) {
     todoLabel.innerText = todo
     let modifyDiv = document.createElement("span")
     modifyDiv.addEventListener("click",addTodoModifyEvent)
-    modifyDiv.innerText="M"
+    modifyDiv.innerText="···"
     modifyDiv.classList.add("todo_modify")
     let deleteDiv = document.createElement("span")
     deleteDiv.addEventListener("click",addTodoDeleteEvent)
@@ -47,7 +51,9 @@ function addFrontTodo(todo) {
 }
 
 function addTodoModifyEvent(event) {
+    addTodoModify(event.clientX,event.clientY,function (yes,no) {
 
+    })
 }
 
 function addTodoDeleteEvent(event) {
@@ -56,4 +62,36 @@ function addTodoDeleteEvent(event) {
 
 function addBackTodo(todo) {
 
+}
+
+function addTodoModify(x,y,callback) {
+    let html = document.getElementsByTagName("html")[0]
+
+    let toastMessageDiv = document.createElement("div")
+    toastMessageDiv.style.position = "absolute"
+    toastMessageDiv.style.width ="100px"
+    toastMessageDiv.style.height ="50px"
+    toastMessageDiv.style.top = y+"px"
+    toastMessageDiv.style.left = x-100+"px"
+    toastMessageDiv.style.border = "#000000 1px solid"
+    toastMessageDiv.style.background = "white"
+
+    let tomorrowLabel = document.createElement("div")
+    tomorrowLabel.innerText = "내일까지"
+    tomorrowLabel.classList.add("todo_detail_div")
+
+    let selectDate = document.createElement("div")
+    selectDate.innerText = "날짜 선택"
+    selectDate.classList.add("todo_detail_div")
+
+    let toggleCompleted = document.createElement("div")
+    toggleCompleted.innerText = "완료/미완료 전환"
+    toggleCompleted.classList.add("todo_detail_div")
+
+    toastMessageDiv.appendChild(tomorrowLabel)
+    toastMessageDiv.appendChild(selectDate)
+    toastMessageDiv.appendChild(toggleCompleted)
+    html.appendChild(toastMessageDiv)
+
+    return callback(tomorrowLabel,selectDate,toggleCompleted)
 }

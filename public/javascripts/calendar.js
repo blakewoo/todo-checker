@@ -1,7 +1,7 @@
 const JH_calendar = (function () {
     function JH_calendar (targetDiv,targetDate) {
         if(targetDiv===null || targetDiv===undefined){
-            console.error("[JH_calendar error]targetDiv is not provided")
+            console.error("[JH_calendar error]Target div is not provided")
             return;
         }
 

@@ -92,6 +92,15 @@ body {
     font-weight: bold;
 }
 
+.todo_detail_div{
+    font-size: 8pt;
+}
+
+.todo_detail_div:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
+
 @media (max-width: 1440px)  {
     .headline_div{
         height: 8%;
