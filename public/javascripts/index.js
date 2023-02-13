@@ -50,9 +50,24 @@ function addFrontTodo(todo) {
     todoContainer.appendChild(containerDiv)
 }
 
-function addTodoModifyEvent(event) {
-    addTodoModify(event.clientX,event.clientY,function (yes,no) {
+function addTodoModifyFocusoutEvent(event) {
 
+}
+
+function addTodoModifyEvent(event) {
+    addTodoModify(event.clientX,event.clientY,function (tomorrow,selectedDate,completedToggle,deleteDiv) {
+        tomorrow.addEventListener("click",function (event) {
+            alert("tomorrow")
+        })
+        selectedDate.addEventListener("click",function (event) {
+            alert("selected")
+        })
+        completedToggle.addEventListener("click",function (event) {
+            alert("completed")
+        })
+        deleteDiv.addEventListener("click",function (event) {
+            event.currentTarget.parentNode.remove()
+        })
     })
 }
 
@@ -70,7 +85,7 @@ function addTodoModify(x,y,callback) {
     let toastMessageDiv = document.createElement("div")
     toastMessageDiv.style.position = "absolute"
     toastMessageDiv.style.width ="100px"
-    toastMessageDiv.style.height ="50px"
+    toastMessageDiv.style.height ="60px"
     toastMessageDiv.style.top = y+"px"
     toastMessageDiv.style.left = x-100+"px"
     toastMessageDiv.style.border = "#000000 1px solid"
@@ -88,10 +103,15 @@ function addTodoModify(x,y,callback) {
     toggleCompleted.innerText = "완료/미완료 전환"
     toggleCompleted.classList.add("todo_detail_div")
 
+    let deleteDiv = document.createElement("div")
+    deleteDiv.innerText = "취소"
+    deleteDiv.classList.add("todo_detail_div")
+
     toastMessageDiv.appendChild(tomorrowLabel)
     toastMessageDiv.appendChild(selectDate)
     toastMessageDiv.appendChild(toggleCompleted)
+    toastMessageDiv.appendChild(deleteDiv)
     html.appendChild(toastMessageDiv)
 
-    return callback(tomorrowLabel,selectDate,toggleCompleted)
+    return callback(tomorrowLabel,selectDate,toggleCompleted,deleteDiv)
 }
