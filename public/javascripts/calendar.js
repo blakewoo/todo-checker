@@ -11,6 +11,7 @@ const JH_calendar = (function () {
 
         this.targetDiv = targetDiv
         this.targetDate = targetDate
+        this.seletedDate = targetDate
 
         this.setPaintTarget(targetDate)
     }

@@ -49,6 +49,14 @@ body {
     width: 100%;
     height: calc(100% - 2rem);
 }
+
+.todo_label_container_div{
+    box-sizing: border-box;
+    width: calc(100% - 30px);
+    height: 100%;
+    display: inline-block;
+}
+
 .todo_input{
     box-sizing: border-box;
     width: 100%;
@@ -100,6 +108,20 @@ body {
     cursor: pointer;
     font-weight: bold;
 }
+
+.todo_date_limit_div{
+    font-size: 6pt;
+}
+
+.completed_check_span{
+    box-sizing: border-box;
+    height: 100%;
+    width: 30px;
+    display: inline-block;
+    float: left;
+}
+
+
 
 @media (max-width: 1440px)  {
     .headline_div{
