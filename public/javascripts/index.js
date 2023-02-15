@@ -1,8 +1,17 @@
-window.onload = function (event) {
+window.onload = async function (event) {
     let calendar = new JH_calendar(document.getElementById("calendar_div"), new Date())
+    let todoObj = await initTodo()
     let todoModify;
     printTodoList(new Date())
     document.getElementById("todo_input").addEventListener("keyup", todoInputEvent)
+
+    async function initTodo() {
+        return new Promise((resolve,reject) => (
+            requestFunction("GET","/todolist/my?date="+(new Date().getDate()),{},"JSON",function (result) {
+                resolve(new TODO_object(result.TODO_LIST,result.ID_HEAD))
+            })
+        ))
+    }
 
     function printTodoList(date) {
         let url = "/todolist/my?date=" + date.getTime()
@@ -36,6 +45,17 @@ window.onload = function (event) {
         let completedSpan =document.createElement("span")
         completedSpan.classList.add("completed_check_span")
 
+        let hiddenCheckBox = document.createElement("input");
+        hiddenCheckBox.type = "checkbox"
+        hiddenCheckBox.style.display = "none";
+        hiddenCheckBox.id = "1"
+
+        let showCheckBoxLabel = document.createElement("label")
+        showCheckBoxLabel.htmlFor = "1"
+
+        completedSpan.appendChild(hiddenCheckBox)
+        completedSpan.appendChild(showCheckBoxLabel)
+
         let labelContainerDiv = document.createElement("div")
         labelContainerDiv.classList.add("todo_label_container_div")
 
@@ -53,7 +73,7 @@ window.onload = function (event) {
 
         let dateDiv = document.createElement("div")
         dateDiv.classList.add("todo_date_limit_div")
-        dateDiv.innerText = "없음"
+        dateDiv.innerText = "기한 없음"
 
         labelContainerDiv.appendChild(todoLabel)
         labelContainerDiv.appendChild(deleteDiv)

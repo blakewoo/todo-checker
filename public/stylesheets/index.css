@@ -121,6 +121,19 @@ body {
     float: left;
 }
 
+input[type="checkbox"] + label {
+    line-height: calc(50% - 10px);
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #000000;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked + label {
+    background-color: #000000;
+}
+
 
 
 @media (max-width: 1440px)  {
