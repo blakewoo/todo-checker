@@ -1,23 +1,15 @@
 window.onload = async function (event) {
     let calendar = new JH_calendar(document.getElementById("calendar_div"), new Date())
-    let todoObj = await initTodo()
+    // let todoObj = await initTodo()
     let todoModify;
-    printTodoList(new Date())
     document.getElementById("todo_input").addEventListener("keyup", todoInputEvent)
 
     async function initTodo() {
         return new Promise((resolve,reject) => (
             requestFunction("GET","/todolist/my?date="+(new Date().getDate()),{},"JSON",function (result) {
-                resolve(new TODO_object(result.TODO_LIST,result.ID_HEAD))
+                resolve(new TODO(result.TODO_LIST,result.ID_HEAD))
             })
         ))
-    }
-
-    function printTodoList(date) {
-        let url = "/todolist/my?date=" + date.getTime()
-        // requestFunction("GET",url,"","JSON",function (result) {
-        //
-        // })
     }
 
     function todoInputEvent(event) {
@@ -127,7 +119,7 @@ window.onload = async function (event) {
 
     function addTodoDeleteEvent(event) {
         // frontend
-        event.currentTarget.parentNode.remove()
+        event.currentTarget.parentNode.parentNode.remove()
         // backend
 
     }
