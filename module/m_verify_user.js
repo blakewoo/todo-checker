@@ -17,12 +17,15 @@ exports.user_auth = function (req,res,next) {
 
 exports.admin_auth = async function (req,res,next) {
     try{
-
+        if(req.session.isAdmin) {
+            next()
+        }
+        else {
+            return res.status(401).send({status:false})
+        }
     }
     catch(e){
         console.log(e)
-    }
-    finally {
-
+        return res.status(401).send({status:false})
     }
 }
