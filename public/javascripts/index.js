@@ -2,6 +2,7 @@ window.onload = async function (event) {
     let calendar = new JH_calendar(document.getElementById("calendar_div"), new Date())
     // let todoObj = await initTodo()
     let todoModify;
+    let prevTodoModify;
     document.getElementById("todo_input").addEventListener("keyup", todoInputEvent)
 
     async function initTodo() {
@@ -82,8 +83,12 @@ window.onload = async function (event) {
 
     function addTodoModifyEvent(event) {
         let currentTodo = event.currentTarget;
+        if(prevTodoModify) {
+            prevTodoModify.remove()
+        }
         addTodoModify(event.clientX, event.clientY, function (tomorrow, selectedDate, completedToggle, deleteDiv,toastMessageDiv) {
             todoModify = toastMessageDiv
+            prevTodoModify = toastMessageDiv
             tomorrow.addEventListener("click", setTomorrowEvent)
             selectedDate.addEventListener("click", setDateTodoEvent)
             completedToggle.addEventListener("click", setCompletedTodoEvent)
@@ -118,6 +123,9 @@ window.onload = async function (event) {
     }
 
     function addTodoDeleteEvent(event) {
+        if(prevTodoModify) {
+            prevTodoModify.remove()
+        }
         // frontend
         event.currentTarget.parentNode.parentNode.remove()
         // backend
