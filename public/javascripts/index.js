@@ -1,15 +1,16 @@
 window.onload = async function (event) {
     let calendar = new JH_calendar(document.getElementById("calendar_div"), new Date())
-    // let todoObj = await initTodo()
+    let todoObj = await initTodo()
     let todoModify;
     let prevTodoModify;
     document.getElementById("todo_input").addEventListener("keyup", todoInputEvent)
 
     async function initTodo() {
         return new Promise((resolve,reject) => (
-            requestFunction("GET","/todolist/my?date="+(new Date().getDate()),{},"JSON",function (result) {
-                resolve(new TODO(result.TODO_LIST,result.ID_HEAD))
-            })
+            // requestFunction("GET","/todolist/my?date="+(new Date().getDate()),{},"JSON",function (result) {
+            //     resolve(new TODO(result.TODO_LIST,result.ID_HEAD))
+            // })
+            resolve(new TODO([],"TEST",document.getElementById("todo_container_div")))
         ))
     }
 
@@ -21,6 +22,8 @@ window.onload = async function (event) {
                 return
             }
             event.currentTarget.value = ""
+            let temp = new TODO_OBJECT(Data,null,false)
+            todoObj.addTodo(temp)
             addTodo(Data)
         }
     }
@@ -30,8 +33,8 @@ window.onload = async function (event) {
         addBackTodo(todo)
     }
 
-    function addFrontTodo(todo) {
-        let todoContainer = document.getElementById("todo_container_div")
+    function addFrontTodo(todo,container) {
+        let todoContainer = document.getElementById(container)
         let containerDiv = document.createElement("div")
         containerDiv.classList.add("todo_div")
 

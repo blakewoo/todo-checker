@@ -5,13 +5,16 @@ const TODO = (function () {
      * @param ID_HEAD : string
      * @constructor
      */
-    function TODO (TODO_LIST,ID_HEAD) {
+    function TODO (TODO_LIST,ID_HEAD,TODO_CONTAINER) {
         let tempMap = new Map();
         for(let i=0;i<TODO_LIST.length;i++) {
             tempMap.set(TODO_LIST[i].ID,TODO_LIST[i].DATA)
         }
         this.TODO_Map = tempMap
         this.ID_Header = ID_HEAD
+
+        // 이후 프론트 엔드 병합시 사용
+        this.TODO_CONTAINER = TODO_CONTAINER
     }
 
     /**
@@ -26,8 +29,12 @@ const TODO = (function () {
         if(!TODO_OBJ.Value) {
             return false
         }
+        TODO_OBJ.DeadLine = null
+        TODO_OBJ.isCompleted = false
+        TODO_OBJ.ID = addId
 
         this.TODO_Map.set(addId,TODO_OBJ);
+
         return addId
     }
 
@@ -99,9 +106,18 @@ const TODO = (function () {
 })
 
 const TODO_OBJECT = (function () {
-    function TODO_OBJECT (DATA) {
-        this.Value = DATA.value;
-        this.DeadLine = DATA.DeadLine
-        this.isCompleted = DATA.isCompleted
+    /**
+     * TODO 객체 초기화
+     * @param Value
+     * @param DeadLine
+     * @param isCompleted
+     * @constructor
+     */
+    function TODO_OBJECT (Value,DeadLine,isCompleted) {
+        this.ID = null
+        this.Value = Value;
+        this.DeadLine = DeadLine
+        this.isCompleted = isCompleted
     }
+    return TODO_OBJECT
 })

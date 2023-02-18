@@ -11,15 +11,15 @@ router.get('/my',verify.user_auth,function(req, res, next) {
     }
 });
 
-router.post('/', async function(req, res, next) {
+router.post('/',verify.user_auth,async function(req, res, next) {
 
 });
 
-router.put('/', function(req, res, next) {
+router.put('/',verify.user_auth, function(req, res, next) {
 
 });
 
-router.delete('/', function(req, res, next) {
+router.delete('/',verify.user_auth, function(req, res, next) {
 
 });
 
