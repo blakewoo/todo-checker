@@ -1,4 +1,4 @@
-const TODO = (function () {
+let TODO = (function () {
     /**
      * TODO 객체 생성자
      * @param TODO_LIST : array
@@ -103,9 +103,11 @@ const TODO = (function () {
 
         return result
     }
-})
 
-const TODO_OBJECT = (function () {
+    return TODO
+}())
+
+let TODO_OBJECT = (function () {
     /**
      * TODO 객체 초기화
      * @param Value
@@ -119,5 +121,5 @@ const TODO_OBJECT = (function () {
         this.DeadLine = DeadLine
         this.isCompleted = isCompleted
     }
-    return TODO_OBJECT
-})
+    return TODO_OBJECT;
+}())
