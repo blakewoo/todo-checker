@@ -78,7 +78,7 @@ const JH_calendar = (function () {
     }
 
     JH_calendar.prototype.buttonEvent = function (targetDate) {
-        let target = this
+
         document.getElementById("calendar_prevMonth").addEventListener("click",function (event){
         })
 

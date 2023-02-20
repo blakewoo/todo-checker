@@ -35,8 +35,13 @@ let TODO = (function () {
 
         this.TODO_Map.set(addId,TODO_OBJ);
 
+        //Front End
+        addTodo(TODO_OBJ)
+
         return addId
     }
+
+
 
     /**
      * TODO 변경
@@ -123,3 +128,156 @@ let TODO_OBJECT = (function () {
     }
     return TODO_OBJECT;
 }())
+
+
+function addTodo(todo) {
+    addBackTodo(todo)
+}
+
+function addBackTodo(todo) {
+    // 백엔드에 TODO 추가
+    // requestFunction("POST","/todolist/my",{},"JSON",function (result) {
+    //     if(result.status) {
+    // 프론트엔드에 TODO 추가
+    addFrontTodo(todo.Value)
+    //     }
+    //     else {
+    //         // 백엔드에 TODO 추가가 안되었을때 예외처리
+    //     }
+    // })
+}
+
+function addFrontTodo(todo) {
+    let todoContainer = document.getElementById("todo_container_div")
+    let containerDiv = document.createElement("div")
+    containerDiv.classList.add("todo_div")
+
+    let completedSpan =document.createElement("span")
+    completedSpan.classList.add("completed_check_span")
+
+    let hiddenCheckBox = document.createElement("input");
+    hiddenCheckBox.type = "checkbox"
+    hiddenCheckBox.style.display = "none";
+    hiddenCheckBox.id = "1"
+
+    let showCheckBoxLabel = document.createElement("label")
+    showCheckBoxLabel.htmlFor = "1"
+
+    completedSpan.appendChild(hiddenCheckBox)
+    completedSpan.appendChild(showCheckBoxLabel)
+
+    let labelContainerDiv = document.createElement("div")
+    labelContainerDiv.classList.add("todo_label_container_div")
+
+    let todoLabel = document.createElement("label")
+    todoLabel.classList.add("todo_label")
+    todoLabel.innerText = todo
+    let modifyDiv = document.createElement("span")
+    modifyDiv.addEventListener("click", addTodoModifyEvent)
+    modifyDiv.innerText = "···"
+    modifyDiv.classList.add("todo_modify")
+    let deleteDiv = document.createElement("span")
+    deleteDiv.addEventListener("click", addTodoDeleteEvent)
+    deleteDiv.innerText = "X"
+    deleteDiv.classList.add("todo_delete")
+
+    let dateDiv = document.createElement("div")
+    dateDiv.classList.add("todo_date_limit_div")
+    dateDiv.innerText = "기한 없음"
+
+    labelContainerDiv.appendChild(todoLabel)
+    labelContainerDiv.appendChild(deleteDiv)
+    labelContainerDiv.appendChild(modifyDiv)
+    labelContainerDiv.appendChild(dateDiv)
+    containerDiv.appendChild(labelContainerDiv)
+    containerDiv.appendChild(completedSpan)
+    todoContainer.appendChild(containerDiv)
+}
+
+function addTodoModifyEvent(event) {
+    let currentTodo = event.currentTarget;
+    if(prevTodoModify) {
+        prevTodoModify.remove()
+    }
+    addTodoModify(event.clientX, event.clientY, function (tomorrow, selectedDate, completedToggle, deleteDiv,toastMessageDiv) {
+        todoModify = toastMessageDiv
+        prevTodoModify = toastMessageDiv
+        tomorrow.addEventListener("click", setTomorrowEvent)
+        selectedDate.addEventListener("click", setDateTodoEvent)
+        completedToggle.addEventListener("click", setCompletedTodoEvent)
+        deleteDiv.addEventListener("click", function (event) {
+            event.currentTarget.parentNode.remove()
+        })
+    })
+
+    function setTomorrowEvent(event) {
+        // backend
+
+        // front
+        currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = "내일까지"
+        todoModify.remove()
+    }
+
+    function setDateTodoEvent(event) {
+        // backend
+
+        // front
+        currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = "언제까지"
+        todoModify.remove()
+    }
+
+    function setCompletedTodoEvent(event) {
+        // backend
+
+        // front
+        todoModify.remove()
+    }
+}
+
+function addTodoDeleteEvent(event) {
+    if(prevTodoModify) {
+        prevTodoModify.remove()
+    }
+    // backend
+
+
+    // frontend
+    event.currentTarget.parentNode.parentNode.remove()
+}
+
+function addTodoModify(x, y, callback) {
+    let html = document.getElementsByTagName("html")[0]
+
+    let toastMessageDiv = document.createElement("div")
+    toastMessageDiv.style.position = "absolute"
+    toastMessageDiv.style.width = "100px"
+    toastMessageDiv.style.height = "60px"
+    toastMessageDiv.style.top = y + "px"
+    toastMessageDiv.style.left = x - 100 + "px"
+    toastMessageDiv.style.border = "#000000 1px solid"
+    toastMessageDiv.style.background = "white"
+
+    let tomorrowLabel = document.createElement("div")
+    tomorrowLabel.innerText = "내일까지"
+    tomorrowLabel.classList.add("todo_detail_div")
+
+    let selectDate = document.createElement("div")
+    selectDate.innerText = "날짜 선택"
+    selectDate.classList.add("todo_detail_div")
+
+    let toggleCompleted = document.createElement("div")
+    toggleCompleted.innerText = "완료/미완료 전환"
+    toggleCompleted.classList.add("todo_detail_div")
+
+    let deleteDiv = document.createElement("div")
+    deleteDiv.innerText = "취소"
+    deleteDiv.classList.add("todo_detail_div")
+
+    toastMessageDiv.appendChild(tomorrowLabel)
+    toastMessageDiv.appendChild(selectDate)
+    toastMessageDiv.appendChild(toggleCompleted)
+    toastMessageDiv.appendChild(deleteDiv)
+    html.appendChild(toastMessageDiv)
+
+    return callback(tomorrowLabel, selectDate, toggleCompleted, deleteDiv,toastMessageDiv)
+}
