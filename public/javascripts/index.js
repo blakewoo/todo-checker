@@ -1,8 +1,7 @@
 window.onload = async function (event) {
     let calendar = new JH_calendar(document.getElementById("calendar_div"), new Date())
     let todoObj = await initTodo()
-    let todoModify;
-    let prevTodoModify;
+
 
     document.getElementById("todo_input").addEventListener("keyup", todoInputEvent)
 

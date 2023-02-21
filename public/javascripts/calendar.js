@@ -17,6 +17,7 @@ const JH_calendar = (function () {
     }
 
     JH_calendar.prototype.setPaintTarget = function (targetDate) {
+        this.targetDate = targetDate
         this.paint(targetDate)
         this.drawTbody(targetDate)
         this.buttonEvent(targetDate)
@@ -78,14 +79,31 @@ const JH_calendar = (function () {
     }
 
     JH_calendar.prototype.buttonEvent = function (targetDate) {
+        document.getElementById("calendar_prevMonth").removeEventListener("click",this.prevMonthEvent.bind(this))
+        document.getElementById("calendar_prevMonth").addEventListener("click",this.prevMonthEvent.bind(this))
 
-        document.getElementById("calendar_prevMonth").addEventListener("click",function (event){
-        })
+        document.getElementById("calendar_nextMonth").removeEventListener("click",this.nextMonthEvent.bind(this))
+        document.getElementById("calendar_nextMonth").addEventListener("click",this.nextMonthEvent.bind(this))
 
-        document.getElementById("calendar_nextMonth").addEventListener("click",function (event){
-        })
+        let allDay = document.getElementsByClassName("day_td")
+        for(let i=0;i<allDay.length;i++) {
+            allDay[i].removeEventListener("click",this.dailySelectEvent.bind(this))
+            allDay[i].addEventListener("click",this.dailySelectEvent.bind(this))
+        }
+    }
 
-        //일 선택
+    JH_calendar.prototype.prevMonthEvent = function (event) {
+        let newTarget = new Date(this.targetDate.getFullYear(), this.targetDate.getMonth() - 1, this.targetDate.getDate());
+        this.setPaintTarget(newTarget)
+    }
+
+    JH_calendar.prototype.nextMonthEvent = function (event) {
+        let newTarget = new Date(this.targetDate.getFullYear(), this.targetDate.getMonth() + 1, this.targetDate.getDate());
+        this.setPaintTarget(newTarget)
+    }
+
+    JH_calendar.prototype.dailySelectEvent = function (event) {
+
     }
 
     return JH_calendar;

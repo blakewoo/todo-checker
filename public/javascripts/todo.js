@@ -1,7 +1,12 @@
+'use strict'
+
+let todoModify;
+let prevTodoModify;
+
 let TODO = (function () {
     /**
      * TODO 객체 생성자
-     * @param TODO_LIST : array
+     * @param TODO_LIST : TODO_OBJECT[]
      * @param ID_HEAD : string
      * @constructor
      */
@@ -61,11 +66,14 @@ let TODO = (function () {
 
 
     /**
-     * TODO 전체 값 가져오기
-     * @returns {TODO_OBJECT[]}
+     * 특정 날짜의 TODO 값 가져오기
+     * @param date : Date
      */
-    TODO.prototype.getAllTodo = function () {
-        return Array.from(this.TODO_Map.values())
+    TODO.prototype.getDateTodo = function (date) {
+        // 백엔드에서 요청해서 갖고 오기
+
+        // 프론트엔드에서 요청해서 갖고 오기
+
     }
 
     /**
