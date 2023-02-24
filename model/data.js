@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const todoList = new mongoose.Schema({
     USER_ID: String,
+    TODO_ID:String,
     TARGET_DATE: Date,
     DATA: String,
     isDone: Boolean
