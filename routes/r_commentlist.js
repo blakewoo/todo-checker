@@ -3,7 +3,7 @@ let verify = require("../module/m_verify_user")
 const commentModule = require("../module/m_comment")
 var router = express.Router();
 
-// TODO 불러들이기
+// Comment 불러들이기
 router.get('/my',verify.user_auth,async function(req, res, next) {
     try{
         // get my comment list
@@ -26,7 +26,7 @@ router.get('/my',verify.user_auth,async function(req, res, next) {
     }
 });
 
-// TODO 추가
+// Comment 추가
 router.post('/my',verify.user_auth,async function(req, res, next) {
     try{
         // get my comment list
@@ -50,7 +50,7 @@ router.post('/my',verify.user_auth,async function(req, res, next) {
     }
 });
 
-// TODO 업데이트
+// Comment 업데이트
 router.put('/my',verify.user_auth,async function(req, res, next) {
     try{
         // get my comment list
@@ -65,14 +65,14 @@ router.put('/my',verify.user_auth,async function(req, res, next) {
     }
 });
 
-// TODO 삭제
+// Comment 삭제
 router.delete('/my',verify.user_auth,async function(req, res, next) {
     try{
         // get my comment list
         if(!req.body.COMMENT_ID) {
             return res.status(400).send({status:false})
         }
-        await commentModule.deleteComment(req.body.COMMENT_ID)
+        await commentModule.deleteComment(req.body.TODO_ID)
         return res.send({status:true})
     }
     catch(e){
