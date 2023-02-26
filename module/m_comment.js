@@ -1,4 +1,4 @@
-const comment_data = require("/model/comment")
+const comment_data = require("../model/comment")
 
 /**
  *

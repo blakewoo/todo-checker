@@ -1,4 +1,4 @@
-const todo_data = require("/model/data")
+const todo_data = require("../model/data")
 
 exports.addTodo = async function (USER_ID,DATE,TODO_DATA) {
    try{
