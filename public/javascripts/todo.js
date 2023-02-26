@@ -10,13 +10,12 @@ let TODO = (function () {
      * @param ID_HEAD : string
      * @constructor
      */
-    function TODO (TODO_LIST,ID_HEAD,TODO_CONTAINER) {
+    function TODO (TODO_LIST,TODO_CONTAINER) {
         let tempMap = new Map();
         for(let i=0;i<TODO_LIST.length;i++) {
             tempMap.set(TODO_LIST[i].ID,TODO_LIST[i].DATA)
         }
         this.TODO_Map = tempMap
-        this.ID_Header = ID_HEAD
 
         // 이후 프론트 엔드 병합시 사용
         this.TODO_CONTAINER = TODO_CONTAINER
@@ -27,23 +26,21 @@ let TODO = (function () {
      * @param TODO_OBJ : TODO_OBJECT
      * @returns {string|Boolean}
      */
-    TODO.prototype.addTodo = function (TODO_OBJ) {
-        let addId = this.ID_Header+"_"+new Date().getTime()
-
+    TODO.prototype.addTodo = function (TODO_ID,TODO_OBJ) {
         // TODO 값 검증 루틴
         if(!TODO_OBJ.Value) {
             return false
         }
         TODO_OBJ.DeadLine = null
         TODO_OBJ.isCompleted = false
-        TODO_OBJ.ID = addId
+        TODO_OBJ.ID = TODO_ID
 
-        this.TODO_Map.set(addId,TODO_OBJ);
+        this.TODO_Map.set(TODO_ID,TODO_OBJ);
 
         //Front End
         addTodo(TODO_OBJ)
 
-        return addId
+        return true
     }
 
 

@@ -7,13 +7,10 @@ var router = express.Router();
 router.get('/my',verify.user_auth,async function(req, res, next) {
     try{
         // get my comment list
-        if(!req.body.USER_ID) {
+        if(!req.query.date) {
             return res.status(400).send({status:false})
         }
-        if(!req.body.TARGET_DATE) {
-            return res.status(400).send({status:false})
-        }
-        let result = await todoModule.getTodo(req.body.USER_ID,req.body.TARGET_DATE)
+        let result = await todoModule.getTodo(req.session.ID,req.query.date)
         if(result) {
             return res.send({status:true,result:result})
         }
@@ -30,9 +27,6 @@ router.get('/my',verify.user_auth,async function(req, res, next) {
 router.post('/my',verify.user_auth,async function(req, res, next) {
     try{
         // get my comment list
-        if(!req.body.USER_ID) {
-            return res.status(400).send({status:false})
-        }
         if(!req.body.TARGET_DATE) {
             return res.status(400).send({status:false})
         }
@@ -42,7 +36,7 @@ router.post('/my',verify.user_auth,async function(req, res, next) {
         if(!req.body.DATA) {
             return res.status(400).send({status:false})
         }
-        await todoModule.addTodo(req.body.USER_ID,req.body.TARGET_DATE,req.body.PARENT,req.body.DATA)
+        await todoModule.addTodo(req.session.ID,req.body.TARGET_DATE,req.body.PARENT,req.body.DATA)
         return res.send({status:true})
     }
     catch(e){
@@ -51,7 +45,7 @@ router.post('/my',verify.user_auth,async function(req, res, next) {
 });
 
 // TODO 업데이트
-router.put('/',verify.user_auth,async function(req, res, next) {
+router.put('/my',verify.user_auth,async function(req, res, next) {
     try{
         // get my comment list
         if(!req.body.TODO_ID) {
@@ -66,7 +60,7 @@ router.put('/',verify.user_auth,async function(req, res, next) {
 });
 
 // TODO 삭제
-router.delete('/',verify.user_auth,async function(req, res, next) {
+router.delete('/my',verify.user_auth,async function(req, res, next) {
     try{
         // get my comment list
         if(!req.body.TODO_ID) {

@@ -7,10 +7,9 @@ window.onload = async function (event) {
 
     async function initTodo() {
         return new Promise((resolve,reject) => (
-            // requestFunction("GET","/todolist/my?date="+(new Date().getDate()),{},"JSON",function (result) {
-            //     resolve(new TODO(result.TODO_LIST,result.ID_HEAD))
-            // })
-            resolve(new TODO([],"TEST",document.getElementById("todo_container_div")))
+            requestFunction("GET","/todolist/my?date="+(new Date().getDate()),{},"JSON",function (result) {
+                resolve(new TODO(result.result,document.getElementById("todo_container_div")))
+            })
         ))
     }
 
