@@ -16,6 +16,17 @@ body {
     height: 8%;
 }
 
+.user_name_div{
+    box-sizing: border-box;
+    display: inline-block;
+    float : right;
+    font-size: 1rem;
+}
+.user_name_div:hover {
+    font-weight: bold;
+    cursor: pointer;
+}
+
 .left_div{
     box-sizing: border-box;
     width: 70%;
@@ -37,7 +48,7 @@ body {
     float: left;
     margin-left: 30px;
     display: inline-block;
-    font-size: 1.5rem;
+    font-size: 1rem;
 }
 .headline_tab_div:hover{
     cursor: pointer;
@@ -134,7 +145,15 @@ input[type="checkbox"]:checked + label {
     background-color: #000000;
 }
 
+.myinfo_logout_div:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
 
+.myinfo_cancel_div:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
 
 @media (max-width: 1440px)  {
     .headline_div{

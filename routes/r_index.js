@@ -3,11 +3,18 @@ var router = express.Router();
 
 router.get('/', function(req, res, next) {
   if(req.session.isLogin) {
-    return res.render('index');
+    return res.render('index',{title:req.session.ID});
   }
   else {
     return res.render('login');
   }
+});
+
+router.get('/logout', function(req, res, next) {
+  req.session.ID = null
+  req.session.isLogin = null
+  req.session.isAdmin = null
+  return res.redirect("/")
 });
 
 router.get('/signup', function(req, res, next) {
