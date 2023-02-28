@@ -10,6 +10,10 @@ router.get('/', function(req, res, next) {
   }
 });
 
+router.get('/myinfo', function(req, res, next) {
+  return res.render('myinfo',{title:req.session.ID});
+});
+
 router.get('/logout', function(req, res, next) {
   req.session.ID = null
   req.session.isLogin = null
@@ -20,5 +24,6 @@ router.get('/logout', function(req, res, next) {
 router.get('/signup', function(req, res, next) {
     return res.render('signup');
 });
+
 
 module.exports = router;

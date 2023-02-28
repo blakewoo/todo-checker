@@ -149,6 +149,10 @@ input[type="checkbox"]:checked + label {
     cursor: pointer;
     font-weight: bold;
 }
+.myinfo_myinfo_div:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
 
 .myinfo_cancel_div:hover{
     cursor: pointer;

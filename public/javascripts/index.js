@@ -29,12 +29,16 @@ window.onload = async function (event) {
     }
 
     function myInfoModalEvent(event) {
-        myInfoModal(event.clientX, event.clientY,function (logoutDiv,deleteDiv,container) {
+        myInfoModal(event.clientX, event.clientY,function (logoutDiv,myinfoDiv,deleteDiv,container) {
             logoutDiv.addEventListener("click",function (event2) {
                 location.href=location.protocol+"//"+location.host+"/logout"
             })
 
-            deleteDiv.addEventListener("click",function (event3) {
+            myinfoDiv.addEventListener("click",function (event3) {
+                location.href=location.protocol+"//"+location.host+"/myinfo"
+            })
+
+            deleteDiv.addEventListener("click",function (event4) {
                 container.remove()
             })
         })
@@ -56,15 +60,20 @@ window.onload = async function (event) {
         logoutDiv.innerText = "로그아웃"
         logoutDiv.classList.add("myinfo_logout_div")
 
+        let myinfoDiv = document.createElement("div")
+        myinfoDiv.innerText = "내 정보"
+        myinfoDiv.classList.add("myinfo_myinfo_div")
+
         let deleteDiv = document.createElement("div")
         deleteDiv.innerText = "취소"
         deleteDiv.classList.add("myinfo_cancel_div")
 
         toastMessageDiv.appendChild(logoutDiv)
+        toastMessageDiv.appendChild(myinfoDiv)
         toastMessageDiv.appendChild(deleteDiv)
         html.appendChild(toastMessageDiv)
 
-        return callback(logoutDiv, deleteDiv,toastMessageDiv)
+        return callback(logoutDiv,myinfoDiv, deleteDiv,toastMessageDiv)
     }
 
 }
