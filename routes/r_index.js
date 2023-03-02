@@ -11,7 +11,12 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/myinfo', function(req, res, next) {
-  return res.render('myinfo',{title:req.session.ID,USER_ID:req.session.ID});
+  if(req.session.isLogin) {
+    return res.render('myinfo',{title:req.session.ID,USER_ID:req.session.ID});
+  }
+  else {
+    return res.redirect('/');
+  }
 });
 
 router.get('/logout', function(req, res, next) {

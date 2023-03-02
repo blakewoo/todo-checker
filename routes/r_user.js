@@ -3,11 +3,18 @@ var router = express.Router();
 
 const m_user = require("../module/m_user")
 
-router.get('/', function(req, res, next) {
-    
+router.get('/my', async function(req, res, next) {
+    try{
+        let result = await m_user.getUser(req.session.ID);
+        return res.send({status:true,result:result})
+    }
+    catch(e){
+        console.log(e)
+        return res.send({status:false,reason:"unknown"})
+    }
 });
 
-router.post('/', async function(req, res, next) {
+router.post('/my', async function(req, res, next) {
     try{
         if(m_user.verifyEmail(req.body.EMAIL)){
             return res.send({status:false,reason:"malformed email"})

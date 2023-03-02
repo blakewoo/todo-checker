@@ -25,7 +25,7 @@ window.onload = function () {
         }
 
 
-        requestFunction("POST","/user",{ID:ID,PASSWORD:PASSWORD,EMAIL:EMAIL},"JSON",function (result) {
+        requestFunction("POST","/user/my",{ID:ID,PASSWORD:PASSWORD,EMAIL:EMAIL},"JSON",function (result) {
             if(result.status) {
                 location.href = location.protocol+"//"+location.host+"/"
             }

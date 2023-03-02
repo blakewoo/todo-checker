@@ -2,6 +2,24 @@ const conn = require("../connectors/mariadb")
 const bcrypt = require("bcrypt");
 const config = require("../config/config")
 
+
+exports.getUser = async function (ID) {
+    console.log("it works!")
+    let con;
+    let userFind = null;
+    try{
+        con = await conn.getConnection()
+        userFind = await con.query("SELECT ID,EMAIL FROM user WHERE user.ID=?",ID)
+    }
+    catch(e){
+        console.log(e)
+    }
+    finally {
+        await con.end()
+    }
+    return userFind[0]
+}
+
 exports.addUser = async function (ID,PASSWORD,EMAIL) {
     let con;
     try{
@@ -16,14 +34,15 @@ exports.addUser = async function (ID,PASSWORD,EMAIL) {
         }
         let hash = bcrypt.hashSync(PASSWORD, Number(config.SALT_ROUND))
         await con.query("INSERT INTO user value (?,?,?)", [ID,hash,EMAIL])
-        return {status:true}
     }
     catch(e){
         console.log(e)
+        return {status:false}
     }
     finally {
         await con.end()
     }
+    return {status:true}
 }
 
 
