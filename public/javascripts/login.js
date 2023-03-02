@@ -7,6 +7,7 @@ window.onload = function () {
 
     document.getElementById("passwordInput").addEventListener("keyup",function (event) {
         if(event.key === "Enter") {
+            event.currentTarget.blur()
             document.getElementById("login_button").click()
         }
     })
