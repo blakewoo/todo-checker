@@ -45,6 +45,27 @@ exports.addUser = async function (ID,PASSWORD,EMAIL) {
     return {status:true}
 }
 
+exports.updateUser = async function (ID,PASSWORD,EMAIL) {
+    let con;
+    try{
+        con = await conn.getConnection()
+        let emailFind = await con.query("SELECT EMAIL FROM user WHERE user.EMAIL=?",EMAIL)
+        if(emailFind.length !==0) {
+            return {status:false,reason:"EMAIL_duplicated"}
+        }
+        let hash = bcrypt.hashSync(PASSWORD, Number(config.SALT_ROUND))
+        await con.query("UPDATE user SET PASSWORD=?,EMAIL=? WHERE ID=?", [hash,EMAIL,ID])
+    }
+    catch(e){
+        console.log(e)
+        return {status:false}
+    }
+    finally {
+        await con.end()
+    }
+    return {status:true}
+}
+
 
 exports.verifyUser = async function (ID,PASSWORD) {
     let con;
