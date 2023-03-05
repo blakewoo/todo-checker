@@ -30,11 +30,15 @@ router.post('/my', async function(req, res, next) {
 
 router.put('/my', async function(req, res, next) {
     try{
+        let passwordReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{9,25}$/;
         if(m_user.verifyEmail(req.body.EMAIL)){
             return res.send({status:false,reason:"malformed email"})
         }
         if(req.body.PASSWORD !== req.body.PASSWORD_CONFIRM){
             return res.send({status:false,reason:"Not match password"})
+        }
+        if(req.body.PASSWORD !== "" && !passwordReg.test(req.body.PASSWORD)){
+            return res.send({status:false,reason:"malformed password"})
         }
 
         let result = await m_user.updateUser(req.session.ID,req.body.PASSWORD,req.body.EMAIL);
