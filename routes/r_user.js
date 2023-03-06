@@ -1,9 +1,18 @@
 var express = require('express');
 var router = express.Router();
-
 const m_user = require("../module/m_user")
+const m_todo = require("../module/m_todo")
 
-router.get('/my', async function(req, res, next) {
+sessionCheck = function (req,res,next) {
+    if(req.session.isLogin) {
+        next()
+    }
+    else {
+        return res.status(401).send({status:false,reason:"No auth"})
+    }
+}
+
+router.get('/my',sessionCheck, async function(req, res, next) {
     try{
         let result = await m_user.getUser(req.session.ID);
         return res.send({status:true,result:result})
@@ -14,7 +23,7 @@ router.get('/my', async function(req, res, next) {
     }
 });
 
-router.post('/my', async function(req, res, next) {
+router.post('/my',sessionCheck, async function(req, res, next) {
     try{
         if(m_user.verifyEmail(req.body.EMAIL)){
             return res.send({status:false,reason:"malformed email"})
@@ -28,7 +37,7 @@ router.post('/my', async function(req, res, next) {
     }
 });
 
-router.put('/my', async function(req, res, next) {
+router.put('/my',sessionCheck, async function(req, res, next) {
     try{
         let passwordReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{9,25}$/;
         if(m_user.verifyEmail(req.body.EMAIL)){
@@ -50,8 +59,22 @@ router.put('/my', async function(req, res, next) {
     }
 });
 
-router.delete('/', function(req, res, next) {
-
+router.delete('/my',sessionCheck,async function(req, res, next) {
+    try {
+        // Remove to-dos
+        await m_todo.deleteUserTodos(req.session.ID);
+        // Remove user information
+        await m_user.deleteUser(req.session.ID);
+        // Remove session
+        req.session.isLogin = null
+        req.session.ID = null
+        req.session.isAdmin = null
+        return res.send({status:true})
+    }
+    catch(e) {
+        console.log(e)
+        return res.send({status:false,reason:"unknown"})
+    }
 });
 
 module.exports = router;

@@ -61,3 +61,29 @@ exports.deleteTodo = async function (TODO_ID) {
         return false
     }
 }
+
+exports.deleteTodo = async function (TODO_ID) {
+    try{
+        await todo_data.deleteOne({
+            TODO_ID: TODO_ID
+        })
+        return true
+    }
+    catch(e) {
+        console.error(e)
+        return false
+    }
+}
+
+exports.deleteUserTodos = async function (USER_ID) {
+    try{
+        await todo_data.deleteMany({
+            USER_ID: USER_ID
+        })
+        return true
+    }
+    catch(e) {
+        console.error(e)
+        return false
+    }
+}

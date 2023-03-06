@@ -76,6 +76,20 @@ body {
     height: 150px;
 }
 
+.myinfo_delete_account_div{
+    position: absolute;
+    left:calc(50% - 50px);
+    top:calc(50% + 150px);
+    box-sizing: border-box;
+    width: 350px;
+    height: 150px;
+}
+
+.myinfo_delete_account_div:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
+
 .myinfo_id_info_div{
     margin-top: 5px;
 }

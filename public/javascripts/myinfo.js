@@ -4,6 +4,11 @@ window.onload = function () {
         let emailInput = document.getElementById("email_modify_input")
         emailInput.value = result.result.EMAIL
 
+
+        document.getElementsByClassName("myinfo_delete_account_div")[0].addEventListener("click",function (event) {
+            // delete account function
+        })
+
         document.getElementById("password_input").addEventListener("keyup",function (event) {
             let pass = document.getElementById("password_input").value
             let passConfirm = document.getElementById("password_confirm_input").value

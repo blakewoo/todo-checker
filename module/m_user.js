@@ -37,11 +37,11 @@ exports.addUser = async function (ID,PASSWORD,EMAIL) {
     }
     catch(e){
         console.log(e)
+        await con.end()
         return {status:false}
     }
-    finally {
-        await con.end()
-    }
+
+    await con.end()
     return {status:true}
 }
 
@@ -61,11 +61,27 @@ exports.updateUser = async function (ID,PASSWORD,EMAIL) {
     }
     catch(e){
         console.log(e)
+        await con.end()
         return {status:false}
     }
-    finally {
-        await con.end()
+
+    await con.end()
+    return {status:true}
+}
+
+exports.deleteUser = async function(ID) {
+    let con;
+    try{
+        con = await conn.getConnection()
+        await con.query("DELETE EMAIL FROM user WHERE user.ID=?",ID)
     }
+    catch(e){
+        console.log(e)
+        await con.end()
+        return {status:false}
+    }
+
+    await con.end()
     return {status:true}
 }
 
