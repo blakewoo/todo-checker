@@ -7,6 +7,20 @@ window.onload = function () {
 
         document.getElementsByClassName("myinfo_delete_account_div")[0].addEventListener("click",function (event) {
             // delete account function
+            yesNoModal("정말로 탈퇴 하시겠습니까?",300,50,function (yesButton,noButton) {
+                yesButton.addEventListener("click",function (event) {
+                    requestFunction("DELETE","/user/my",{},"JSON",function (result){
+                        if(result.status) {
+                            location.href = location.protocol+"//"+location.host
+                        }
+                    })
+                    event.currentTarget.parentNode.remove()
+                })
+
+                noButton.addEventListener("click",function (event) {
+                    event.currentTarget.parentNode.remove()
+                })
+            })
         })
 
         document.getElementById("password_input").addEventListener("keyup",function (event) {

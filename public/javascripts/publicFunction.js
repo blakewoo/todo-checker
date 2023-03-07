@@ -90,8 +90,8 @@ function yesNoModal(message,width=400,height=200,callback) {
     toastMessageDiv.style.height =height+"px"
     toastMessageDiv.style.top = "calc(50% - "+height/2+"px)"
     toastMessageDiv.style.left = "calc(50% - "+width/2+"px)"
-    toastMessageDiv.style.border = "#10ff00 1px solid"
-    toastMessageDiv.style.background = "black"
+    toastMessageDiv.style.border = "black 1px solid"
+    toastMessageDiv.style.background = "white"
     toastMessageDiv.style.textAlign = "center"
 
     let title = document.createElement("h2")

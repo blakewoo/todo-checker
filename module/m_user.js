@@ -73,7 +73,7 @@ exports.deleteUser = async function(ID) {
     let con;
     try{
         con = await conn.getConnection()
-        await con.query("DELETE EMAIL FROM user WHERE user.ID=?",ID)
+        await con.query("DELETE FROM user WHERE user.ID=?",ID)
     }
     catch(e){
         console.log(e)
