@@ -1,4 +1,6 @@
 window.onload = function () {
+
+    headlineInit()
     let passwordDifferentFlag = false
     requestFunction("GET","/user/my",null,"JSON",function (result) {
         let emailInput = document.getElementById("email_modify_input")

@@ -23,7 +23,7 @@ router.get('/my',sessionCheck, async function(req, res, next) {
     }
 });
 
-router.post('/my',sessionCheck, async function(req, res, next) {
+router.post('/my', async function(req, res, next) {
     try{
         if(m_user.verifyEmail(req.body.EMAIL)){
             return res.send({status:false,reason:"malformed email"})

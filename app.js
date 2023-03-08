@@ -8,7 +8,7 @@ const mariadb = require("./connectors/mariadb")
 const mongodb = require("./connectors/mongodb")
 
 var indexRouter = require('./routes/r_index');
-const loginRouter = require('./routes/login')
+const loginRouter = require('./routes/r_login')
 const userRouter = require('./routes/r_user')
 const todolistRouter = require('./routes/r_todolist')
 const commentlistRouter = require("./routes/r_commentlist")
