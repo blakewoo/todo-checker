@@ -1,0 +1,142 @@
+html{
+    height: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+body {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.left_div{
+    box-sizing: border-box;
+    width: 70%;
+    height: 92%;
+    float: left;
+    display: inline-block;
+}
+
+.right_div{
+    box-sizing: border-box;
+    width: 30%;
+    height: 92%;
+    float: right;
+    display: inline-block;
+}
+
+.todo_container_div{
+    box-sizing: border-box;
+    border: 1px solid black;
+    width: 100%;
+    height: 100%;
+}
+
+.todo_label_container_div{
+    box-sizing: border-box;
+    width: calc(100% - 30px);
+    height: 100%;
+    display: inline-block;
+}
+
+.todo_div{
+    box-sizing: border-box;
+    border:1px solid black;
+    width: 100%;
+    height: 2rem;
+    vertical-align: middle;
+}
+
+.todo_label{
+    vertical-align: middle;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.todo_modify{
+    float: right;
+    vertical-align: middle;
+    height: 100%;
+    margin-right: 5px;
+}
+
+.todo_modify:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.todo_delete{
+    float: right;
+    vertical-align: middle;
+    height: 100%;
+}
+
+.todo_delete:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.todo_detail_div{
+    font-size: 8pt;
+}
+
+.todo_detail_div:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.todo_date_limit_div{
+    font-size: 6pt;
+}
+
+.completed_check_span{
+    box-sizing: border-box;
+    height: 100%;
+    width: 30px;
+    display: inline-block;
+    float: left;
+}
+
+input[type="checkbox"] + label {
+    line-height: calc(50% - 10px);
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #000000;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked + label {
+    background-color: #000000;
+}
+
+@media (max-width: 1440px)  {
+
+    .left_div{
+        width: 100%;
+        height: 42%;
+        display: block;
+    }
+
+    .right_div{
+        width: 100%;
+        height: 50%;
+        display: block;
+    }
+
+    .todo_container_div{
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+@media (max-width: 720px)  {
+    .left_div{
+
+    }
+
+    .right_div{
+
+    }
+}

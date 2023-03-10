@@ -1,5 +1,5 @@
 const JH_calendar = (function () {
-    function JH_calendar (targetDiv,targetDate) {
+    function JH_calendar (targetDiv,targetDate,readOnly) {
         if(targetDiv===null || targetDiv===undefined){
             console.error("[JH_calendar error]Target div is not provided")
             return;
@@ -12,6 +12,7 @@ const JH_calendar = (function () {
         this.targetDiv = targetDiv
         this.targetDate = targetDate
         this.seletedDate = targetDate
+        this.readOnly = readOnly
 
         this.setPaintTarget(targetDate)
     }

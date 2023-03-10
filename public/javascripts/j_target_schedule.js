@@ -1,6 +1,6 @@
 window.onload = async function (event) {
     headlineInit()
-    let calendar = new JH_calendar(document.getElementById("calendar_div"), new Date())
+    let calendar = new JH_calendar(document.getElementById("calendar_div"), new Date(),true)
     let todoObj = await initTodo()
 
     async function initTodo() {
