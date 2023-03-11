@@ -10,7 +10,7 @@ let TODO = (function () {
      * @param ID_HEAD : string
      * @constructor
      */
-    function TODO (TODO_LIST,TODO_CONTAINER) {
+    function TODO (TODO_LIST,TODO_CONTAINER,READ_ONLY) {
         let tempMap = new Map();
         for(let i=0;i<TODO_LIST.length;i++) {
             tempMap.set(TODO_LIST[i].ID,TODO_LIST[i].DATA)
@@ -19,6 +19,7 @@ let TODO = (function () {
 
         // 이후 프론트 엔드 병합시 사용
         this.TODO_CONTAINER = TODO_CONTAINER
+        this.READ_ONLY = READ_ONLY
     }
 
     /**
@@ -26,21 +27,87 @@ let TODO = (function () {
      * @param TODO_OBJ : TODO_OBJECT
      * @returns {string|Boolean}
      */
-    TODO.prototype.addTodo = function (TODO_ID,TODO_OBJ) {
+    TODO.prototype.addTodo = async function (TODO_OBJ) {
         // TODO 값 검증 루틴
         if(!TODO_OBJ.Value) {
             return false
         }
-        TODO_OBJ.DeadLine = null
-        TODO_OBJ.isCompleted = false
-        TODO_OBJ.ID = TODO_ID
+        if(this.READ_ONLY) {
+            return false
+        }
+        let sendData = {
+            TARGET_DATE:new Date(),
+            DATA:TODO_OBJ.Value
+        }
+        let result = await this.addBackTodo(sendData)
+        if(result) {
+            TODO_OBJ.DeadLine = null
+            TODO_OBJ.isCompleted = false
+            TODO_OBJ.ID = result.result._id
+            this.TODO_Map.set(TODO_OBJ.ID,TODO_OBJ);
+            this.addFrontTodo(TODO_OBJ)
+            return true
+        }
+        else {
+            return false
+        }
+    }
 
-        this.TODO_Map.set(TODO_ID,TODO_OBJ);
+    TODO.prototype.addBackTodo =async function (sendData) {
+        try{
+            return await syncRequestFunction("POST","/todolist/my",sendData,"JSON")
+        }
+        catch(e) {
+            console.error(e)
+            return false
+        }
+    }
 
-        //Front End
-        addTodo(TODO_OBJ)
+    TODO.prototype.addFrontTodo = function (TODO) {
+        let todoContainer = this.TODO_CONTAINER
+        let containerDiv = document.createElement("div")
+        containerDiv.classList.add("todo_div")
 
-        return true
+        let completedSpan =document.createElement("span")
+        completedSpan.classList.add("completed_check_span")
+
+        let hiddenCheckBox = document.createElement("input");
+        hiddenCheckBox.type = "checkbox"
+        hiddenCheckBox.style.display = "none";
+        hiddenCheckBox.id = TODO.ID
+
+        let showCheckBoxLabel = document.createElement("label")
+        showCheckBoxLabel.htmlFor = TODO.ID
+
+        completedSpan.appendChild(hiddenCheckBox)
+        completedSpan.appendChild(showCheckBoxLabel)
+
+        let labelContainerDiv = document.createElement("div")
+        labelContainerDiv.classList.add("todo_label_container_div")
+
+        let todoLabel = document.createElement("label")
+        todoLabel.classList.add("todo_label")
+        todoLabel.innerText = TODO.Value
+        let modifyDiv = document.createElement("span")
+        modifyDiv.addEventListener("click", addTodoModifyEvent)
+        modifyDiv.innerText = "···"
+        modifyDiv.classList.add("todo_modify")
+        let deleteDiv = document.createElement("span")
+        deleteDiv.addEventListener("click", addTodoDeleteEvent)
+        deleteDiv.innerText = "X"
+        deleteDiv.classList.add("todo_delete")
+
+        let dateDiv = document.createElement("div")
+        dateDiv.classList.add("todo_date_limit_div")
+        dateDiv.innerText = "기한 없음"
+
+        labelContainerDiv.appendChild(todoLabel)
+        labelContainerDiv.appendChild(deleteDiv)
+        labelContainerDiv.appendChild(modifyDiv)
+        labelContainerDiv.appendChild(dateDiv)
+        containerDiv.appendChild(labelContainerDiv)
+        containerDiv.appendChild(completedSpan)
+        todoContainer.appendChild(containerDiv)
     }
 
 
@@ -133,71 +200,6 @@ let TODO_OBJECT = (function () {
     }
     return TODO_OBJECT;
 }())
-
-
-function addTodo(todo) {
-    addBackTodo(todo)
-}
-
-function addBackTodo(todo) {
-    // 백엔드에 TODO 추가
-    // requestFunction("POST","/todolist/my",{},"JSON",function (result) {
-    //     if(result.status) {
-    // 프론트엔드에 TODO 추가
-    addFrontTodo(todo.Value)
-    //     }
-    //     else {
-    //         // 백엔드에 TODO 추가가 안되었을때 예외처리
-    //     }
-    // })
-}
-
-function addFrontTodo(todo) {
-    let todoContainer = document.getElementById("todo_container_div")
-    let containerDiv = document.createElement("div")
-    containerDiv.classList.add("todo_div")
-
-    let completedSpan =document.createElement("span")
-    completedSpan.classList.add("completed_check_span")
-
-    let hiddenCheckBox = document.createElement("input");
-    hiddenCheckBox.type = "checkbox"
-    hiddenCheckBox.style.display = "none";
-    hiddenCheckBox.id = "1"
-
-    let showCheckBoxLabel = document.createElement("label")
-    showCheckBoxLabel.htmlFor = "1"
-
-    completedSpan.appendChild(hiddenCheckBox)
-    completedSpan.appendChild(showCheckBoxLabel)
-
-    let labelContainerDiv = document.createElement("div")
-    labelContainerDiv.classList.add("todo_label_container_div")
-
-    let todoLabel = document.createElement("label")
-    todoLabel.classList.add("todo_label")
-    todoLabel.innerText = todo
-    let modifyDiv = document.createElement("span")
-    modifyDiv.addEventListener("click", addTodoModifyEvent)
-    modifyDiv.innerText = "···"
-    modifyDiv.classList.add("todo_modify")
-    let deleteDiv = document.createElement("span")
-    deleteDiv.addEventListener("click", addTodoDeleteEvent)
-    deleteDiv.innerText = "X"
-    deleteDiv.classList.add("todo_delete")
-
-    let dateDiv = document.createElement("div")
-    dateDiv.classList.add("todo_date_limit_div")
-    dateDiv.innerText = "기한 없음"
-
-    labelContainerDiv.appendChild(todoLabel)
-    labelContainerDiv.appendChild(deleteDiv)
-    labelContainerDiv.appendChild(modifyDiv)
-    labelContainerDiv.appendChild(dateDiv)
-    containerDiv.appendChild(labelContainerDiv)
-    containerDiv.appendChild(completedSpan)
-    todoContainer.appendChild(containerDiv)
-}
 
 function addTodoModifyEvent(event) {
     let currentTodo = event.currentTarget;

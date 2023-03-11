@@ -22,6 +22,7 @@ window.onload = async function (event) {
                 return
             }
             event.currentTarget.value = ""
+            console.log(Data)
             let temp = new TODO_OBJECT(Data,null,false)
             todoObj.addTodo(temp)
         }

@@ -1,14 +1,13 @@
-const todo_data = require("../model/data")
+const todo_data = require("../model/to-do")
 
 exports.addTodo = async function (USER_ID,DATE,TODO_DATA) {
    try{
-       await todo_data.create({
+       return await todo_data.create({
            USER_ID: USER_ID,
            TARGET_DATE: DATE,
            DATA: TODO_DATA,
            isDone: false
        })
-       return true
    }
    catch(e) {
        console.error(e)

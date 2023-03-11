@@ -30,14 +30,16 @@ router.post('/my',verify.user_auth,async function(req, res, next) {
         if(!req.body.TARGET_DATE) {
             return res.status(400).send({status:false})
         }
-        if(!req.body.PARENT) {
-            return res.status(400).send({status:false})
-        }
         if(!req.body.DATA) {
             return res.status(400).send({status:false})
         }
-        await todoModule.addTodo(req.session.ID,req.body.TARGET_DATE,req.body.PARENT,req.body.DATA)
-        return res.send({status:true})
+        let result = await todoModule.addTodo(req.session.ID,req.body.TARGET_DATE,req.body.DATA)
+        if(!result) {
+            return res.send({status:false})
+        }
+        else {
+            return res.send({status:true,result:result})
+        }
     }
     catch(e){
         return res.status(404).send({status:false})

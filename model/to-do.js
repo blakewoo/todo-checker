@@ -4,6 +4,7 @@ const todoList = new mongoose.Schema({
     TODO_ID:String,
     TARGET_DATE: Date,
     DATA: String,
+    order: Number,
     isDone: Boolean
 });
 

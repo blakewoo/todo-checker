@@ -13,6 +13,7 @@ function requestFunction(method_type,url,send_data,responseType="JSON",callback)
             }
             else {
                 console.error(xhr.responseText);
+                callback(null,xhr.responseText)
             }
         }
     }
@@ -33,6 +34,19 @@ function requestFunction(method_type,url,send_data,responseType="JSON",callback)
         xhr.setRequestHeader('Content-Type', "application/json");
         xhr.send(JSON.stringify(sender));
     }
+}
+
+async function syncRequestFunction(method_type,url,send_data,responseType) {
+    return new Promise((resolve,reject)=>{
+        requestFunction(method_type,url,send_data,responseType,function (result,error) {
+            if(error) {
+                reject(result)
+            }
+            else {
+                resolve(result)
+            }
+        })
+    })
 }
 
 
