@@ -10,7 +10,7 @@ router.get('/my',verify.user_auth,async function(req, res, next) {
         if(!req.query.date) {
             return res.status(400).send({status:false})
         }
-        let result = await todoModule.getTodo(req.session.ID,req.query.date)
+        let result = await todoModule.getTodo(req.session.ID,new Date(Number(req.query.date)))
         if(result) {
             return res.send({status:true,result:result})
         }
@@ -27,13 +27,13 @@ router.get('/my',verify.user_auth,async function(req, res, next) {
 router.post('/my',verify.user_auth,async function(req, res, next) {
     try{
         // get my comment list
-        if(!req.body.TARGET_DATE) {
+        if(!req.body.CREATED_DATE) {
             return res.status(400).send({status:false})
         }
         if(!req.body.DATA) {
             return res.status(400).send({status:false})
         }
-        let result = await todoModule.addTodo(req.session.ID,req.body.TARGET_DATE,req.body.DATA)
+        let result = await todoModule.addTodo(req.session.ID,req.body.CREATED_DATE,req.body.DATA)
         if(!result) {
             return res.send({status:false})
         }

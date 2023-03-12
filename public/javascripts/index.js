@@ -7,10 +7,19 @@ window.onload = async function (event) {
 
     async function initTodo() {
         return new Promise((resolve,reject) => (
-            // requestFunction("GET","/todolist/my?date="+(new Date().getDate()),{},"JSON",function (result) {
-            //     resolve(new TODO(result.result,document.getElementById("todo_container_div")))
-            resolve(new TODO([],document.getElementById("todo_container_div")))
-            // })
+            requestFunction("GET","/todolist/my?date="+new Date().getTime(),{},"JSON",function (result) {
+                if(result.status) {
+                    let temp_list = []
+                    for(let i=0;i<result.result.length;i++) {
+                        let temp = result.result[i]
+                        temp_list.push({ID:temp._id,DATA:new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.isDone)})
+                    }
+                    resolve(new TODO(temp_list,document.getElementById("todo_container_div"),false))
+                }
+                else {
+                    resolve(new TODO([],document.getElementById("todo_container_div"),false))
+                }
+            })
         ))
     }
 
@@ -22,8 +31,7 @@ window.onload = async function (event) {
                 return
             }
             event.currentTarget.value = ""
-            console.log(Data)
-            let temp = new TODO_OBJECT(Data,null,false)
+            let temp = new TODO_OBJECT(null,Data,new Date(),null,false)
             todoObj.addTodo(temp)
         }
     }

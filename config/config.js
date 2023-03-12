@@ -22,5 +22,6 @@ module.exports = {
     AWS_KEY : {
         ACCESS_KEY:process.env.AWS_KEY_ACCESS_KEY,
         SECRET_KEY:process.env.AWS_KEY_SECRET_KEY,
-    }
+    },
+    COUNTRY_CODE : process.env.COUNTRY_SET
 }

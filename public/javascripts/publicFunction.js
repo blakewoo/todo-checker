@@ -21,12 +21,7 @@ function requestFunction(method_type,url,send_data,responseType="JSON",callback)
     let sender = send_data;
 
     if(method_type==="GET") {
-        if(sender) {
-            xhr.open(method_type,url+sender);
-        }
-        else {
-            xhr.open(method_type,url);
-        }
+        xhr.open(method_type,url);
         xhr.send();
     }
     else {

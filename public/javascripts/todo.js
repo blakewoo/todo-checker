@@ -20,6 +20,9 @@ let TODO = (function () {
         // 이후 프론트 엔드 병합시 사용
         this.TODO_CONTAINER = TODO_CONTAINER
         this.READ_ONLY = READ_ONLY
+        for(let i=0;i<TODO_LIST.length;i++) {
+            this.addFrontTodo(TODO_LIST[i])
+        }
     }
 
     /**
@@ -36,7 +39,7 @@ let TODO = (function () {
             return false
         }
         let sendData = {
-            TARGET_DATE:new Date(),
+            CREATED_DATE:new Date(),
             DATA:TODO_OBJ.Value
         }
         let result = await this.addBackTodo(sendData)
@@ -45,7 +48,7 @@ let TODO = (function () {
             TODO_OBJ.isCompleted = false
             TODO_OBJ.ID = result.result._id
             this.TODO_Map.set(TODO_OBJ.ID,TODO_OBJ);
-            this.addFrontTodo(TODO_OBJ)
+            this.addFrontTodo({ID:TODO_OBJ.ID,DATA:TODO_OBJ})
             return true
         }
         else {
@@ -55,6 +58,7 @@ let TODO = (function () {
 
     TODO.prototype.addBackTodo =async function (sendData) {
         try{
+            console.log("aa?")
             return await syncRequestFunction("POST","/todolist/my",sendData,"JSON")
         }
         catch(e) {
@@ -87,7 +91,7 @@ let TODO = (function () {
 
         let todoLabel = document.createElement("label")
         todoLabel.classList.add("todo_label")
-        todoLabel.innerText = TODO.Value
+        todoLabel.innerText = TODO.DATA.Value
         let modifyDiv = document.createElement("span")
         modifyDiv.addEventListener("click", addTodoModifyEvent)
         modifyDiv.innerText = "···"
@@ -99,7 +103,12 @@ let TODO = (function () {
 
         let dateDiv = document.createElement("div")
         dateDiv.classList.add("todo_date_limit_div")
-        dateDiv.innerText = "기한 없음"
+        if(TODO.DATA.DEAD_LINE) {
+            dateDiv.innerText = TODO.DATA.DEAD_LINE
+        }
+        else {
+            dateDiv.innerText = "기한 없음"
+        }
 
         labelContainerDiv.appendChild(todoLabel)
         labelContainerDiv.appendChild(deleteDiv)
@@ -188,13 +197,15 @@ let TODO_OBJECT = (function () {
     /**
      * TODO 객체 초기화
      * @param Value
+     * @param CreatedDate
      * @param DeadLine
      * @param isCompleted
      * @constructor
      */
-    function TODO_OBJECT (Value,DeadLine,isCompleted) {
-        this.ID = null
+    function TODO_OBJECT (ID,Value,CreatedDate,DeadLine,isCompleted) {
+        this.ID = ID
         this.Value = Value;
+        this.CreatedDate = CreatedDate;
         this.DeadLine = DeadLine
         this.isCompleted = isCompleted
     }

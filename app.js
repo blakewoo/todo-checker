@@ -17,7 +17,7 @@ const MemoryStore = require('memorystore')(session);
 
 var app = express();
 
-const maxAge = 1000 * 60 * 5
+const maxAge = 1000 * 60 * 30
 const sessionObj = {
   secret: config.SESSION_KEY,
   resave: false,
