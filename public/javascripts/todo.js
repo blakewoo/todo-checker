@@ -256,11 +256,14 @@ function addTodoDeleteEvent(event) {
     if(prevTodoModify) {
         prevTodoModify.remove()
     }
-    // backend
-
-
-    // frontend
-    event.currentTarget.parentNode.parentNode.remove()
+    let id = event.currentTarget.parentNode.parentNode.querySelector("input[type=checkbox]").getAttribute("id")
+    let current = event.currentTarget
+    requestFunction("DELETE","/todolist/my",{TODO_ID:id},"JSON",function (result) {
+        // frontend
+        if(result.status) {
+            current.parentNode.parentNode.remove()
+        }
+    })
 }
 
 function addTodoModify(x, y, callback) {

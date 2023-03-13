@@ -68,8 +68,13 @@ router.delete('/my',verify.user_auth,async function(req, res, next) {
         if(!req.body.TODO_ID) {
             return res.status(400).send({status:false})
         }
-        await todoModule.deleteTodo(req.body.TODO_ID)
-        return res.send({status:true})
+        let result = await todoModule.deleteTodo(req.body.TODO_ID)
+        if(result) {
+            return res.send({status:true})
+        }
+        else {
+            return res.send({status:false})
+        }
     }
     catch(e){
         return res.status(404).send({status:false})

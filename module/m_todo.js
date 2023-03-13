@@ -60,20 +60,7 @@ exports.updateTodo = async function (TODO_ID,TODO_DATA) {
 exports.deleteTodo = async function (TODO_ID) {
     try{
         await todo_data.deleteOne({
-            TODO_ID: TODO_ID
-        })
-        return true
-    }
-    catch(e) {
-        console.error(e)
-        return false
-    }
-}
-
-exports.deleteTodo = async function (TODO_ID) {
-    try{
-        await todo_data.deleteOne({
-            TODO_ID: TODO_ID
+            _id: TODO_ID
         })
         return true
     }
