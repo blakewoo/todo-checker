@@ -2,10 +2,11 @@ const todo_data = require("../model/to-do")
 const time_data = require("../module/m_timezone")
 
 
-exports.addTodo = async function (USER_ID,DATE,TODO_DATA) {
+exports.addTodo = async function (USER_ID,DATE,TARGET_DATE,TODO_DATA) {
    try{
        let result = await todo_data.create({
            USER_ID: USER_ID,
+           TARGET_DATE:TARGET_DATE,
            CREATED_DATE: DATE,
            DEAD_LINE:null,
            DATA: TODO_DATA,
@@ -30,7 +31,7 @@ exports.getTodo = async function (USER_ID,DATE) {
         let endDate = new Date(DATE.setHours(24,0,0,0))
         return await todo_data.find({
             USER_ID: USER_ID,
-            CREATED_DATE: {"$gte":startDate,"$lte":endDate}
+            $or:[{TARGET_DATE: {"$gte":startDate,"$lte":endDate}},{DEAD_LINE: {"$gte":startDate,"$lte":endDate}}]
         })
     }
     catch(e) {

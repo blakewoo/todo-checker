@@ -33,7 +33,7 @@ router.post('/my',verify.user_auth,async function(req, res, next) {
         if(!req.body.DATA) {
             return res.status(400).send({status:false})
         }
-        let result = await todoModule.addTodo(req.session.ID,req.body.CREATED_DATE,req.body.DATA)
+        let result = await todoModule.addTodo(req.session.ID,req.body.CREATED_DATE,req.body.TARGET_DATE,req.body.DATA)
         if(!result) {
             return res.send({status:false})
         }

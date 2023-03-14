@@ -17,6 +17,10 @@ const JH_calendar = (function () {
         this.setPaintTarget(targetDate)
     }
 
+    JH_calendar.prototype.daySelected = function (day) {
+        // This function is kind of interface function
+    }
+
     JH_calendar.prototype.setPaintTarget = function (targetDate) {
         this.targetDate = targetDate
         this.paint(targetDate)
@@ -49,6 +53,7 @@ const JH_calendar = (function () {
     JH_calendar.prototype.drawTbody = function (targetDate) {
         let thisMonthFirstDay = new Date(targetDate.getFullYear(), targetDate.getMonth(), 1);
         let thisMonthLastDay = new Date(targetDate.getFullYear(), targetDate.getMonth() + 1, 0);
+        let currentNowYearMonth = (new Date()).getFullYear() === targetDate.getFullYear() && (new Date()).getMonth() === targetDate.getMonth()
 
         let tbody = document.getElementById("calendar_table_tbody")
         let cnt = 0;
@@ -62,15 +67,20 @@ const JH_calendar = (function () {
                 str += "<tr>"
             }
             cnt+=1
+            let classStr = "day_td"
             if(cnt%7===6) {
-                str += "<td class='day_td blue_font'><br><label class='day_label'>"+i+"</label></td>"
+                classStr+=" blue_font"
             }
-            else if(cnt%7===0) {
-                str += "<td class='day_td red_font'><br><label class='day_label'>"+i+"</label></td>"
+
+            if(cnt%7===0) {
+                classStr+=" red_font"
             }
-            else {
-                str += "<td class='day_td'><br><label class='day_label'>"+i+"</label></td>"
+
+            if(currentNowYearMonth && i===(new Date()).getDate()) {
+                classStr+= " day_selected"
             }
+
+            str += "<td class='"+classStr+"' id='day-"+thisMonthLastDay.getFullYear()+"-"+thisMonthLastDay.getMonth()+"-"+i+"'><br><label class='day_label'>"+i+"</label></td>"
 
             if(cnt%7===0) {
                 str += "</tr>"
@@ -104,7 +114,16 @@ const JH_calendar = (function () {
     }
 
     JH_calendar.prototype.dailySelectEvent = function (event) {
+        let dayID = event.currentTarget.getAttribute("id");
+        let currentSelected = document.getElementsByClassName("day_selected")
+        for(let i=0;i<currentSelected.length;i++) {
+            currentSelected[i].classList.remove("day_selected")
+        }
+        event.currentTarget.classList.add("day_selected")
 
+        let dayStr = dayID.split("-")
+        this.daySelected(new Date(dayStr[1],dayStr[2],dayStr[3]))
+        this.seletedDate = new Date(dayStr[1],dayStr[2],dayStr[3])
     }
 
     return JH_calendar;

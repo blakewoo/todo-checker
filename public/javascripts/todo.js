@@ -20,6 +20,11 @@ let TODO = (function () {
         // 이후 프론트 엔드 병합시 사용
         this.TODO_CONTAINER = TODO_CONTAINER
         this.READ_ONLY = READ_ONLY
+        this.printTodo(TODO_LIST)
+    }
+
+    TODO.prototype.printTodo = function (TODO_LIST) {
+        this.TODO_CONTAINER.innerHTML = ""
         for(let i=0;i<TODO_LIST.length;i++) {
             this.addFrontTodo(TODO_LIST[i])
         }
@@ -30,7 +35,7 @@ let TODO = (function () {
      * @param TODO_OBJ : TODO_OBJECT
      * @returns {string|Boolean}
      */
-    TODO.prototype.addTodo = async function (TODO_OBJ) {
+    TODO.prototype.addTodo = async function (TODO_OBJ,TARGET_DATE) {
         // TODO 값 검증 루틴
         if(!TODO_OBJ.Value) {
             return false
@@ -40,15 +45,16 @@ let TODO = (function () {
         }
         let sendData = {
             CREATED_DATE:new Date(),
-            DATA:TODO_OBJ.Value
+            TARGET_DATE:TARGET_DATE,
+            DATA:TODO_OBJ.Value,
         }
-        let result = await this.addBackTodo(sendData)
+        let result = await this.addBackTodo(sendData,TARGET_DATE)
         if(result) {
             TODO_OBJ.DeadLine = null
             TODO_OBJ.isCompleted = false
             TODO_OBJ.ID = result.result._id
             this.TODO_Map.set(TODO_OBJ.ID,TODO_OBJ);
-            this.addFrontTodo({ID:TODO_OBJ.ID,DATA:TODO_OBJ})
+            this.addFrontTodo(TODO_OBJ)
             return true
         }
         else {
@@ -58,7 +64,6 @@ let TODO = (function () {
 
     TODO.prototype.addBackTodo =async function (sendData) {
         try{
-            console.log("aa?")
             return await syncRequestFunction("POST","/todolist/my",sendData,"JSON")
         }
         catch(e) {
@@ -91,7 +96,7 @@ let TODO = (function () {
 
         let todoLabel = document.createElement("label")
         todoLabel.classList.add("todo_label")
-        todoLabel.innerText = TODO.DATA.Value
+        todoLabel.innerText = TODO.Value
         let modifyDiv = document.createElement("span")
         modifyDiv.addEventListener("click", addTodoModifyEvent)
         modifyDiv.innerText = "···"
@@ -103,8 +108,8 @@ let TODO = (function () {
 
         let dateDiv = document.createElement("div")
         dateDiv.classList.add("todo_date_limit_div")
-        if(TODO.DATA.DEAD_LINE) {
-            dateDiv.innerText = TODO.DATA.DEAD_LINE
+        if(TODO.DEAD_LINE) {
+            dateDiv.innerText = TODO.DEAD_LINE
         }
         else {
             dateDiv.innerText = "기한 없음"
@@ -138,15 +143,24 @@ let TODO = (function () {
     }
 
 
+    TODO.prototype.listConvertTodoObject = function (RAW_LIST) {
+        let result = []
+        for(let i=0;i<RAW_LIST.length;i++) {
+            result.push(new TODO_OBJECT(RAW_LIST[i]._id,RAW_LIST[i].DATA,RAW_LIST[i].CREATED_DATE,RAW_LIST[i].DEAD_LINE,RAW_LIST[i].isDone))
+        }
+        return result;
+    }
+
     /**
      * 특정 날짜의 TODO 값 가져오기
      * @param date : Date
      */
-    TODO.prototype.getDateTodo = function (date) {
+    TODO.prototype.getDateTodo =async function (date) {
         // 백엔드에서 요청해서 갖고 오기
-
-        // 프론트엔드에서 요청해서 갖고 오기
-
+        let result = await syncRequestFunction("GET","/todolist/my?date="+date.getTime(),null,"JSON")
+        if(result.status) {
+            this.printTodo(this.listConvertTodoObject(result.result))
+        }
     }
 
     /**
@@ -186,7 +200,6 @@ let TODO = (function () {
         this.TODO_Map.delete(TODO_ID)
 
         // back update
-
         return result
     }
 
@@ -217,9 +230,10 @@ function addTodoModifyEvent(event) {
     if(prevTodoModify) {
         prevTodoModify.remove()
     }
-    addTodoModify(event.clientX, event.clientY, function (tomorrow, selectedDate, completedToggle, deleteDiv,toastMessageDiv) {
+    addTodoModify(event.clientX, event.clientY, function (today,tomorrow, selectedDate, completedToggle, deleteDiv,toastMessageDiv) {
         todoModify = toastMessageDiv
         prevTodoModify = toastMessageDiv
+        today.addEventListener("click",setTodayEvent)
         tomorrow.addEventListener("click", setTomorrowEvent)
         selectedDate.addEventListener("click", setDateTodoEvent)
         completedToggle.addEventListener("click", setCompletedTodoEvent)
@@ -228,15 +242,24 @@ function addTodoModifyEvent(event) {
         })
     })
 
+    function setTodayEvent(event) {
+        // backend
+
+        // front
+        currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = "오늘까지"
+        todoModify.remove()
+    }
+
     function setTomorrowEvent(event) {
         // backend
 
         // front
-        currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = "내일까지"
+        currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = "다음날까지"
         todoModify.remove()
     }
 
     function setDateTodoEvent(event) {
+
         // backend
 
         // front
@@ -272,14 +295,18 @@ function addTodoModify(x, y, callback) {
     let toastMessageDiv = document.createElement("div")
     toastMessageDiv.style.position = "absolute"
     toastMessageDiv.style.width = "100px"
-    toastMessageDiv.style.height = "60px"
+    toastMessageDiv.style.height = "80px"
     toastMessageDiv.style.top = y + "px"
     toastMessageDiv.style.left = x - 100 + "px"
     toastMessageDiv.style.border = "#000000 1px solid"
     toastMessageDiv.style.background = "white"
 
+    let todayLabel = document.createElement("div")
+    todayLabel.innerText = "오늘까지"
+    todayLabel.classList.add("todo_detail_div")
+
     let tomorrowLabel = document.createElement("div")
-    tomorrowLabel.innerText = "내일까지"
+    tomorrowLabel.innerText = "다음날까지"
     tomorrowLabel.classList.add("todo_detail_div")
 
     let selectDate = document.createElement("div")
@@ -294,11 +321,12 @@ function addTodoModify(x, y, callback) {
     deleteDiv.innerText = "취소"
     deleteDiv.classList.add("todo_detail_div")
 
+    toastMessageDiv.appendChild(todayLabel)
     toastMessageDiv.appendChild(tomorrowLabel)
     toastMessageDiv.appendChild(selectDate)
     toastMessageDiv.appendChild(toggleCompleted)
     toastMessageDiv.appendChild(deleteDiv)
     html.appendChild(toastMessageDiv)
 
-    return callback(tomorrowLabel, selectDate, toggleCompleted, deleteDiv,toastMessageDiv)
+    return callback(todayLabel,tomorrowLabel, selectDate, toggleCompleted, deleteDiv,toastMessageDiv)
 }

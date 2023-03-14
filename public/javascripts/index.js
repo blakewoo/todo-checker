@@ -3,6 +3,10 @@ window.onload = async function (event) {
     let calendar = new JH_calendar(document.getElementById("calendar_div"), new Date(),false)
     let todoObj = await initTodo()
 
+    calendar.daySelected = function (day) {
+        todoObj.getDateTodo(day)
+    }
+
     document.getElementById("todo_input").addEventListener("keyup", todoInputEvent)
 
     async function initTodo() {
@@ -12,7 +16,7 @@ window.onload = async function (event) {
                     let temp_list = []
                     for(let i=0;i<result.result.length;i++) {
                         let temp = result.result[i]
-                        temp_list.push({ID:temp._id,DATA:new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.isDone)})
+                        temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.isDone))
                     }
                     resolve(new TODO(temp_list,document.getElementById("todo_container_div"),false))
                 }
@@ -32,7 +36,7 @@ window.onload = async function (event) {
             }
             event.currentTarget.value = ""
             let temp = new TODO_OBJECT(null,Data,new Date(),null,false)
-            todoObj.addTodo(temp)
+            todoObj.addTodo(temp,calendar.seletedDate)
         }
     }
 
