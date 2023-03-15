@@ -259,9 +259,8 @@ function addTodoModifyEvent(event) {
     }
 
     function setDateTodoEvent(event) {
-
         // backend
-
+        
         // front
         currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = "언제까지"
         todoModify.remove()
