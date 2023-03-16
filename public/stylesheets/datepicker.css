@@ -1,0 +1,25 @@
+.jh_datepicker_div {
+    position: absolute;
+    box-sizing: border-box;
+    border: 1px solid black;
+}
+
+.jh_datepicker_div_table {
+
+}
+
+.jh_datepicker_div_table_thead {
+
+}
+
+.jh_datepicker_div_table_thead_sat {
+    color: blue;
+}
+
+.jh_datepicker_div_table_thead_sun {
+    color: red;
+}
+
+.jh_datepicker_div_table_tbody {
+
+}
