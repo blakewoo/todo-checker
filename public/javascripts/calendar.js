@@ -40,7 +40,7 @@ const JH_calendar = (function () {
             "<td id='calendar_nextMonth'>></td>" +
             "</tr>" +
             "<tr class='day_head_tr'>" +
-            "<td>월</td><td>화</td><td>수</td><td>목</td><td>금</td><td class='blue_font'>토</td><td class='red_font'>일</td>" +
+            "<td class='red_font'>일</td><td>월</td><td>화</td><td>수</td><td>목</td><td>금</td><td class='blue_font'>토</td>" +
             "</tr>" +
             "</thead>" +
             "<tbody id='calendar_table_tbody'>" +
@@ -68,11 +68,11 @@ const JH_calendar = (function () {
             }
             cnt+=1
             let classStr = "day_td"
-            if(cnt%7===6) {
+            if(cnt%7===0) {
                 classStr+=" blue_font"
             }
 
-            if(cnt%7===0) {
+            if(cnt%7===1) {
                 classStr+=" red_font"
             }
 

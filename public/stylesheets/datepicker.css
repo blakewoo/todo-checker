@@ -20,6 +20,14 @@
     color: red;
 }
 
-.jh_datepicker_div_table_tbody {
+.jh_datepicker_div_table_tbody_td {
 
+}
+
+.jh_datepicker_div_table_tbody_sat {
+    color: blue;
+}
+
+.jh_datepicker_div_table_tbody_sun {
+    color: red;
 }
