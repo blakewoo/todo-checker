@@ -62,7 +62,7 @@ const JH_calendar = (function () {
             str += "<td></td>"
             cnt += 1
         }
-        for(let i=1;i<thisMonthLastDay.getDate();i++) {
+        for(let i=1;i<=thisMonthLastDay.getDate();i++) {
             if(cnt%7===0) {
                 str += "<tr>"
             }

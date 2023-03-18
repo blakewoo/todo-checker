@@ -203,6 +203,115 @@ let TODO = (function () {
         return result
     }
 
+    TODO.prototype.setDateTodoEvent = function () {
+
+    }
+
+    function addTodoModifyEvent(event) {
+        let currentTodo = event.currentTarget;
+        if(prevTodoModify) {
+            prevTodoModify.remove()
+        }
+        addTodoModify(event.clientX, event.clientY, function (today,tomorrow, selectedDate, completedToggle, deleteDiv,toastMessageDiv) {
+            todoModify = toastMessageDiv
+            prevTodoModify = toastMessageDiv
+            today.addEventListener("click",setTodayEvent)
+            tomorrow.addEventListener("click", setTomorrowEvent)
+            selectedDate.addEventListener("click", setDateTodoEvent)
+            completedToggle.addEventListener("click", setCompletedTodoEvent)
+            deleteDiv.addEventListener("click", function (event) {
+                event.currentTarget.parentNode.remove()
+            })
+        })
+
+        function setTodayEvent(event) {
+            // backend
+
+            // front
+            currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = "오늘까지"
+            todoModify.remove()
+        }
+
+        function setTomorrowEvent(event) {
+            // backend
+
+            // front
+            currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = "다음날까지"
+            todoModify.remove()
+        }
+
+        function setDateTodoEvent(event) {
+            // backend
+
+            // front
+            currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = "언제까지"
+            todoModify.remove()
+        }
+
+        function setCompletedTodoEvent(event) {
+            // backend
+
+            // front
+            todoModify.remove()
+        }
+    }
+
+    function addTodoDeleteEvent(event) {
+        if(prevTodoModify) {
+            prevTodoModify.remove()
+        }
+        let id = event.currentTarget.parentNode.parentNode.querySelector("input[type=checkbox]").getAttribute("id")
+        let current = event.currentTarget
+        requestFunction("DELETE","/todolist/my",{TODO_ID:id},"JSON",function (result) {
+            // frontend
+            if(result.status) {
+                current.parentNode.parentNode.remove()
+            }
+        })
+    }
+
+    function addTodoModify(x, y, callback) {
+        let html = document.getElementsByTagName("html")[0]
+
+        let toastMessageDiv = document.createElement("div")
+        toastMessageDiv.style.position = "absolute"
+        toastMessageDiv.style.width = "100px"
+        toastMessageDiv.style.height = "80px"
+        toastMessageDiv.style.top = y + "px"
+        toastMessageDiv.style.left = x - 100 + "px"
+        toastMessageDiv.style.border = "#000000 1px solid"
+        toastMessageDiv.style.background = "white"
+
+        let todayLabel = document.createElement("div")
+        todayLabel.innerText = "오늘까지"
+        todayLabel.classList.add("todo_detail_div")
+
+        let tomorrowLabel = document.createElement("div")
+        tomorrowLabel.innerText = "다음날까지"
+        tomorrowLabel.classList.add("todo_detail_div")
+
+        let selectDate = document.createElement("div")
+        selectDate.innerText = "날짜 선택"
+        selectDate.classList.add("todo_detail_div")
+
+        let toggleCompleted = document.createElement("div")
+        toggleCompleted.innerText = "완료/미완료 전환"
+        toggleCompleted.classList.add("todo_detail_div")
+
+        let deleteDiv = document.createElement("div")
+        deleteDiv.innerText = "취소"
+        deleteDiv.classList.add("todo_detail_div")
+
+        toastMessageDiv.appendChild(todayLabel)
+        toastMessageDiv.appendChild(tomorrowLabel)
+        toastMessageDiv.appendChild(selectDate)
+        toastMessageDiv.appendChild(toggleCompleted)
+        toastMessageDiv.appendChild(deleteDiv)
+        html.appendChild(toastMessageDiv)
+
+        return callback(todayLabel,tomorrowLabel, selectDate, toggleCompleted, deleteDiv,toastMessageDiv)
+    }
+
     return TODO
 }())
 
@@ -225,107 +334,3 @@ let TODO_OBJECT = (function () {
     return TODO_OBJECT;
 }())
 
-function addTodoModifyEvent(event) {
-    let currentTodo = event.currentTarget;
-    if(prevTodoModify) {
-        prevTodoModify.remove()
-    }
-    addTodoModify(event.clientX, event.clientY, function (today,tomorrow, selectedDate, completedToggle, deleteDiv,toastMessageDiv) {
-        todoModify = toastMessageDiv
-        prevTodoModify = toastMessageDiv
-        today.addEventListener("click",setTodayEvent)
-        tomorrow.addEventListener("click", setTomorrowEvent)
-        selectedDate.addEventListener("click", setDateTodoEvent)
-        completedToggle.addEventListener("click", setCompletedTodoEvent)
-        deleteDiv.addEventListener("click", function (event) {
-            event.currentTarget.parentNode.remove()
-        })
-    })
-
-    function setTodayEvent(event) {
-        // backend
-
-        // front
-        currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = "오늘까지"
-        todoModify.remove()
-    }
-
-    function setTomorrowEvent(event) {
-        // backend
-
-        // front
-        currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = "다음날까지"
-        todoModify.remove()
-    }
-
-    function setDateTodoEvent(event) {
-        // backend
-        
-        // front
-        currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = "언제까지"
-        todoModify.remove()
-    }
-
-    function setCompletedTodoEvent(event) {
-        // backend
-
-        // front
-        todoModify.remove()
-    }
-}
-
-function addTodoDeleteEvent(event) {
-    if(prevTodoModify) {
-        prevTodoModify.remove()
-    }
-    let id = event.currentTarget.parentNode.parentNode.querySelector("input[type=checkbox]").getAttribute("id")
-    let current = event.currentTarget
-    requestFunction("DELETE","/todolist/my",{TODO_ID:id},"JSON",function (result) {
-        // frontend
-        if(result.status) {
-            current.parentNode.parentNode.remove()
-        }
-    })
-}
-
-function addTodoModify(x, y, callback) {
-    let html = document.getElementsByTagName("html")[0]
-
-    let toastMessageDiv = document.createElement("div")
-    toastMessageDiv.style.position = "absolute"
-    toastMessageDiv.style.width = "100px"
-    toastMessageDiv.style.height = "80px"
-    toastMessageDiv.style.top = y + "px"
-    toastMessageDiv.style.left = x - 100 + "px"
-    toastMessageDiv.style.border = "#000000 1px solid"
-    toastMessageDiv.style.background = "white"
-
-    let todayLabel = document.createElement("div")
-    todayLabel.innerText = "오늘까지"
-    todayLabel.classList.add("todo_detail_div")
-
-    let tomorrowLabel = document.createElement("div")
-    tomorrowLabel.innerText = "다음날까지"
-    tomorrowLabel.classList.add("todo_detail_div")
-
-    let selectDate = document.createElement("div")
-    selectDate.innerText = "날짜 선택"
-    selectDate.classList.add("todo_detail_div")
-
-    let toggleCompleted = document.createElement("div")
-    toggleCompleted.innerText = "완료/미완료 전환"
-    toggleCompleted.classList.add("todo_detail_div")
-
-    let deleteDiv = document.createElement("div")
-    deleteDiv.innerText = "취소"
-    deleteDiv.classList.add("todo_detail_div")
-
-    toastMessageDiv.appendChild(todayLabel)
-    toastMessageDiv.appendChild(tomorrowLabel)
-    toastMessageDiv.appendChild(selectDate)
-    toastMessageDiv.appendChild(toggleCompleted)
-    toastMessageDiv.appendChild(deleteDiv)
-    html.appendChild(toastMessageDiv)
-
-    return callback(todayLabel,tomorrowLabel, selectDate, toggleCompleted, deleteDiv,toastMessageDiv)
-}

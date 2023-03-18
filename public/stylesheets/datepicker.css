@@ -2,6 +2,7 @@
     position: absolute;
     box-sizing: border-box;
     border: 1px solid black;
+    background-color: white;
 }
 
 .jh_datepicker_div_table {
@@ -22,6 +23,11 @@
 
 .jh_datepicker_div_table_tbody_td {
 
+}
+
+.jh_datepicker_div_table_tbody_td:hover {
+    cursor: pointer;
+    font-weight: bold;
 }
 
 .jh_datepicker_div_table_tbody_sat {

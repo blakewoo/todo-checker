@@ -17,7 +17,7 @@ const JH_datepicker = (function () {
             this.targetMonth = Month
         }
 
-        let html = document.getElementsByTagName("html")
+        let body = document.getElementsByTagName("body")[0]
         let datepickerContainerDiv = document.createElement("div")
         datepickerContainerDiv.classList.add("jh_datepicker_div")
         datepickerContainerDiv.style.left = this.xPoint+"px"
@@ -29,7 +29,7 @@ const JH_datepicker = (function () {
         this.drawTable(datepickerTable)
 
         datepickerContainerDiv.appendChild(datepickerTable)
-        html.appendChild(datepickerContainerDiv)
+        body.appendChild(datepickerContainerDiv)
     }
 
     JH_datepicker.prototype.drawTable = function (table) {
@@ -123,11 +123,25 @@ const JH_datepicker = (function () {
         }
         tbody.appendChild(firstRow)
 
-        let tempTr = null
-        for(let i=1;i<targetMonthFirstDay.getDay();i++) {
-
+        let tempTr;
+        for(;day<=targetMonthLastDay.getDate();day++, cnt++) {
+            if(cnt%7===0) {
+                tempTr = document.createElement("tr")
+            }
+            let tempTd = document.createElement("td")
+            if(cnt%7===6) {
+                tempTd.classList.add("jh_datepicker_div_table_thead_sat")
+            }
+            if(cnt%7===0) {
+                tempTd.classList.add("jh_datepicker_div_table_thead_sun")
+            }
+            tempTd.classList.add("jh_datepicker_div_table_tbody_td")
+            tempTd.innerText = day.toString()
+            tempTr.appendChild(tempTd)
+            if(cnt%7===0) {
+                tbody.appendChild(tempTr)
+            }
         }
-
 
 
         // let cnt = 0;
