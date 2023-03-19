@@ -33,6 +33,12 @@
     cursor: pointer;
     font-weight: bold;
 }
+
+.myinfo_shared_div:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
+
 .myinfo_myinfo_div:hover{
     cursor: pointer;
     font-weight: bold;

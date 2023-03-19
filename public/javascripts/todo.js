@@ -21,6 +21,11 @@ let TODO = (function () {
         this.TODO_CONTAINER = TODO_CONTAINER
         this.READ_ONLY = READ_ONLY
         this.printTodo(TODO_LIST)
+        document.getElementsByTagName("body")[0].addEventListener("click",function (e){
+            if(document.getElementsByClassName("todo_modify_div")[0] && !e.currentTarget.classList.contains("todo_modify_div")) {
+                document.getElementsByClassName("todo_modify_div")[0].remove()
+            }
+        })
     }
 
     TODO.prototype.printTodo = function (TODO_LIST) {
@@ -208,20 +213,18 @@ let TODO = (function () {
     }
 
     function addTodoModifyEvent(event) {
+        event.stopPropagation()
         let currentTodo = event.currentTarget;
         if(prevTodoModify) {
             prevTodoModify.remove()
         }
-        addTodoModify(event.clientX, event.clientY, function (today,tomorrow, selectedDate, completedToggle, deleteDiv,toastMessageDiv) {
+        addTodoModify(event.clientX, event.clientY, function (today,tomorrow, selectedDate, completedToggle,toastMessageDiv) {
             todoModify = toastMessageDiv
             prevTodoModify = toastMessageDiv
             today.addEventListener("click",setTodayEvent)
             tomorrow.addEventListener("click", setTomorrowEvent)
             selectedDate.addEventListener("click", setDateTodoEvent)
             completedToggle.addEventListener("click", setCompletedTodoEvent)
-            deleteDiv.addEventListener("click", function (event) {
-                event.currentTarget.parentNode.remove()
-            })
         })
 
         function setTodayEvent(event) {
@@ -244,8 +247,12 @@ let TODO = (function () {
             // backend
 
             // front
-            currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = "언제까지"
-            todoModify.remove()
+            let datepicker = new JH_datepicker(event.clientX,event.clientY,(new Date()).getFullYear(),(new Date()).getMonth())
+            datepicker.getDay = function (day) {
+                currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = day
+            }
+
+            // todoModify.remove()
         }
 
         function setCompletedTodoEvent(event) {
@@ -274,9 +281,10 @@ let TODO = (function () {
         let html = document.getElementsByTagName("html")[0]
 
         let toastMessageDiv = document.createElement("div")
+        toastMessageDiv.classList.add("todo_modify_div")
         toastMessageDiv.style.position = "absolute"
         toastMessageDiv.style.width = "100px"
-        toastMessageDiv.style.height = "80px"
+        toastMessageDiv.style.height = "60px"
         toastMessageDiv.style.top = y + "px"
         toastMessageDiv.style.left = x - 100 + "px"
         toastMessageDiv.style.border = "#000000 1px solid"
@@ -298,18 +306,13 @@ let TODO = (function () {
         toggleCompleted.innerText = "완료/미완료 전환"
         toggleCompleted.classList.add("todo_detail_div")
 
-        let deleteDiv = document.createElement("div")
-        deleteDiv.innerText = "취소"
-        deleteDiv.classList.add("todo_detail_div")
-
         toastMessageDiv.appendChild(todayLabel)
         toastMessageDiv.appendChild(tomorrowLabel)
         toastMessageDiv.appendChild(selectDate)
         toastMessageDiv.appendChild(toggleCompleted)
-        toastMessageDiv.appendChild(deleteDiv)
         html.appendChild(toastMessageDiv)
 
-        return callback(todayLabel,tomorrowLabel, selectDate, toggleCompleted, deleteDiv,toastMessageDiv)
+        return callback(todayLabel,tomorrowLabel, selectDate, toggleCompleted,toastMessageDiv)
     }
 
     return TODO

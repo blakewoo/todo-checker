@@ -2,11 +2,17 @@ const JH_datepicker = (function () {
     function JH_datepicker (x,y,targetYear,targetMonth,limitStartDate=null,limitEndDate=null) {
         this.xPoint = x
         this.yPoint = y
+        this.containDiv = null
         this.targetYear = targetYear
         this.targetMonth = targetMonth
         this.limitStartDate = limitStartDate
         this.limitEndDate = limitEndDate
         this.paint(targetYear,targetMonth)
+        document.getElementsByTagName("body")[0].addEventListener("click",function (e){
+            if(document.getElementsByClassName("jh_datepicker_div")[0] && !e.currentTarget.classList.contains("jh_datepicker_div")) {
+                document.getElementsByClassName("jh_datepicker_div")[0].remove()
+            }
+        })
     }
 
     JH_datepicker.prototype.paint = function (Year,Month) {
@@ -19,8 +25,9 @@ const JH_datepicker = (function () {
 
         let body = document.getElementsByTagName("body")[0]
         let datepickerContainerDiv = document.createElement("div")
+        this.containDiv = datepickerContainerDiv
         datepickerContainerDiv.classList.add("jh_datepicker_div")
-        datepickerContainerDiv.style.left = this.xPoint+"px"
+        datepickerContainerDiv.style.left = this.xPoint-100+"px"
         datepickerContainerDiv.style.top = this.yPoint+"px"
 
         let datepickerTable = document.createElement("table")
@@ -116,6 +123,8 @@ const JH_datepicker = (function () {
                 tempTd.classList.add("jh_datepicker_div_table_thead_sun")
             }
             tempTd.classList.add("jh_datepicker_div_table_tbody_td")
+            tempTd.addEventListener("click",this.dailySelectEvent.bind(this))
+            tempTd.setAttribute("id","datapicker-"+targetMonthFirstDay.getFullYear()+"-"+targetMonthFirstDay.getMonth()+"-"+day)
             tempTd.innerText = day.toString()
             firstRow.appendChild(tempTd)
             day += 1
@@ -136,6 +145,8 @@ const JH_datepicker = (function () {
                 tempTd.classList.add("jh_datepicker_div_table_thead_sun")
             }
             tempTd.classList.add("jh_datepicker_div_table_tbody_td")
+            tempTd.addEventListener("click",this.dailySelectEvent.bind(this))
+            tempTd.setAttribute("id","datapicker-"+targetMonthFirstDay.getFullYear()+"-"+targetMonthFirstDay.getMonth()+"-"+day)
             tempTd.innerText = day.toString()
             tempTr.appendChild(tempTd)
             if(cnt%7===0) {
@@ -181,16 +192,19 @@ const JH_datepicker = (function () {
         this.paint(this.targetYear,this.targetMonth+1)
     }
 
+    JH_datepicker.prototype.getDay = function (day) {
+
+    }
+
     JH_datepicker.prototype.dailySelectEvent = function (event) {
         let dayID = event.currentTarget.getAttribute("id");
 
         let dayStr = dayID.split("-")
         this.getDay(new Date(dayStr[1],dayStr[2],dayStr[3]))
+        // this.containDiv.remove()
     }
 
-    JH_datepicker.prototype.getDay = function (day) {
 
-    }
 
     return JH_datepicker
 }())
