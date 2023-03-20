@@ -153,35 +153,6 @@ const JH_datepicker = (function () {
                 tbody.appendChild(tempTr)
             }
         }
-
-
-        // let cnt = 0;
-        // let str = "<tr>"
-        // for(let i=0;i<targetMonthFirstDay.getDay();i++) {
-        //     str += "<td></td>"
-        //     cnt += 1
-        // }
-        // for(let i=1;i<targetMonthLastDay.getDate();i++) {
-        //     if(cnt%7===0) {
-        //         str += "<tr>"
-        //     }
-        //     cnt+=1
-        //     let classStr = "jh_datepicker_div_table_tbody_td"
-        //     if(cnt%7===6) {
-        //         classStr+=" jh_datepicker_div_table_tbody_sat"
-        //     }
-        //
-        //     if(cnt%7===0) {
-        //         classStr+=" jh_datepicker_div_table_tbody_sun"
-        //     }
-        //
-        //     str += "<td class='"+classStr+"' id='datepicker-"+targetMonthFirstDay.getFullYear()+"-"+targetMonthFirstDay.getMonth()+"-"+i+"'><br><label class='day_label'>"+i+"</label></td>"
-        //
-        //     if(cnt%7===0) {
-        //         str += "</tr>"
-        //     }
-        // }
-        // tbody.innerHTML = str;
     }
 
     JH_datepicker.prototype.prevMonthEvent = function (event) {
@@ -201,10 +172,7 @@ const JH_datepicker = (function () {
 
         let dayStr = dayID.split("-")
         this.getDay(new Date(dayStr[1],dayStr[2],dayStr[3]))
-        // this.containDiv.remove()
     }
-
-
 
     return JH_datepicker
 }())

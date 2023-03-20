@@ -113,8 +113,9 @@ let TODO = (function () {
 
         let dateDiv = document.createElement("div")
         dateDiv.classList.add("todo_date_limit_div")
-        if(TODO.DEAD_LINE) {
-            dateDiv.innerText = TODO.DEAD_LINE
+        console.log(TODO)
+        if(TODO.DeadLine) {
+            dateDiv.innerText = Intl.DateTimeFormat("ko").format(new Date(TODO.DeadLine)) + "까지"
         }
         else {
             dateDiv.innerText = "기한 없음"
@@ -244,15 +245,17 @@ let TODO = (function () {
         }
 
         function setDateTodoEvent(event) {
-            // backend
 
-            // front
+
             let datepicker = new JH_datepicker(event.clientX,event.clientY,(new Date()).getFullYear(),(new Date()).getMonth())
             datepicker.getDay = function (day) {
-                currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = day
+                let id = currentTodo.parentNode.parentNode.querySelector("input[type=checkbox]").getAttribute("id")
+                requestFunction("PUT","/todolist/my",{TODO_ID:id,TODO_DATA:{DEAD_LINE:day}},"JSON",function (result) {
+                    if(result.status) {
+                        currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = Intl.DateTimeFormat("ko").format(day)+"까지"
+                    }
+                })
             }
-
-            // todoModify.remove()
         }
 
         function setCompletedTodoEvent(event) {
