@@ -56,7 +56,7 @@ let TODO = (function () {
         let result = await this.addBackTodo(sendData,TARGET_DATE)
         if(result) {
             TODO_OBJ.DeadLine = null
-            TODO_OBJ.isCompleted = false
+            TODO_OBJ.IS_DONE = false
             TODO_OBJ.ID = result.result._id
             this.TODO_Map.set(TODO_OBJ.ID,TODO_OBJ);
             this.addFrontTodo(TODO_OBJ)
@@ -89,6 +89,7 @@ let TODO = (function () {
         hiddenCheckBox.type = "checkbox"
         hiddenCheckBox.style.display = "none";
         hiddenCheckBox.id = TODO.ID
+        hiddenCheckBox.checked = !!TODO.IS_DONE;
 
         let showCheckBoxLabel = document.createElement("label")
         showCheckBoxLabel.htmlFor = TODO.ID
@@ -229,24 +230,29 @@ let TODO = (function () {
         })
 
         function setTodayEvent(event) {
-            // backend
-
-            // front
-            currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = "오늘까지"
-            todoModify.remove()
+            let today = new Date((new Date()).setHours(0,0,0,0))
+            let id = currentTodo.parentNode.parentNode.querySelector("input[type=checkbox]").getAttribute("id")
+            requestFunction("PUT","/todolist/my",{TODO_ID:id,TODO_DATA:{DEAD_LINE:today}},"JSON",function (result) {
+                if(result.status) {
+                    currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = "오늘까지"
+                    todoModify.remove()
+                }
+            })
         }
 
         function setTomorrowEvent(event) {
-            // backend
-
-            // front
-            currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = "다음날까지"
-            todoModify.remove()
+            let today = new Date()
+            let tomorrowDay = new Date(today.getFullYear(),today.getMonth(),today.getDate()+1)
+            let id = currentTodo.parentNode.parentNode.querySelector("input[type=checkbox]").getAttribute("id")
+            requestFunction("PUT","/todolist/my",{TODO_ID:id,TODO_DATA:{DEAD_LINE:tomorrowDay}},"JSON",function (result) {
+                if(result.status) {
+                    currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = "내일까지"
+                    todoModify.remove()
+                }
+            })
         }
 
         function setDateTodoEvent(event) {
-
-
             let datepicker = new JH_datepicker(event.clientX,event.clientY,(new Date()).getFullYear(),(new Date()).getMonth())
             datepicker.getDay = function (day) {
                 let id = currentTodo.parentNode.parentNode.querySelector("input[type=checkbox]").getAttribute("id")
@@ -260,7 +266,16 @@ let TODO = (function () {
 
         function setCompletedTodoEvent(event) {
             // backend
-
+            let check = currentTodo.parentNode.parentNode.querySelector("input[type=checkbox]")
+            let flag = Boolean(currentTodo.parentNode.parentNode.querySelector("input[type=checkbox]").getAttribute("checked"))
+            let id = currentTodo.parentNode.parentNode.querySelector("input[type=checkbox]").getAttribute("id")
+            requestFunction("PUT","/todolist/my",{TODO_ID:id,TODO_DATA:{isDone:!flag}},"JSON",function (result) {
+                if(result.status) {
+                    console.log(result)
+                    console.log(flag)
+                    check.setAttribute("checked",!flag)
+                }
+            })
             // front
             todoModify.remove()
         }
@@ -330,12 +345,12 @@ let TODO_OBJECT = (function () {
      * @param isCompleted
      * @constructor
      */
-    function TODO_OBJECT (ID,Value,CreatedDate,DeadLine,isCompleted) {
+    function TODO_OBJECT (ID,Value,CreatedDate,DeadLine,IS_DONE) {
         this.ID = ID
         this.Value = Value;
         this.CreatedDate = CreatedDate;
         this.DeadLine = DeadLine
-        this.isCompleted = isCompleted
+        this.IS_DONE = IS_DONE
     }
     return TODO_OBJECT;
 }())

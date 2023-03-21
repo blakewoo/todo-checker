@@ -5,8 +5,8 @@ const todoList = new mongoose.Schema({
     TARGET_DATE: Date,
     DEAD_LINE:Date,
     DATA: String,
-    order: Number,
-    isDone: Boolean
+    ORDER: Number,
+    IS_DONE: Boolean
 });
 
 module.exports = mongoose.model('TODO_LIST', todoList);

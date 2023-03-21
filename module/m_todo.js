@@ -10,7 +10,7 @@ exports.addTodo = async function (USER_ID,DATE,TARGET_DATE,TODO_DATA) {
            CREATED_DATE: DATE,
            DEAD_LINE:null,
            DATA: TODO_DATA,
-           isDone: false
+           IS_DONE: false
        })
        return result
    }
