@@ -89,10 +89,11 @@ let TODO = (function () {
         hiddenCheckBox.type = "checkbox"
         hiddenCheckBox.style.display = "none";
         hiddenCheckBox.id = TODO.ID
-        hiddenCheckBox.checked = !!TODO.IS_DONE;
 
         let showCheckBoxLabel = document.createElement("label")
-        showCheckBoxLabel.htmlFor = TODO.ID
+        showCheckBoxLabel.htmlFor = TODO.ID;
+        console.log(TODO)
+        hiddenCheckBox.checked = TODO.IS_DONE;
 
         completedSpan.appendChild(hiddenCheckBox)
         completedSpan.appendChild(showCheckBoxLabel)
@@ -114,7 +115,7 @@ let TODO = (function () {
 
         let dateDiv = document.createElement("div")
         dateDiv.classList.add("todo_date_limit_div")
-        console.log(TODO)
+
         if(TODO.DeadLine) {
             dateDiv.innerText = Intl.DateTimeFormat("ko").format(new Date(TODO.DeadLine)) + "까지"
         }
@@ -153,7 +154,7 @@ let TODO = (function () {
     TODO.prototype.listConvertTodoObject = function (RAW_LIST) {
         let result = []
         for(let i=0;i<RAW_LIST.length;i++) {
-            result.push(new TODO_OBJECT(RAW_LIST[i]._id,RAW_LIST[i].DATA,RAW_LIST[i].CREATED_DATE,RAW_LIST[i].DEAD_LINE,RAW_LIST[i].isDone))
+            result.push(new TODO_OBJECT(RAW_LIST[i]._id,RAW_LIST[i].DATA,RAW_LIST[i].CREATED_DATE,RAW_LIST[i].DEAD_LINE,RAW_LIST[i].IS_DONE))
         }
         return result;
     }
@@ -267,13 +268,11 @@ let TODO = (function () {
         function setCompletedTodoEvent(event) {
             // backend
             let check = currentTodo.parentNode.parentNode.querySelector("input[type=checkbox]")
-            let flag = Boolean(currentTodo.parentNode.parentNode.querySelector("input[type=checkbox]").getAttribute("checked"))
+            let flag = currentTodo.parentNode.parentNode.querySelector("input[type=checkbox]").checked
             let id = currentTodo.parentNode.parentNode.querySelector("input[type=checkbox]").getAttribute("id")
-            requestFunction("PUT","/todolist/my",{TODO_ID:id,TODO_DATA:{isDone:!flag}},"JSON",function (result) {
+            requestFunction("PUT","/todolist/my",{TODO_ID:id,TODO_DATA:{IS_DONE:!flag}},"JSON",function (result) {
                 if(result.status) {
-                    console.log(result)
-                    console.log(flag)
-                    check.setAttribute("checked",!flag)
+                    check.checked = !flag
                 }
             })
             // front

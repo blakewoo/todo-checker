@@ -16,8 +16,9 @@ window.onload = async function (event) {
                     let temp_list = []
                     for(let i=0;i<result.result.length;i++) {
                         let temp = result.result[i]
-                        temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.isDone))
+                        temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
                     }
+
                     resolve(new TODO(temp_list,document.getElementById("todo_container_div"),false))
                 }
                 else {

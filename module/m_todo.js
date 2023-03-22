@@ -48,13 +48,13 @@ exports.updateTodo = async function (TODO_ID,TODO_DATA) {
     try{
         let Parsed_Todo = TODO_DATA
         let targetObj = {}
-        if(Parsed_Todo.DEAD_LINE) {
+        if(Parsed_Todo.DEAD_LINE!==undefined) {
             targetObj.DEAD_LINE = Parsed_Todo.DEAD_LINE
         }
-        if(Parsed_Todo.isDone){
-            targetObj.isDone = Parsed_Todo.isDone
+        if(Parsed_Todo.IS_DONE!==undefined){
+            targetObj.IS_DONE = Parsed_Todo.IS_DONE
         }
-        if(Parsed_Todo.DATA) {
+        if(Parsed_Todo.DATA!==undefined) {
             targetObj.DATA = Parsed_Todo.DATA
         }
         await todo_data.updateOne({
