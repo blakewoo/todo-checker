@@ -92,8 +92,10 @@ let TODO = (function () {
 
         let showCheckBoxLabel = document.createElement("label")
         showCheckBoxLabel.htmlFor = TODO.ID;
-        console.log(TODO)
+        showCheckBoxLabel.classList.add("todo_check_label")
         hiddenCheckBox.checked = TODO.IS_DONE;
+
+        showCheckBoxLabel.addEventListener("click",checkTodoEvent)
 
         completedSpan.appendChild(hiddenCheckBox)
         completedSpan.appendChild(showCheckBoxLabel)
@@ -278,6 +280,14 @@ let TODO = (function () {
             // front
             todoModify.remove()
         }
+    }
+
+    function checkTodoEvent(event) {
+        let id = event.currentTarget.parentNode.querySelector("input[type=checkbox]").getAttribute("id")
+        let flag = event.currentTarget.parentNode.querySelector("input[type=checkbox]").checked
+        requestFunction("PUT","/todolist/my",{TODO_ID:id,TODO_DATA:{IS_DONE:!flag}},"JSON",function (result) {
+
+        })
     }
 
     function addTodoDeleteEvent(event) {
