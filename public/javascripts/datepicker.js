@@ -1,29 +1,30 @@
 const JH_datepicker = (function () {
-    function JH_datepicker (x,y,targetYear,targetMonth,limitStartDate=null,limitEndDate=null) {
+    function JH_datepicker (x,y,targetDate,limitStartDate=null,limitEndDate=null) {
         this.xPoint = x
         this.yPoint = y
         this.containDiv = null
-        this.targetYear = targetYear
-        this.targetMonth = targetMonth
+        this.targetDate = targetDate
         this.limitStartDate = limitStartDate
         this.limitEndDate = limitEndDate
-        this.paint(targetYear,targetMonth)
+        this.paint(targetDate)
         document.getElementsByTagName("body")[0].addEventListener("click",function (e){
-            if(document.getElementsByClassName("jh_datepicker_div")[0] && !e.currentTarget.classList.contains("jh_datepicker_div")) {
+            if(document.getElementsByClassName("jh_datepicker_div")[0] && !e.currentTarget.classList.contains("jh_datepicker_div") && !e.target.classList.contains("jh_datepicker_div_table_thead_prev") && !e.target.classList.contains("jh_datepicker_div_table_thead_after")) {
                 document.getElementsByClassName("jh_datepicker_div")[0].remove()
             }
         })
     }
 
-    JH_datepicker.prototype.paint = function (Year,Month) {
-        if(Year) {
-            this.targetYear = Year
-        }
-        if(Month){
-            this.targetMonth = Month
+    JH_datepicker.prototype.paint = function (Date) {
+        if(Date) {
+            this.targetDate = Date
         }
 
         let body = document.getElementsByTagName("body")[0]
+
+        let prevModal = document.getElementsByClassName("jh_datepicker_div")[0]
+        if(prevModal) {
+            prevModal.remove()
+        }
         let datepickerContainerDiv = document.createElement("div")
         this.containDiv = datepickerContainerDiv
         datepickerContainerDiv.classList.add("jh_datepicker_div")
@@ -42,18 +43,21 @@ const JH_datepicker = (function () {
     JH_datepicker.prototype.drawTable = function (table) {
 
         let thead = document.createElement("thead")
+        thead.classList.add("jh_datepicker_div_table_thead")
         let titleArrowTr = document.createElement("tr")
         let leftArrowTd = document.createElement("td")
         leftArrowTd.innerHTML = "<"
-        leftArrowTd.addEventListener("click",this.prevMonthEvent)
+        leftArrowTd.classList.add("jh_datepicker_div_table_thead_prev")
+        leftArrowTd.addEventListener("click",this.prevMonthEvent.bind(this))
 
         let rightArrowTd = document.createElement("td")
         rightArrowTd.innerHTML = ">"
-        rightArrowTd.addEventListener("click",this.nextMonthEvent)
+        rightArrowTd.classList.add("jh_datepicker_div_table_thead_after")
+        rightArrowTd.addEventListener("click",this.nextMonthEvent.bind(this))
 
         let currentMonthViewTd = document.createElement("td")
         currentMonthViewTd.colSpan = 5
-        currentMonthViewTd.innerHTML = this.targetYear+"년 "+this.targetMonth+"월"
+        currentMonthViewTd.innerHTML = this.targetDate.getFullYear()+"년 "+(this.targetDate.getMonth()+1)+"월"
 
         titleArrowTr.appendChild(leftArrowTd)
         titleArrowTr.appendChild(currentMonthViewTd)
@@ -103,8 +107,8 @@ const JH_datepicker = (function () {
     }
 
     JH_datepicker.prototype.drawTbody = function (tbody) {
-        let targetMonthFirstDay = new Date(this.targetYear, this.targetMonth, 1);
-        let targetMonthLastDay = new Date(this.targetYear, this.targetMonth+1, 0);
+        let targetMonthFirstDay = new Date(this.targetDate.getFullYear(), this.targetDate.getMonth(), 1);
+        let targetMonthLastDay = new Date(this.targetDate.getFullYear(), this.targetDate.getMonth()+1, 0);
 
         let cnt = 0
         let day = 1
@@ -139,10 +143,10 @@ const JH_datepicker = (function () {
             }
             let tempTd = document.createElement("td")
             if(cnt%7===6) {
-                tempTd.classList.add("jh_datepicker_div_table_thead_sat")
+                tempTd.classList.add("jh_datepicker_div_table_tbody_sat")
             }
             if(cnt%7===0) {
-                tempTd.classList.add("jh_datepicker_div_table_thead_sun")
+                tempTd.classList.add("jh_datepicker_div_table_tbody_sun")
             }
             tempTd.classList.add("jh_datepicker_div_table_tbody_td")
             tempTd.addEventListener("click",this.dailySelectEvent.bind(this))
@@ -156,11 +160,13 @@ const JH_datepicker = (function () {
     }
 
     JH_datepicker.prototype.prevMonthEvent = function (event) {
-        this.paint(this.targetYear,this.targetMonth-1)
+        let newTarget = new Date(this.targetDate.getFullYear(), this.targetDate.getMonth() - 1, this.targetDate.getDate())
+        this.paint(newTarget)
     }
 
     JH_datepicker.prototype.nextMonthEvent = function (event) {
-        this.paint(this.targetYear,this.targetMonth+1)
+        let newTarget = new Date(this.targetDate.getFullYear(), this.targetDate.getMonth() + 1, this.targetDate.getDate())
+        this.paint(newTarget)
     }
 
     JH_datepicker.prototype.getDay = function (day) {
@@ -172,6 +178,7 @@ const JH_datepicker = (function () {
 
         let dayStr = dayID.split("-")
         this.getDay(new Date(dayStr[1],dayStr[2],dayStr[3]))
+        this.containDiv.remove()
     }
 
     return JH_datepicker

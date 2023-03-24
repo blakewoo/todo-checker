@@ -11,7 +11,17 @@
 }
 
 .jh_datepicker_div_table_thead {
+    text-align: center;
+}
 
+.jh_datepicker_div_table_thead_prev:hover {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.jh_datepicker_div_table_thead_after:hover {
+    cursor: pointer;
+    font-weight: bold;
 }
 
 .jh_datepicker_div_table_thead_sat {
@@ -23,7 +33,8 @@
 }
 
 .jh_datepicker_div_table_tbody_td {
-
+    width: 20px;
+    height: 20px;
 }
 
 .jh_datepicker_div_table_tbody_td:hover {

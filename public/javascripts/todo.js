@@ -22,7 +22,7 @@ let TODO = (function () {
         this.READ_ONLY = READ_ONLY
         this.printTodo(TODO_LIST)
         document.getElementsByTagName("body")[0].addEventListener("click",function (e){
-            if(document.getElementsByClassName("todo_modify_div")[0] && !e.currentTarget.classList.contains("todo_modify_div")) {
+            if(document.getElementsByClassName("todo_modify_div")[0] && !e.target.classList.contains("todo_modify_div") && !e.target.classList.contains("jh_datepicker_div_table_thead_prev") && !e.target.classList.contains("jh_datepicker_div_table_thead_after")) {
                 document.getElementsByClassName("todo_modify_div")[0].remove()
             }
         })
@@ -256,7 +256,7 @@ let TODO = (function () {
         }
 
         function setDateTodoEvent(event) {
-            let datepicker = new JH_datepicker(event.clientX,event.clientY,(new Date()).getFullYear(),(new Date()).getMonth())
+            let datepicker = new JH_datepicker(event.clientX,event.clientY,new Date())
             datepicker.getDay = function (day) {
                 let id = currentTodo.parentNode.parentNode.querySelector("input[type=checkbox]").getAttribute("id")
                 requestFunction("PUT","/todolist/my",{TODO_ID:id,TODO_DATA:{DEAD_LINE:day}},"JSON",function (result) {
