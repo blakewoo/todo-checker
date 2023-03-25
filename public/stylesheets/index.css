@@ -103,16 +103,25 @@ body {
     float: left;
 }
 
-input[type="checkbox"] + .todo_check_label {
+input[type="checkbox"] + label {
     display: inline-block;
-    width: 27px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
     border: 2px solid #000000;
     cursor: pointer;
+    position: relative;
 }
 
-input[type="checkbox"]:checked + .todo_check_label {
-    background-color: #000000;
+input[type="checkbox"]:checked + label:after {
+    content:'✔';
+    font-size: 25px;
+    width: 26px;
+    height: 26px;
+    text-align: center;
+}
+
+.text_middle_line{
+    text-decoration: line-through;
 }
 
 @media (max-width: 1440px)  {

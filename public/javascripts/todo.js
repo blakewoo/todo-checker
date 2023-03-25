@@ -92,7 +92,6 @@ let TODO = (function () {
 
         let showCheckBoxLabel = document.createElement("label")
         showCheckBoxLabel.htmlFor = TODO.ID;
-        showCheckBoxLabel.classList.add("todo_check_label")
         hiddenCheckBox.checked = TODO.IS_DONE;
 
         showCheckBoxLabel.addEventListener("click",checkTodoEvent)
@@ -105,6 +104,9 @@ let TODO = (function () {
 
         let todoLabel = document.createElement("label")
         todoLabel.classList.add("todo_label")
+        if(TODO.IS_DONE) {
+            todoLabel.classList.add("text_middle_line")
+        }
         todoLabel.innerText = TODO.Value
         let modifyDiv = document.createElement("span")
         modifyDiv.addEventListener("click", addTodoModifyEvent)
@@ -275,6 +277,12 @@ let TODO = (function () {
             requestFunction("PUT","/todolist/my",{TODO_ID:id,TODO_DATA:{IS_DONE:!flag}},"JSON",function (result) {
                 if(result.status) {
                     check.checked = !flag
+                    if(flag) {
+                        check.parentNode.parentNode.querySelector(".todo_label").classList.remove("text_middle_line")
+                    }
+                    else{
+                        check.parentNode.parentNode.querySelector(".todo_label").classList.add("text_middle_line")
+                    }
                 }
             })
             // front
@@ -283,10 +291,16 @@ let TODO = (function () {
     }
 
     function checkTodoEvent(event) {
+        let currentTarget= event.currentTarget
         let id = event.currentTarget.parentNode.querySelector("input[type=checkbox]").getAttribute("id")
         let flag = event.currentTarget.parentNode.querySelector("input[type=checkbox]").checked
         requestFunction("PUT","/todolist/my",{TODO_ID:id,TODO_DATA:{IS_DONE:!flag}},"JSON",function (result) {
-
+            if(flag) {
+                currentTarget.parentNode.parentNode.querySelector(".todo_label").classList.remove("text_middle_line")
+            }
+            else{
+                currentTarget.parentNode.parentNode.querySelector(".todo_label").classList.add("text_middle_line")
+            }
         })
     }
 
