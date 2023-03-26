@@ -24,7 +24,7 @@ function headlineInit() {
             })
 
             shareDiv.addEventListener("click",function (event3){
-                location.href=location.protocol+"//"+location.host+"/sharedinfo"
+                location.href=location.protocol+"//"+location.host+"/schedule_setting"
             })
 
             myinfoDiv.addEventListener("click",function (event4) {
