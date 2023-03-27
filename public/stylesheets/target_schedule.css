@@ -110,7 +110,7 @@ input[type="checkbox"]:checked + label {
     background-color: #000000;
 }
 
-@media (max-width: 1440px)  {
+@media (max-width: 1300px)  {
 
     .left_div{
         width: 100%;

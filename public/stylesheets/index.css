@@ -124,7 +124,7 @@ input[type="checkbox"]:checked + label:after {
     text-decoration: line-through;
 }
 
-@media (max-width: 1440px)  {
+@media (max-width: 1300px)  {
 
     .left_div{
         width: 100%;
