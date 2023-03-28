@@ -11,6 +11,7 @@
 .day_td{
     text-align: left;
     border: 1px solid black;
+    width: calc(100% / 7);
 }
 
 .day_td:hover{
@@ -36,12 +37,25 @@
     vertical-align: middle;
 }
 
-#calendar_prevMonth:hover{
+.current_Month{
+    font-size: 20px;
+}
+
+#calendar_prevMonth>label{
+    font-size: 20px;
+
+}
+
+#calendar_nextMonth>label{
+    font-size: 20px;
+}
+
+#calendar_prevMonth>label:hover{
     cursor: pointer;
     font-weight: bold;
 }
 
-#calendar_nextMonth:hover{
+#calendar_nextMonth>label:hover{
     cursor: pointer;
     font-weight: bold;
 }

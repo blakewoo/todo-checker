@@ -35,9 +35,9 @@ const JH_calendar = (function () {
         let html = "<table class='calendar_table'>" +
             "<thead>" +
             "<tr class='title_arrow_tr'>"+
-            "<td id='calendar_prevMonth'><</td>" +
-            "<td colspan='5'>"+year+"년 "+month+"월</td>" +
-            "<td id='calendar_nextMonth'>></td>" +
+            "<td id='calendar_prevMonth'><label>< 이전달</label></td>" +
+            "<td class='current_Month' colspan='5'>"+year+"년 "+month+"월</td>" +
+            "<td id='calendar_nextMonth'><label>다음달 ></label></td>" +
             "</tr>" +
             "<tr class='day_head_tr'>" +
             "<td class='red_font'>일</td><td>월</td><td>화</td><td>수</td><td>목</td><td>금</td><td class='blue_font'>토</td>" +
