@@ -1,0 +1,17 @@
+html{
+    height: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+body {
+    height: 100%;
+    box-sizing: border-box;
+}
+.schedule_manage_table{
+
+}
+
+.schedule_manage_table td {
+    border: 1px solid black;
+}
