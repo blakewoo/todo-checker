@@ -27,10 +27,24 @@
     </div>
 </div>
 <div class="schedule_manage_div">
-    <input type="button" value="전송" id="">
-    <input type="text" placeholder="이메일" id="">
-    <table class="schedule_manage_table">
-        <thead>
+    <div class="shared_schedule_request_div">
+        <div>
+            <label>
+                스케줄 공유 요청
+            </label>
+        </div>
+        <div>
+            <input type="text" placeholder="이메일" id="todoSharedRequest">
+            <input type="button" value="전송" id="requestSubmit">
+        </div>
+    </div>
+
+    <div class="shared_schedule_table_div">
+        <label>
+            스케줄 공유 요청 목록
+        </label>
+        <table class="schedule_manage_table">
+            <thead>
             <tr>
                 <td>
                     이름
@@ -45,11 +59,12 @@
                     수락/거절
                 </td>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 </body>

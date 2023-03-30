@@ -15,3 +15,13 @@ body {
 .schedule_manage_table td {
     border: 1px solid black;
 }
+
+.schedule_manage_div{
+    position: absolute;
+    left:calc(50% - 175px);
+    top:calc(50% - 75px);
+    box-sizing: border-box;
+    border: 1px solid black;
+    width: 350px;
+    height: 150px;
+}
