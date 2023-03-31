@@ -8,20 +8,46 @@ body {
     height: 100%;
     box-sizing: border-box;
 }
-.schedule_manage_table{
 
+.shared_schedule_request_status_table{
+    width: 100%;
+    text-align: center;
 }
 
-.schedule_manage_table td {
+.shared_schedule_request_status_table td{
+    border: 1px solid black;
+}
+
+.shared_schedule_receive_status_table{
+    width: 100%;
+    text-align: center;
+}
+
+.shared_schedule_receive_status_table td {
     border: 1px solid black;
 }
 
 .schedule_manage_div{
     position: absolute;
-    left:calc(50% - 175px);
-    top:calc(50% - 75px);
+    left:calc(50% - 300px);
+    top:calc(50% - 300px);
     box-sizing: border-box;
     border: 1px solid black;
-    width: 350px;
-    height: 150px;
+    width: 600px;
+    height: 600px;
+}
+
+.shared_schedule_request_div{
+    box-sizing: border-box;
+    height: 10%;
+}
+
+.shared_schedule_request_status_div{
+    box-sizing: border-box;
+    height: 40%;
+}
+
+.shared_schedule_table_div{
+    box-sizing: border-box;
+    height: 40%;
 }
