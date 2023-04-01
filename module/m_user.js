@@ -4,7 +4,6 @@ const config = require("../config/config")
 
 
 exports.getUser = async function (ID) {
-    console.log("it works!")
     let con;
     let userFind = null;
     try{
@@ -53,7 +52,6 @@ exports.updateUser = async function (ID,PASSWORD,EMAIL) {
         if(emailFind.length !==0) {
             return {status:false,reason:"EMAIL_duplicated"}
         }
-        console.log(PASSWORD)
         if(PASSWORD!=="") {
             let hash = bcrypt.hashSync(PASSWORD, Number(config.SALT_ROUND))
             await con.query("UPDATE user SET PASSWORD=?,EMAIL=? WHERE ID=?", [hash,EMAIL,ID])
