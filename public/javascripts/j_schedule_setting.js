@@ -1,6 +1,21 @@
 window.onload = async function(){
     headlineInit()
-    await initSchedule()
+    // await initSchedule()
+
+    document.getElementById("todoSharedRequest").addEventListener("keyup",function (event) {
+        if(event.key === "Enter") {
+            document.getElementById("requestSubmit").click()
+        }
+    })
+
+    document.getElementById("requestSubmit").addEventListener("click",function (event) {
+        let targetId = document.getElementById("todoSharedRequest").value
+        requestFunction("POST","/todo-share/request",{target:targetId},"JSON",function (result){
+            if(result.status){
+                location.reload()
+            }
+        })
+    })
 
     async function initSchedule() {
         let requestList = await sharedRequestStatus()
