@@ -3,7 +3,7 @@ var router = express.Router();
 const todoShare = require("../module/m_todo_share")
 
 router.get('/request',async function(req, res, next) {
-    let result = todoShare.getRequest()
+    let result = await todoShare.getRequest(req.session.ID)
     if(result) {
         res.send({status:true,result:result})
     }
@@ -13,7 +13,7 @@ router.get('/request',async function(req, res, next) {
 });
 
 router.post('/request',async function(req, res, next) {
-    let result = todoShare.addRequest(req.session.ID,req.body.target)
+    let result = await todoShare.addRequest(req.session.ID,req.body.target)
     if(result) {
         res.send({status:true,result:result})
     }
@@ -27,7 +27,13 @@ router.delete('/request',async function(req, res, next) {
 });
 
 router.get('/receive',async function(req, res, next) {
-
+    let result = todoShare.getReceive(req.session.ID)
+    if(result) {
+        res.send({status:true,result:result})
+    }
+    else {
+        res.send({status:false})
+    }
 });
 
 module.exports = router;

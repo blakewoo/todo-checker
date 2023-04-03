@@ -7,11 +7,20 @@ exports.addRequest = async function (requester,target) {
         let RequestFind = await con.query("SELECT ID,EMAIL FROM user WHERE user.ID=?",requester)
         let ReceiveFind = await con.query("SELECT ID,EMAIL FROM user WHERE user.ID=?",target)
 
+        if(ReceiveFind.length===0) {
+            return false
+        }
+
+        if(RequestFind[0].ID === ReceiveFind[0].ID) {
+            return false
+        }
+
+
         await shared.create({
             OVERSEER_USER_ID: requester,
-            OVERSEER_EMAIL: RequestFind.EMAIL,
+            OVERSEER_EMAIL: RequestFind[0].EMAIL,
             TARGET_USER_ID: target,
-            TARGET_EMAIL:ReceiveFind.EMAIL,
+            TARGET_EMAIL:ReceiveFind[0].EMAIL,
             CREATED_DATE: new Date(),
             STATUS:"Waiting"})
 
@@ -23,9 +32,9 @@ exports.addRequest = async function (requester,target) {
     }
 }
 
-exports.getRequest = async function () {
+exports.getRequest = async function (requester) {
     try{
-
+        return await shared.find({OVERSEER_USER_ID:requester})
     }
     catch(e) {
         console.error(e)
@@ -47,9 +56,9 @@ exports.addReceive = async function () {
     }
 }
 
-exports.getReceive = async function () {
+exports.getReceive = async function (receiver) {
     try{
-
+        return await shared.find({TARGET_USER_ID:receiver})
     }
     catch(e) {
         console.error(e)

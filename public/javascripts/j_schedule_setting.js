@@ -1,6 +1,6 @@
-window.onload = async function(){
+window.onload = function(){
     headlineInit()
-    // await initSchedule()
+    initSchedule()
 
     document.getElementById("todoSharedRequest").addEventListener("keyup",function (event) {
         if(event.key === "Enter") {
@@ -14,40 +14,43 @@ window.onload = async function(){
             if(result.status){
                 location.reload()
             }
+            else {
+                alert("해당 사용자가 없습니다.")
+            }
         })
     })
 
-    async function initSchedule() {
-        let requestList = await sharedRequestStatus()
-        printSharedRequestStatus(requestList)
+    function initSchedule() {
+        sharedRequestStatus(function (result) {
+            printSharedRequestStatus(result)
+        })
 
-        let receiveList = await sharedRequestReceiveStatus()
-        printSharedRequestReceiveStatus(receiveList)
+
+        sharedRequestReceiveStatus(function (result) {
+            printSharedRequestReceiveStatus(result)
+        })
+
     }
 
-    async function sharedRequestStatus() {
-        return new Promise((reject,resolve)=>{
-            requestFunction("GET","/todo-share/request",{},"JSON",function (result){
-                if(result.status){
-                    resolve(result.result)
-                }
-                else {
-                    reject(false)
-                }
-            })
+    function sharedRequestStatus(callback) {
+        requestFunction("GET","/todo-share/request",{},"JSON",function (result){
+            if(result.status){
+                callback(result.result)
+            }
+            else {
+                callback(false)
+            }
         })
     }
 
-    async function sharedRequestReceiveStatus() {
-        return new Promise((reject,resolve)=>{
-            requestFunction("GET","/todo-share/receive",{},"JSON",function (result){
-                if(result.status){
-                    resolve(result.result)
-                }
-                else {
-                    reject(false)
-                }
-            })
+    function sharedRequestReceiveStatus(callback) {
+        requestFunction("GET","/todo-share/receive",{},"JSON",function (result){
+            if(result.status){
+                callback(result.result)
+            }
+            else {
+                callback(false)
+            }
         })
     }
 
@@ -68,11 +71,15 @@ window.onload = async function(){
             tempEmail.innerText = list[i].TARGET_EMAIL
 
             let tempCreated = document.createElement("td")
-            tempCreated.innerText = list[i].CREATED_DATE
+            tempCreated.innerText = Intl.DateTimeFormat("ko",{dateStyle: 'full', timeStyle: 'short'}).format(new Date(list[i].CREATED_DATE))
+
+            let tempStatus = document.createElement("td")
+            tempStatus.innerText = list[i].STATUS
 
             tempTr.appendChild(tempId)
             tempTr.appendChild(tempEmail)
             tempTr.appendChild(tempCreated)
+            tempTr.appendChild(tempStatus)
             temp.appendChild(tempTr)
         }
 
@@ -98,9 +105,13 @@ window.onload = async function(){
             let tempCreated = document.createElement("td")
             tempCreated.innerText = list[i].CREATED_DATE
 
+            let tempSubmit = document.createElement("td")
+            tempCreated.innerHTML = "<input type='button' value='허용' class='receive_submmit_button' id='submit_'"+list[i].OVERSEER_USER_ID+">"
+
             tempTr.appendChild(tempId)
             tempTr.appendChild(tempEmail)
             tempTr.appendChild(tempCreated)
+            tempTr.appendChild(tempSubmit)
             temp.appendChild(tempTr)
         }
 
