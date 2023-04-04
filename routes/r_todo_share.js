@@ -27,7 +27,18 @@ router.delete('/request',async function(req, res, next) {
 });
 
 router.get('/receive',async function(req, res, next) {
-    let result = todoShare.getReceive(req.session.ID)
+    let result = await todoShare.getReceive(req.session.ID)
+    if(result) {
+        res.send({status:true,result:result})
+    }
+    else {
+        res.send({status:false})
+    }
+});
+
+router.put('/receive',async function(req, res, next) {
+    let result = await todoShare.updateReceive(req.body.requester,req.session.ID,req.body.state)
+    console.log(result)
     if(result) {
         res.send({status:true,result:result})
     }

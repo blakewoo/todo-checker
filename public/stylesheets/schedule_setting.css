@@ -32,7 +32,7 @@ body {
     left:calc(50% - 300px);
     top:calc(50% - 300px);
     box-sizing: border-box;
-    border: 1px solid black;
+    border: 1px solid #000000;
     width: 600px;
     height: 600px;
 }
@@ -50,4 +50,12 @@ body {
 .shared_schedule_table_div{
     box-sizing: border-box;
     height: 40%;
+}
+
+.receive_submmit_button:hover {
+    cursor: pointer;
+}
+
+.receive_decline_button:hover {
+    cursor: pointer;
 }

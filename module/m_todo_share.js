@@ -66,6 +66,16 @@ exports.getReceive = async function (receiver) {
     }
 }
 
+exports.updateReceive = async function (requester,receiver,status) {
+    try{
+        return await shared.updateOne({OVERSEER_USER_ID:requester,TARGET_USER_ID:receiver},{STATUS:status})
+    }
+    catch(e) {
+        console.error(e)
+        return false
+    }
+}
+
 exports.deleteReceive = async function () {
 
 }

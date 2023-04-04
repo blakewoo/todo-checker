@@ -74,7 +74,15 @@ window.onload = function(){
             tempCreated.innerText = Intl.DateTimeFormat("ko",{dateStyle: 'full', timeStyle: 'short'}).format(new Date(list[i].CREATED_DATE))
 
             let tempStatus = document.createElement("td")
-            tempStatus.innerText = list[i].STATUS
+            if(list[i].STATUS ==="Waiting") {
+                tempStatus.innerText = "대기중"
+            }
+            else if(list[i].STATUS ==="ACCEPT") {
+                tempStatus.innerText = "수락"
+            }
+            else {
+                tempStatus.innerText = "거절"
+            }
 
             tempTr.appendChild(tempId)
             tempTr.appendChild(tempEmail)
@@ -103,10 +111,45 @@ window.onload = function(){
             tempEmail.innerText = list[i].OVERSEER_EMAIL
 
             let tempCreated = document.createElement("td")
-            tempCreated.innerText = list[i].CREATED_DATE
+            tempCreated.innerText = Intl.DateTimeFormat("ko",{dateStyle: 'full', timeStyle: 'short'}).format(new Date(list[i].CREATED_DATE))
 
             let tempSubmit = document.createElement("td")
-            tempCreated.innerHTML = "<input type='button' value='허용' class='receive_submmit_button' id='submit_'"+list[i].OVERSEER_USER_ID+">"
+            if(list[i].STATUS ==="Waiting") {
+                let submitButton = document.createElement("input")
+                submitButton.type = "button"
+                submitButton.value= "허용"
+                submitButton.classList.add("receive_submmit_button")
+                submitButton.id="submit_"+list[i].OVERSEER_USER_ID
+                submitButton.addEventListener("click",function (event) {
+                    requestFunction("PUT","/todo-share/receive",{requester:list[i].OVERSEER_USER_ID,state:"ACCEPT"},"JSON",function (result) {
+                        if(result.status) {
+                            location.reload()
+                        }
+                    })
+                })
+
+                let declineButton = document.createElement("input")
+                declineButton.type = "button"
+                declineButton.value= "거절"
+                declineButton.classList.add("receive_decline_button")
+                declineButton.id="decline_"+list[i].OVERSEER_USER_ID
+                declineButton.addEventListener("click",function (event) {
+                    requestFunction("PUT","/todo-share/receive",{requester:list[i].OVERSEER_USER_ID,state:"DECLINE"},"JSON",function (result) {
+                        if(result.status) {
+                            location.reload()
+                        }
+                    })
+                })
+                tempSubmit.appendChild(submitButton)
+                tempSubmit.appendChild(declineButton)
+            }
+            else if(list[i].STATUS ==="DECLINE") {
+                tempSubmit.innerText = "거절"
+            }
+            else {
+                tempSubmit.innerText = "수락 완료"
+            }
+
 
             tempTr.appendChild(tempId)
             tempTr.appendChild(tempEmail)

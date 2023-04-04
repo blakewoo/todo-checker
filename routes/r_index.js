@@ -48,7 +48,12 @@ router.get('/signup', function(req, res, next) {
     return res.render('signup');
 });
 router.get('/schedule_setting', function(req, res, next) {
-  return res.render('schedule_setting',{title:req.session.ID,USER_ID:req.session.ID});
+  if(req.session.isLogin) {
+    return res.render('schedule_setting',{title:req.session.ID,USER_ID:req.session.ID});
+  }
+  else {
+    return res.redirect('/');
+  }
 });
 
 module.exports = router;
