@@ -15,6 +15,7 @@ const commentlistRouter = require("./routes/r_commentlist")
 const todoShareRouter= require("./routes/r_todo_share")
 const session = require('express-session');
 const MemoryStore = require('memorystore')(session);
+const helmet = require("helmet");
 
 var app = express();
 
@@ -29,6 +30,7 @@ const sessionObj = {
   },
 };
 
+app.use(helmet())
 app.use(session(sessionObj));
 
 // DB 연결

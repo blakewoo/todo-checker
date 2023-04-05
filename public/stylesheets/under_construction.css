@@ -1,0 +1,32 @@
+html{
+    height: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+body {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.under_div{
+
+}
+
+.under_construction_img{
+    margin: auto;
+    width: 800px;
+    height: 400px;
+    position: absolute;
+    top:calc(50% - 200px);
+    left:calc(50% - 400px);
+}
+
+.under_construction_label{
+    margin: auto;
+    font-size: x-large;
+    font-weight: bold;
+    position: absolute;
+    top:calc(50% + 200px);
+    left:calc(50% - 100px);
+}
