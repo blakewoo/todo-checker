@@ -21,8 +21,8 @@ router.get('/myinfo', function(req, res, next) {
 
 router.get('/target', function(req, res, next) {
   if(req.session.isLogin) {
-    // return res.render('target_schedule',{title:req.session.ID,USER_ID:req.session.ID});
-    return res.render('under_construction',{title:req.session.ID,USER_ID:req.session.ID});
+    return res.render('target_schedule',{title:req.session.ID,USER_ID:req.session.ID});
+    // return res.render('under_construction',{title:req.session.ID,USER_ID:req.session.ID});
   }
   else {
     return res.redirect('/');

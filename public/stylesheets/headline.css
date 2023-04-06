@@ -16,6 +16,12 @@
     cursor: pointer;
 }
 
+.headline_tab_div{
+    box-sizing: border-box;
+    float: left;
+    margin-left: 30px;
+    display: inline-block;
+}
 
 .headline_tab_div>label{
     box-sizing: border-box;

@@ -167,11 +167,19 @@ let TODO = (function () {
      * 특정 날짜의 TODO 값 가져오기
      * @param date : Date
      */
-    TODO.prototype.getDateTodo =async function (date) {
+    TODO.prototype.getDateTodo =async function (date,isOthers,ID) {
         // 백엔드에서 요청해서 갖고 오기
-        let result = await syncRequestFunction("GET","/todolist/my?date="+date.getTime(),null,"JSON")
-        if(result.status) {
-            this.printTodo(this.listConvertTodoObject(result.result))
+        if(isOthers) {
+            let result = await syncRequestFunction("GET","/todolist/target?ID="+ID+"&date="+date.getTime(),null,"JSON")
+            if(result.status) {
+                this.printTodo(this.listConvertTodoObject(result.result))
+            }
+        }
+        else {
+            let result = await syncRequestFunction("GET","/todolist/my?date="+date.getTime(),null,"JSON")
+            if(result.status) {
+                this.printTodo(this.listConvertTodoObject(result.result))
+            }
         }
     }
 

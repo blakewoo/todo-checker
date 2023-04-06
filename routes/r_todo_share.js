@@ -12,6 +12,16 @@ router.get('/request',async function(req, res, next) {
     }
 });
 
+router.get('/request/accept',async function(req, res, next) {
+    let result = await todoShare.getAcceptRequest(req.session.ID)
+    if(result) {
+        res.send({status:true,result:result})
+    }
+    else {
+        res.send({status:false})
+    }
+});
+
 router.post('/request',async function(req, res, next) {
     let result = await todoShare.addRequest(req.session.ID,req.body.target)
     if(result) {

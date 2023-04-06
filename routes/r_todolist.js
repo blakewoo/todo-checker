@@ -81,4 +81,24 @@ router.delete('/my',verify.user_auth,async function(req, res, next) {
     }
 });
 
+// TARGET TODO 불러들이기
+router.get('/target',verify.user_auth,async function(req, res, next) {
+    try{
+        // get my comment list
+        if(!req.query.date) {
+            return res.status(400).send({status:false})
+        }
+        let result = await todoModule.getTodo(req.query.ID,new Date(Number(req.query.date)))
+        if(result) {
+            return res.send({status:true,result:result})
+        }
+        else {
+            return res.status(404).send({status:false})
+        }
+    }
+    catch(e){
+        return res.status(404).send({status:false})
+    }
+});
+
 module.exports = router;

@@ -42,6 +42,17 @@ exports.getRequest = async function (requester) {
     }
 }
 
+exports.getAcceptRequest = async function (requester) {
+    try{
+        console.log(requester)
+        return await shared.find({OVERSEER_USER_ID:requester,STATUS:"ACCEPT"})
+    }
+    catch(e) {
+        console.error(e)
+        return false
+    }
+}
+
 exports.deleteRequest = async function () {
 
 }
