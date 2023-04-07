@@ -3,7 +3,12 @@ const config = require("../config/config")
 
 module.exports = function () {
     mongoose.set('strictQuery', false);
-    mongoose.connect("mongodb://"+config.DATA_DATABASE.URL+":"+config.DATA_DATABASE.PORT)
+    if(config.AUTH) {
+        mongoose.connect("mongodb://"+config.DATA_DATABASE.ID+":"+config.DATA_DATABASE.PASSWORD+"@"+config.DATA_DATABASE.URL+":"+config.DATA_DATABASE.PORT+"/"+config.DATA_DATABASE.DATABASE+"?authSource=admin")
+    }
+    else {
+        mongoose.connect("mongodb://"+config.DATA_DATABASE.URL+":"+config.DATA_DATABASE.PORT+"/"+config.DATA_DATABASE.DATABASE)
+    }
 
     mongoose.connection.on('connected', function () {
         console.log("[SYSTEM] Mongo DB connected")

@@ -2,6 +2,7 @@ const dotenv = require("dotenv")
 dotenv.config()
 
 module.exports = {
+    AUTH:false,
     LOGIN_DATABASE:{
         URL:process.env.LOGIN_DATABASE_URL,
         PORT:process.env.LOGIN_DATABASE_PORT,
