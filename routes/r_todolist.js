@@ -84,7 +84,6 @@ router.delete('/my',verify.user_auth,async function(req, res, next) {
 // TARGET TODO 불러들이기
 router.get('/target',verify.user_auth,async function(req, res, next) {
     try{
-        // get my comment list
         if(!req.query.date) {
             return res.status(400).send({status:false})
         }

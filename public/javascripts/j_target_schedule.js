@@ -8,14 +8,25 @@ window.onload = async function (event) {
         let todoObj = await initTodo(sharedId)
 
         calendar.daySelected = function (day) {
-            todoObj.getDateTodo(day)
+            todoObj.getDateTodo(day,true,sharedId)
         }
     }
 
     async function initTodo(ID) {
         return new Promise((resolve,reject) => (
-            requestFunction("GET","/todolist/my?ID="+ID+"&date="+(new Date().getDate()),{},"JSON",function (result) {
-                resolve(new TODO(result.result,document.getElementById("todo_container_div")))
+            requestFunction("GET","/todolist/target?ID="+ID+"&date="+((new Date()).getTime()),null,"JSON",function (result) {
+                if(result.status) {
+                    let temp_list = []
+                    for(let i=0;i<result.result.length;i++) {
+                        let temp = result.result[i]
+                        temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
+                    }
+
+                    resolve(new TODO(temp_list,document.getElementById("todo_container_div"),false))
+                }
+                else {
+                    reject(new TODO([],document.getElementById("todo_container_div")))
+                }
             })
         ))
     }
@@ -34,6 +45,10 @@ window.onload = async function (event) {
                         }
                         container.append(temp)
                     }
+                    resolve(true)
+                }
+                else{
+                    reject(true)
                 }
             })
         ))
