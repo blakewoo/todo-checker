@@ -94,7 +94,9 @@ let TODO = (function () {
         showCheckBoxLabel.htmlFor = TODO.ID;
         hiddenCheckBox.checked = TODO.IS_DONE;
 
-        showCheckBoxLabel.addEventListener("click",checkTodoEvent)
+        if(!this.READ_ONLY) {
+            showCheckBoxLabel.addEventListener("click",checkTodoEvent)
+        }
 
         completedSpan.appendChild(hiddenCheckBox)
         completedSpan.appendChild(showCheckBoxLabel)
@@ -108,6 +110,8 @@ let TODO = (function () {
             todoLabel.classList.add("text_middle_line")
         }
         todoLabel.innerText = TODO.Value
+        todoLabel.addEventListener("click",modifyTodoEvent.bind(this))
+
         let modifyDiv = document.createElement("span")
         modifyDiv.addEventListener("click", addTodoModifyEvent)
         modifyDiv.innerText = "···"
@@ -128,8 +132,10 @@ let TODO = (function () {
         }
 
         labelContainerDiv.appendChild(todoLabel)
-        labelContainerDiv.appendChild(deleteDiv)
-        labelContainerDiv.appendChild(modifyDiv)
+        if(!this.READ_ONLY) {
+            labelContainerDiv.appendChild(deleteDiv)
+            labelContainerDiv.appendChild(modifyDiv)
+        }
         labelContainerDiv.appendChild(dateDiv)
         containerDiv.appendChild(labelContainerDiv)
         containerDiv.appendChild(completedSpan)
@@ -225,6 +231,31 @@ let TODO = (function () {
 
     TODO.prototype.setDateTodoEvent = function () {
 
+    }
+    function modifyTodoEvent(event) {
+        if(this.READ_ONLY) {
+            return
+        }
+        let originLabel = event.currentTarget;
+        let textBuffer = originLabel.innerText;
+        event.currentTarget.style.display = "none"
+
+        let textInput = document.createElement("textarea")
+        textInput.innerText = textBuffer
+        textInput.classList.add("modify_textarea")
+        textInput.addEventListener("focusout",function (event2) {
+            let todoID = event.target.parentNode.parentNode.querySelector(".completed_check_span").firstChild.id
+            let afterText= event2.target.value
+            requestFunction("PUT","/todolist/my",{TODO_ID:todoID,TODO_DATA:{DATA:afterText}},"JSON",function (result){
+                if(result.status) {
+                    originLabel.innerText = event2.target.value;
+                    originLabel.style.display = ""
+                    event2.target.remove()
+                }
+            })
+        }.bind(this))
+        originLabel.parentNode.insertBefore(textInput,originLabel.parentNode.firstChild)
+        textInput.focus()
     }
 
     function addTodoModifyEvent(event) {

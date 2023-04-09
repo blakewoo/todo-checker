@@ -124,6 +124,12 @@ input[type="checkbox"]:checked + label:after {
     text-decoration: line-through;
 }
 
+.modify_textarea{
+    border: none;
+    height: 1rem;
+    resize: none;
+}
+
 @media (max-width: 1300px)  {
 
     .left_div{

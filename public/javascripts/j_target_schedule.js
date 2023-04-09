@@ -22,7 +22,7 @@ window.onload = async function (event) {
                         temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
                     }
 
-                    resolve(new TODO(temp_list,document.getElementById("todo_container_div"),false))
+                    resolve(new TODO(temp_list,document.getElementById("todo_container_div"),true))
                 }
                 else {
                     reject(new TODO([],document.getElementById("todo_container_div")))
