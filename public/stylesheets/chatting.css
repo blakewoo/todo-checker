@@ -8,3 +8,49 @@ body {
     height: 100%;
     box-sizing: border-box;
 }
+
+.chat_window_div{
+    box-sizing: border-box;
+    position: absolute;
+    left: calc(50% - 400px);
+    top: calc(50% - 400px);
+    width: 800px;
+    height: 800px;
+}
+
+.chat_display_div{
+    box-sizing: border-box;
+    border: 1px solid black;
+    width: 100%;
+    height: calc(100% - 30px);
+    overflow: auto;
+}
+
+.text_input_span{
+    box-sizing: border-box;
+    border: 1px solid black;
+    display: inline-block;
+    width: 100%;
+    height: 30px;
+}
+
+.message_input_textarea{
+    box-sizing: border-box;
+    width: calc(100% - 50px);
+    height: 100%;
+    resize: none;
+    display: inline-block;
+    margin: 0;
+    float: left;
+    overflow: hidden;
+}
+
+.message_send_button{
+    box-sizing: border-box;
+    height: 100%;
+    width: 50px;
+    border: 1px solid black;
+    display: inline-block;
+    margin: 0;
+    float: right;
+}
