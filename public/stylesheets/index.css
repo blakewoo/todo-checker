@@ -29,7 +29,7 @@ body {
     box-sizing: border-box;
     border: 1px solid black;
     width: 100%;
-    height: calc(100% - 2rem);
+    height: calc(100% - 4rem);
 }
 
 .todo_label_container_div{
@@ -130,6 +130,20 @@ input[type="checkbox"]:checked + label:after {
     resize: none;
 }
 
+.todo_category_container_div{
+    height: 2rem;
+    width: 100%;
+}
+
+.todo_category_span{
+    border: 1px solid black;
+}
+
+.todo_category_span:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
+
 @media (max-width: 1300px)  {
 
     .left_div{
@@ -147,11 +161,15 @@ input[type="checkbox"]:checked + label:after {
     .todo_container_div{
         box-sizing: border-box;
         width: 100%;
-        height: 90%;
+        height: 80%;
     }
     .todo_input{
         box-sizing: border-box;
         width: 100%;
+        height: 10%;
+    }
+
+    .todo_category_container_div{
         height: 10%;
     }
 }
