@@ -9,6 +9,7 @@
     <script src="/javascripts/publicFunction.js"></script>
     <script src="/javascripts/j_headline.js"></script>
     <script src="/javascripts/j_chatting.js"></script>
+    <script src = "/socket.io/socket.io.js"></script>
 </head>
 <body>
 <div class="headline_div">
@@ -23,6 +24,7 @@
     </div>
     <div class="headline_tab_div">
         <label id="headlineChattingLabel">채팅</label>
+        <select id="sharedChatSelect"></select>
     </div>
 </div>
 <div class="bottom_div">
@@ -31,7 +33,7 @@
 
         </div>
         <span class="text_input_span">
-            <textarea class="message_input_textarea" id="chattingTextarea"></textarea>
+            <input type="text" class="message_text_input" id="chattingTextInput"></textarea>
             <input type="button" class="message_send_button" value="전송" id="messageSendButton">
         </span>
     </div>

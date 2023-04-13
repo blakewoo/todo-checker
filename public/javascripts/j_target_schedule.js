@@ -2,7 +2,7 @@ window.onload = async function (event) {
     headlineInit()
     let calendar = new JH_calendar(document.getElementById("calendar_div"), new Date(),true)
     await initShared()
-    let selectTag = document.getElementById("shared_todo_id")
+    let selectTag = document.getElementById("sharedTodoSelect")
     let sharedId = selectTag.options[selectTag.selectedIndex].text
     if(sharedId) {
         let todoObj = await initTodo(sharedId)
@@ -35,7 +35,7 @@ window.onload = async function (event) {
         return new Promise((resolve,reject) => (
             requestFunction("GET","/todo-share/request/accept",{},"JSON",function (result) {
                 if(result.status) {
-                    let container = document.getElementById("shared_todo_id")
+                    let container = document.getElementById("sharedTodoSelect")
                     if(result.result.length!==0) {
                         let temp = document.createDocumentFragment()
                         for(let i=0;i<result.result.length;i++) {

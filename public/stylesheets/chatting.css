@@ -34,7 +34,7 @@ body {
     height: 30px;
 }
 
-.message_input_textarea{
+.message_text_input{
     box-sizing: border-box;
     width: calc(100% - 50px);
     height: 100%;

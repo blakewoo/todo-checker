@@ -90,3 +90,13 @@ exports.updateReceive = async function (requester,receiver,status) {
 exports.deleteReceive = async function () {
 
 }
+
+exports.getChatList = async function(requester) {
+    try{
+        return await shared.find({"$or":[{OVERSEER_USER_ID:requester},{TARGET_USER_ID:requester}]})
+    }
+    catch(e) {
+        console.error(e)
+        return false
+    }
+}

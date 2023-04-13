@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('todochecker:server');
 var http = require('http');
+let socketIo = require("../module/socket/m_socket_connect")
 
 /**
  * Get port from environment and store in Express.
@@ -28,7 +29,8 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-console.log("[SYSTEM] Server on now listening : "+port+" port")
+socketIo(server)
+console.log("[SYSTEM] Server on now listenings : "+port+" port")
 /**
  * Normalize a port into a number, string, or false.
  */

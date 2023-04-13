@@ -57,4 +57,14 @@ router.put('/receive',async function(req, res, next) {
     }
 });
 
+router.get('/chatlist',async function(req, res, next) {
+    let result = await todoShare.getChatList(req.session.ID)
+    if(result) {
+        res.send({status:true,result:result,myId:req.session.ID})
+    }
+    else {
+        res.send({status:false})
+    }
+});
+
 module.exports = router;
