@@ -8,15 +8,11 @@ function connect (server) {
             console.log('Client logged-in - ID:' + data.ID);
             idMap.set(data.ID,socket.id)
             socketIdMap.set(socket.id,data.ID)
-            // socket[data.ID] = socket.id;
-            // socket[socket.id] = data.ID
-            // console.log(socket.id)
         })
 
         socket.on('chat',function (data) {
             let message = data.message;
             let targetSocketId = idMap.get(data.target)
-            console.log(targetSocketId)
             if(targetSocketId) {
                 io.to(targetSocketId).emit("chat",message)
             }
@@ -24,9 +20,9 @@ function connect (server) {
 
         socket.on('disconnect', function() {
             let dataID = socketIdMap.get(socket.id)
+            console.log('Client logged-out - ID:' + socketIdMap.get(socket.id));
             idMap.delete(dataID)
             socketIdMap.delete(socket.id)
-            console.log('Client logged-out - ID:' + socket[socket.id]);
         });
     })
 

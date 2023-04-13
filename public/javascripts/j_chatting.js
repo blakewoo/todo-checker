@@ -46,7 +46,7 @@ window.onload = async function (event) {
                         let temp = document.createDocumentFragment()
                         for(let i=0;i<result.result.length;i++) {
                             let tempOption = document.createElement("option")
-                            if(result.result.myId === result.result[i].TARGET_USER_ID) {
+                            if(result.myId === result.result[i].TARGET_USER_ID) {
                                 tempOption.innerText = result.result[i].OVERSEER_USER_ID;
                             }
                             else{
