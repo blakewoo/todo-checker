@@ -13,6 +13,7 @@ const userRouter = require('./routes/r_user')
 const todolistRouter = require('./routes/r_todolist')
 const commentlistRouter = require("./routes/r_commentlist")
 const todoShareRouter= require("./routes/r_todo_share")
+const chattingRouter = require("./routes/r_chatting")
 const session = require('express-session');
 const MemoryStore = require('memorystore')(session);
 const helmet = require("helmet");
@@ -67,7 +68,8 @@ app.use('/login', loginRouter);
 app.use('/user', userRouter);
 app.use('/todolist', todolistRouter);
 app.use('/commentlist', commentlistRouter);
-app.use('/todo-share',todoShareRouter)
+app.use('/todo-share',todoShareRouter);
+app.use('/chatting', chattingRouter);
 //
 
 
