@@ -16,7 +16,7 @@ exports.addChatting = async function (REQUEST_ID,TARGET_ID,MESSAGE) {
     }
 }
 
-exports.getChatting = async function (REQUEST_ID,TARGET_ID,MESSAGE) {
+exports.getChatting = async function (REQUEST_ID,TARGET_ID) {
     try{
         return await chattingModel.find({"$or":[{REQUEST_ID: REQUEST_ID},{
             DESTINATION_ID: TARGET_ID}]
