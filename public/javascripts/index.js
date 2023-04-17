@@ -9,6 +9,11 @@ window.onload = async function (event) {
 
     document.getElementById("todo_input").addEventListener("keyup", todoInputEvent)
 
+    document.getElementById("calendarViewTodo").addEventListener("click",viewingTodo)
+    document.getElementById("dailyTodo").addEventListener("click",dailyTodo)
+    document.getElementById("weeklyTodo").addEventListener("click",weeklyTodo)
+    document.getElementById("monthlyTodo").addEventListener("click",monthlyTodo)
+
     async function initTodo() {
         return new Promise((resolve,reject) => (
             requestFunction("GET","/todolist/my?date="+new Date().getTime(),{},"JSON",function (result) {
@@ -39,6 +44,22 @@ window.onload = async function (event) {
             let temp = new TODO_OBJECT(null,Data,new Date(),null,false)
             todoObj.addTodo(temp,calendar.seletedDate)
         }
+    }
+
+    function viewingTodo(event) {
+
+    }
+
+    function dailyTodo(event) {
+
+    }
+
+    function weeklyTodo(event) {
+
+    }
+
+    function monthlyTodo(event) {
+
     }
 
 }

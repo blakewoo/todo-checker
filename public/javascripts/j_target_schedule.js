@@ -12,6 +12,11 @@ window.onload = async function (event) {
         }
     }
 
+    document.getElementById("calendarViewTodo").addEventListener("click",viewingTodo)
+    document.getElementById("dailyTodo").addEventListener("click",dailyTodo)
+    document.getElementById("weeklyTodo").addEventListener("click",weeklyTodo)
+    document.getElementById("monthlyTodo").addEventListener("click",monthlyTodo)
+
     async function initTodo(ID) {
         return new Promise((resolve,reject) => (
             requestFunction("GET","/todolist/target?ID="+ID+"&date="+((new Date()).getTime()),null,"JSON",function (result) {
@@ -54,5 +59,19 @@ window.onload = async function (event) {
         ))
     }
 
+    function viewingTodo(event) {
 
+    }
+
+    function dailyTodo(event) {
+
+    }
+
+    function weeklyTodo(event) {
+
+    }
+
+    function monthlyTodo(event) {
+
+    }
 }
