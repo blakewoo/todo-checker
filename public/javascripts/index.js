@@ -16,7 +16,7 @@ window.onload = async function (event) {
 
     async function initTodo() {
         return new Promise((resolve,reject) => (
-            requestFunction("GET","/todolist/my?date="+new Date().getTime(),{},"JSON",function (result) {
+            requestFunction("GET","/todolist/my/daily?date="+new Date().getTime(),{},"JSON",function (result) {
                 if(result.status) {
                     let temp_list = []
                     for(let i=0;i<result.result.length;i++) {
@@ -47,19 +47,59 @@ window.onload = async function (event) {
     }
 
     function viewingTodo(event) {
+        requestFunction("GET","/todolist/my/daily?date="+new Date().getTime(),{},"JSON",function (result) {
+            if(result.status) {
+                let temp_list = []
+                for(let i=0;i<result.result.length;i++) {
+                    let temp = result.result[i]
+                    temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
+                }
 
+                todoObj = new TODO(temp_list,document.getElementById("todo_container_div"),false)
+            }
+        })
     }
 
     function dailyTodo(event) {
+        requestFunction("GET","/todolist/my/daily?date="+new Date().getTime(),{},"JSON",function (result) {
+            if(result.status) {
+                let temp_list = []
+                for(let i=0;i<result.result.length;i++) {
+                    let temp = result.result[i]
+                    temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
+                }
 
+                todoObj = new TODO(temp_list,document.getElementById("todo_container_div"),false)
+            }
+        })
     }
 
     function weeklyTodo(event) {
+        requestFunction("GET","/todolist/my?date="+new Date().getTime(),{},"JSON",function (result) {
+            if(result.status) {
+                let temp_list = []
+                for(let i=0;i<result.result.length;i++) {
+                    let temp = result.result[i]
+                    temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
+                }
 
+                todoObj = new TODO(temp_list,document.getElementById("todo_container_div"),false)
+            }
+        })
     }
 
     function monthlyTodo(event) {
+        requestFunction("GET","/todolist/my?date="+new Date().getTime(),{},"JSON",function (result) {
+            if(result.status) {
+                let temp_list = []
+                for(let i=0;i<result.result.length;i++) {
+                    let temp = result.result[i]
+                    temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
+                }
 
+                todoObj = new TODO(temp_list,document.getElementById("todo_container_div"),false)
+            }
+        })
     }
 
 }

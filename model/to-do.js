@@ -6,6 +6,7 @@ const todoList = new mongoose.Schema({
     DEAD_LINE:Date,
     DATA: String,
     ORDER: Number,
+    TYPE:String,
     IS_DONE: Boolean
 });
 

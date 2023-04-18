@@ -19,7 +19,7 @@ window.onload = async function (event) {
 
     async function initTodo(ID) {
         return new Promise((resolve,reject) => (
-            requestFunction("GET","/todolist/target?ID="+ID+"&date="+((new Date()).getTime()),null,"JSON",function (result) {
+            requestFunction("GET","/todolist/target/daily?ID="+ID+"&date="+((new Date()).getTime()),null,"JSON",function (result) {
                 if(result.status) {
                     let temp_list = []
                     for(let i=0;i<result.result.length;i++) {
