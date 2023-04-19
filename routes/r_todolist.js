@@ -10,7 +10,7 @@ router.get('/my/daily',verify.user_auth,async function(req, res, next) {
         if(!req.query.date) {
             return res.status(400).send({status:false})
         }
-        let result = await todoModule.getTodo(req.session.ID,new Date(Number(req.query.date)),"DAILY")
+        let result = await todoModule.getDailyTodo(req.session.ID,new Date(Number(req.query.date)))
         if(result) {
             return res.send({status:true,result:result})
         }
@@ -88,7 +88,7 @@ router.get('/my/notification',verify.user_auth,async function(req, res, next) {
         if(!req.query.date) {
             return res.status(400).send({status:false})
         }
-        let result = await todoModule.getTodo(req.session.ID,new Date(Number(req.query.date)),"NOTIFICATION")
+        let result = await todoModule.getDailyNotificationTodo(req.session.ID,new Date(Number(req.query.date)),"NOTIFICATION")
         if(result) {
             return res.send({status:true,result:result})
         }
@@ -166,7 +166,7 @@ router.get('/my/weekly',verify.user_auth,async function(req, res, next) {
         if(!req.query.date) {
             return res.status(400).send({status:false})
         }
-        let result = await todoModule.getTodo(req.session.ID,new Date(Number(req.query.date)),"WEEKLY")
+        let result = await todoModule.getWeeklyTodo(req.session.ID,new Date(Number(req.query.date)),"WEEKLY")
         if(result) {
             return res.send({status:true,result:result})
         }
@@ -244,7 +244,7 @@ router.get('/my/monthly',verify.user_auth,async function(req, res, next) {
         if(!req.query.date) {
             return res.status(400).send({status:false})
         }
-        let result = await todoModule.getTodo(req.session.ID,new Date(Number(req.query.date)),"MONTHLY")
+        let result = await todoModule.getMontlyTodo(req.session.ID,new Date(Number(req.query.date)),"MONTHLY")
         if(result) {
             return res.send({status:true,result:result})
         }
@@ -321,7 +321,7 @@ router.get('/target/daily',verify.user_auth,async function(req, res, next) {
         if(!req.query.date) {
             return res.status(400).send({status:false})
         }
-        let result = await todoModule.getTodo(req.query.ID,new Date(Number(req.query.date)),"DAILY")
+        let result = await todoModule.getDailyTodo(req.query.ID,new Date(Number(req.query.date)),"DAILY")
         if(result) {
             return res.send({status:true,result:result})
         }
@@ -339,7 +339,7 @@ router.get('/target/notification',verify.user_auth,async function(req, res, next
         if(!req.query.date) {
             return res.status(400).send({status:false})
         }
-        let result = await todoModule.getTodo(req.query.ID,new Date(Number(req.query.date)),"NOTIFICATION")
+        let result = await todoModule.getDailyNotificationTodo(req.query.ID,new Date(Number(req.query.date)),"NOTIFICATION")
         if(result) {
             return res.send({status:true,result:result})
         }

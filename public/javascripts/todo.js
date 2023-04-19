@@ -10,7 +10,7 @@ let TODO = (function () {
      * @param ID_HEAD : string
      * @constructor
      */
-    function TODO (TODO_LIST,TODO_CONTAINER,READ_ONLY) {
+    function TODO (TODO_LIST,TODO_CONTAINER,READ_ONLY,TYPE) {
         let tempMap = new Map();
         for(let i=0;i<TODO_LIST.length;i++) {
             tempMap.set(TODO_LIST[i].ID,TODO_LIST[i].DATA)
@@ -20,6 +20,7 @@ let TODO = (function () {
         // 이후 프론트 엔드 병합시 사용
         this.TODO_CONTAINER = TODO_CONTAINER
         this.READ_ONLY = READ_ONLY
+        this.TYPE = TYPE
         this.printTodo(TODO_LIST)
         document.getElementsByTagName("body")[0].addEventListener("click",function (e){
             if(document.getElementsByClassName("todo_modify_div")[0] && !e.target.classList.contains("todo_modify_div") && !e.target.classList.contains("jh_datepicker_div_table_thead_prev") && !e.target.classList.contains("jh_datepicker_div_table_thead_after")) {

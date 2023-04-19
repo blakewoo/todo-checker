@@ -22,7 +22,7 @@ exports.addTodo = async function (USER_ID,DATE,TARGET_DATE,TODO_DATA) {
 
 
 
-exports.getTodo = async function (USER_ID,DATE) {
+exports.getDailyTodo = async function (USER_ID,DATE) {
     try{
         // 나라 기준으로 0시0분부터 23시 59분까지의 값을 갖고 와야함
         // let startDate = time_data.getStartTime(DATE)
@@ -31,6 +31,7 @@ exports.getTodo = async function (USER_ID,DATE) {
         let endDate = new Date(DATE.setHours(24,0,0,0))
         return await todo_data.find({
             USER_ID: USER_ID,
+            TYPE:"DAILY",
             $or:[{TARGET_DATE: {"$gte":startDate,"$lte":endDate}},{DEAD_LINE: {"$gte":startDate,"$lte":endDate}}]
         })
     }
@@ -40,8 +41,80 @@ exports.getTodo = async function (USER_ID,DATE) {
     }
 }
 
-exports.getAllTodo = async function (USER_ID,DATE) {
+exports.getWeeklyTodo = async function (USER_ID,DATE) {
+    try{
+        // 나라 기준으로 0시0분부터 23시 59분까지의 값을 갖고 와야함
+        // let startDate = time_data.getStartTime(DATE)
+        // let endDate = time_data.getEndTime(DATE)
+        let startDate = new Date(DATE.setHours(0,0,0,0))
+        let endDate = new Date(DATE.setHours(24,0,0,0))
+        return await todo_data.find({
+            USER_ID: USER_ID,
+            TYPE:"WEEKLY",
+            $or:[{TARGET_DATE: {"$gte":startDate,"$lte":endDate}},{DEAD_LINE: {"$gte":startDate,"$lte":endDate}}]
+        })
+    }
+    catch(e) {
+        console.error(e)
+        return false
+    }
+}
 
+exports.getMontlyTodo = async function (USER_ID,DATE) {
+    try{
+        // 나라 기준으로 0시0분부터 23시 59분까지의 값을 갖고 와야함
+        // let startDate = time_data.getStartTime(DATE)
+        // let endDate = time_data.getEndTime(DATE)
+        let startDate = new Date(DATE.setHours(0,0,0,0))
+        let endDate = new Date(DATE.setHours(24,0,0,0))
+        return await todo_data.find({
+            USER_ID: USER_ID,
+            TYPE:"MONTHLY",
+            $or:[{TARGET_DATE: {"$gte":startDate,"$lte":endDate}},{DEAD_LINE: {"$gte":startDate,"$lte":endDate}}]
+        })
+    }
+    catch(e) {
+        console.error(e)
+        return false
+    }
+}
+
+exports.getDailyNotificationTodo = async function (USER_ID,DATE) {
+    try{
+        // 나라 기준으로 0시0분부터 23시 59분까지의 값을 갖고 와야함
+        // let startDate = time_data.getStartTime(DATE)
+        // let endDate = time_data.getEndTime(DATE)
+        let startDate = new Date(DATE.setHours(0,0,0,0))
+        let endDate = new Date(DATE.setHours(24,0,0,0))
+        return await todo_data.find({
+            USER_ID: USER_ID,
+            TYPE:"NOTIFICATION",
+            $or:[{TARGET_DATE: {"$gte":startDate,"$lte":endDate}},{DEAD_LINE: {"$gte":startDate,"$lte":endDate}}]
+        })
+    }
+    catch(e) {
+        console.error(e)
+        return false
+    }
+}
+
+exports.getMonthlyNotificationTodo = async function (USER_ID,DATE) {
+    try{
+        // 나라 기준으로 0시0분부터 23시 59분까지의 값을 갖고 와야함
+        // let startDate = time_data.getStartTime(DATE)
+        // let endDate = time_data.getEndTime(DATE)
+        let startDate = new Date(DATE.setHours(0,0,0,0))
+        let endDate = new Date(DATE.setHours(24,0,0,0))
+        return await todo_data.find({
+            USER_ID: USER_ID,
+            TYPE:"NOTIFICATION",
+            $or:[{TARGET_DATE: {"$gte":startDate,"$lte":endDate}},{DEAD_LINE: {"$gte":startDate,"$lte":endDate}}]
+        })
+    }
+    catch(e) {
+        console.error(e)
+        return false
+    }
 }
 
 exports.updateTodo = async function (TODO_ID,TODO_DATA) {
