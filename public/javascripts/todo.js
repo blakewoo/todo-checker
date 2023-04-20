@@ -41,7 +41,7 @@ let TODO = (function () {
      * @param TODO_OBJ : TODO_OBJECT
      * @returns {string|Boolean}
      */
-    TODO.prototype.addTodo = async function (TODO_OBJ,TARGET_DATE) {
+    TODO.prototype.addTodo = async function (TODO_OBJ,TARGET_DATE,TYPE) {
         // TODO 값 검증 루틴
         if(!TODO_OBJ.Value) {
             return false
@@ -49,12 +49,14 @@ let TODO = (function () {
         if(this.READ_ONLY) {
             return false
         }
+
         let sendData = {
             CREATED_DATE:new Date(),
             TARGET_DATE:TARGET_DATE,
             DATA:TODO_OBJ.Value,
         }
-        let result = await this.addBackTodo(sendData,TARGET_DATE)
+
+        let result = await this.addBackTodo(sendData,TYPE)
         if(result) {
             TODO_OBJ.DeadLine = null
             TODO_OBJ.IS_DONE = false
@@ -68,9 +70,22 @@ let TODO = (function () {
         }
     }
 
-    TODO.prototype.addBackTodo =async function (sendData) {
+    TODO.prototype.addBackTodo =async function (sendData,todoType) {
         try{
-            return await syncRequestFunction("POST","/todolist/my/daily",sendData,"JSON")
+            let url = "/todolist/my/daily"
+            if(todoType === "dailyTodo") {
+                url = "/todolist/my/daily"
+            }
+            else if(todoType === "weeklyTodo") {
+                url = "/todolist/my/weekly"
+            }
+            else if(todoType === "monthlyTodo") {
+                url = "/todolist/my/monthly"
+            }
+            else {
+                url = "/todolist/my/notification"
+            }
+            return await syncRequestFunction("POST",url,sendData,"JSON")
         }
         catch(e) {
             console.error(e)

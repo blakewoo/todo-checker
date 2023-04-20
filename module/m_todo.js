@@ -2,7 +2,7 @@ const todo_data = require("../model/to-do")
 const time_data = require("../module/m_timezone")
 
 
-exports.addTodo = async function (USER_ID,DATE,TARGET_DATE,TODO_DATA) {
+exports.addTodo = async function (USER_ID,DATE,TARGET_DATE,TODO_DATA,TYPE) {
    try{
        let result = await todo_data.create({
            USER_ID: USER_ID,
@@ -10,6 +10,7 @@ exports.addTodo = async function (USER_ID,DATE,TARGET_DATE,TODO_DATA) {
            CREATED_DATE: DATE,
            DEAD_LINE:null,
            DATA: TODO_DATA,
+           TYPE:TYPE,
            IS_DONE: false
        })
        return result

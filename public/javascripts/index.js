@@ -40,13 +40,16 @@ window.onload = async function (event) {
             if (Data === "") {
                 return
             }
+            let id = document.querySelector(".todo_category_span.active").getAttribute("id")
             event.currentTarget.value = ""
             let temp = new TODO_OBJECT(null,Data,new Date(),null,false)
-            todoObj.addTodo(temp,calendar.seletedDate)
+            todoObj.addTodo(temp,calendar.seletedDate,id)
         }
     }
 
     function viewingTodo(event) {
+        document.querySelector(".todo_category_span.active").classList.remove("active")
+        event.currentTarget.classList.add("active")
         requestFunction("GET","/todolist/my/notification?date="+new Date().getTime(),{},"JSON",function (result) {
             if(result.status) {
                 let temp_list = []
@@ -61,6 +64,8 @@ window.onload = async function (event) {
     }
 
     function dailyTodo(event) {
+        document.querySelector(".todo_category_span.active").classList.remove("active")
+        event.currentTarget.classList.add("active")
         requestFunction("GET","/todolist/my/daily?date="+new Date().getTime(),{},"JSON",function (result) {
             if(result.status) {
                 let temp_list = []
@@ -75,6 +80,9 @@ window.onload = async function (event) {
     }
 
     function weeklyTodo(event) {
+        console.log(       document.querySelector(".todo_category_span.active"))
+        document.querySelector(".todo_category_span.active").classList.remove("active")
+        event.currentTarget.classList.add("active")
         requestFunction("GET","/todolist/my/weekly?date="+new Date().getTime(),{},"JSON",function (result) {
             if(result.status) {
                 let temp_list = []
@@ -89,6 +97,8 @@ window.onload = async function (event) {
     }
 
     function monthlyTodo(event) {
+        document.querySelector(".todo_category_span.active").classList.remove("active")
+        event.currentTarget.classList.add("active")
         requestFunction("GET","/todolist/my/monthly?date="+new Date().getTime(),{},"JSON",function (result) {
             if(result.status) {
                 let temp_list = []

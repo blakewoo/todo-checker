@@ -144,6 +144,11 @@ input[type="checkbox"]:checked + label:after {
     font-weight: bold;
 }
 
+.todo_category_span.active{
+    cursor: pointer;
+    font-weight: bold;
+}
+
 @media (max-width: 1300px)  {
 
     .left_div{
