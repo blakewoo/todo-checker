@@ -4,7 +4,8 @@ window.onload = async function (event) {
     let todoObj = await initTodo()
 
     calendar.daySelected = function (day) {
-        todoObj.getDateTodo(day)
+        let id = document.querySelector(".todo_category_span.active").getAttribute("id")
+        todoObj.getDateTodo(day,false,null,id)
     }
 
     document.getElementById("todo_input").addEventListener("keyup", todoInputEvent)
@@ -80,7 +81,6 @@ window.onload = async function (event) {
     }
 
     function weeklyTodo(event) {
-        console.log(       document.querySelector(".todo_category_span.active"))
         document.querySelector(".todo_category_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
         requestFunction("GET","/todolist/my/weekly?date="+new Date().getTime(),{},"JSON",function (result) {

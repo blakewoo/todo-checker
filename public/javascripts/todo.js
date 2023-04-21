@@ -189,7 +189,7 @@ let TODO = (function () {
      * 특정 날짜의 TODO 값 가져오기
      * @param date : Date
      */
-    TODO.prototype.getDateTodo =async function (date,isOthers,ID) {
+    TODO.prototype.getDateTodo =async function (date,isOthers,ID,TYPE) {
         // 백엔드에서 요청해서 갖고 오기
         if(isOthers) {
             let result = await syncRequestFunction("GET","/todolist/target/daily?ID="+ID+"&date="+date.getTime(),null,"JSON")
@@ -198,7 +198,21 @@ let TODO = (function () {
             }
         }
         else {
-            let result = await syncRequestFunction("GET","/todolist/my/daily?date="+date.getTime(),null,"JSON")
+            let url = ""
+            if(TYPE === "dailyTodo") {
+                url = "/todolist/my/daily?date="
+            }
+            else if(TYPE === "weeklyTodo") {
+                url = "/todolist/my/weekly?date="
+            }
+            else if(TYPE === "monthlyTodo") {
+                url = "/todolist/my/monthly?date="
+            }
+            else {
+                url = "/todolist/my/notification?date="
+            }
+
+            let result = await syncRequestFunction("GET",url+date.getTime(),null,"JSON")
             if(result.status) {
                 this.printTodo(this.listConvertTodoObject(result.result))
             }
