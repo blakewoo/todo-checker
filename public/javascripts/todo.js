@@ -16,7 +16,6 @@ let TODO = (function () {
             tempMap.set(TODO_LIST[i].ID,TODO_LIST[i].DATA)
         }
         this.TODO_Map = tempMap
-
         // 이후 프론트 엔드 병합시 사용
         this.TODO_CONTAINER = TODO_CONTAINER
         this.READ_ONLY = READ_ONLY
@@ -190,6 +189,7 @@ let TODO = (function () {
      * @param date : Date
      */
     TODO.prototype.getDateTodo =async function (date,isOthers,ID,TYPE) {
+        this.TARGET_DATE = date;
         // 백엔드에서 요청해서 갖고 오기
         if(isOthers) {
             let result = await syncRequestFunction("GET","/todolist/target/daily?ID="+ID+"&date="+date.getTime(),null,"JSON")
@@ -200,19 +200,19 @@ let TODO = (function () {
         else {
             let url = ""
             if(TYPE === "dailyTodo") {
-                url = "/todolist/my/daily?date="
+                url = "/todolist/my/daily?date="+date.getTime()
             }
             else if(TYPE === "weeklyTodo") {
-                url = "/todolist/my/weekly?date="
+                url = "/todolist/my/weekly?date="+date.getTime()
             }
             else if(TYPE === "monthlyTodo") {
-                url = "/todolist/my/monthly?date="
+                url = "/todolist/my/monthly?date="+date.getTime()
             }
             else {
-                url = "/todolist/my/notification?date="
+                url = "/todolist/my/notification?date="+date.getTime()
             }
 
-            let result = await syncRequestFunction("GET",url+date.getTime(),null,"JSON")
+            let result = await syncRequestFunction("GET",url,null,"JSON")
             if(result.status) {
                 this.printTodo(this.listConvertTodoObject(result.result))
             }

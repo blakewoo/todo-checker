@@ -43,7 +43,7 @@ window.onload = async function (event) {
             }
             let id = document.querySelector(".todo_category_span.active").getAttribute("id")
             event.currentTarget.value = ""
-            let temp = new TODO_OBJECT(null,Data,new Date(),null,false)
+            let temp = new TODO_OBJECT(null,Data,calendar.seletedDate,null,false)
             todoObj.addTodo(temp,calendar.seletedDate,id)
         }
     }
@@ -51,14 +51,14 @@ window.onload = async function (event) {
     function viewingTodo(event) {
         document.querySelector(".todo_category_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
-        requestFunction("GET","/todolist/my/notification?date="+new Date().getTime(),{},"JSON",function (result) {
+        let targetDate = ""
+        requestFunction("GET","/todolist/my/notification?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
             if(result.status) {
                 let temp_list = []
                 for(let i=0;i<result.result.length;i++) {
                     let temp = result.result[i]
                     temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
                 }
-
                 todoObj = new TODO(temp_list,document.getElementById("todo_container_div"),false,"NOTIFICATION")
             }
         })
@@ -67,14 +67,13 @@ window.onload = async function (event) {
     function dailyTodo(event) {
         document.querySelector(".todo_category_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
-        requestFunction("GET","/todolist/my/daily?date="+new Date().getTime(),{},"JSON",function (result) {
+        requestFunction("GET","/todolist/my/daily?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
             if(result.status) {
                 let temp_list = []
                 for(let i=0;i<result.result.length;i++) {
                     let temp = result.result[i]
                     temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
                 }
-
                 todoObj = new TODO(temp_list,document.getElementById("todo_container_div"),false,"DAILY")
             }
         })
@@ -83,14 +82,13 @@ window.onload = async function (event) {
     function weeklyTodo(event) {
         document.querySelector(".todo_category_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
-        requestFunction("GET","/todolist/my/weekly?date="+new Date().getTime(),{},"JSON",function (result) {
+        requestFunction("GET","/todolist/my/weekly?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
             if(result.status) {
                 let temp_list = []
                 for(let i=0;i<result.result.length;i++) {
                     let temp = result.result[i]
                     temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
                 }
-
                 todoObj = new TODO(temp_list,document.getElementById("todo_container_div"),false,"WEEKLY")
             }
         })
@@ -99,14 +97,13 @@ window.onload = async function (event) {
     function monthlyTodo(event) {
         document.querySelector(".todo_category_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
-        requestFunction("GET","/todolist/my/monthly?date="+new Date().getTime(),{},"JSON",function (result) {
+        requestFunction("GET","/todolist/my/monthly?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
             if(result.status) {
                 let temp_list = []
                 for(let i=0;i<result.result.length;i++) {
                     let temp = result.result[i]
                     temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
                 }
-
                 todoObj = new TODO(temp_list,document.getElementById("todo_container_div"),false,"MONTHLY")
             }
         })

@@ -33,7 +33,7 @@ exports.getDailyTodo = async function (USER_ID,DATE) {
         return await todo_data.find({
             USER_ID: USER_ID,
             TYPE:"DAILY",
-            $or:[{TARGET_DATE: {"$gte":startDate,"$lte":endDate}},{DEAD_LINE: {"$gte":startDate,"$lte":endDate}}]
+            $or:[{TARGET_DATE: {"$gte":startDate,"$lt":endDate}},{DEAD_LINE: {"$gte":startDate,"$lt":endDate}}]
         })
     }
     catch(e) {
@@ -44,15 +44,16 @@ exports.getDailyTodo = async function (USER_ID,DATE) {
 
 exports.getWeeklyTodo = async function (USER_ID,DATE) {
     try{
-        // 나라 기준으로 0시0분부터 23시 59분까지의 값을 갖고 와야함
-        // let startDate = time_data.getStartTime(DATE)
-        // let endDate = time_data.getEndTime(DATE)
         let startDate = new Date(DATE.setHours(0,0,0,0))
-        let endDate = new Date(DATE.setHours(24,0,0,0))
+        let dow = startDate.getDay()
+        startDate.setDate(startDate.getDate()-dow)
+        let endDate = new Date(startDate)
+        endDate.setDate(endDate.getDate()+6)
+
         return await todo_data.find({
             USER_ID: USER_ID,
             TYPE:"WEEKLY",
-            $or:[{TARGET_DATE: {"$gte":startDate,"$lte":endDate}},{DEAD_LINE: {"$gte":startDate,"$lte":endDate}}]
+            $or:[{TARGET_DATE: {"$gte":startDate,"$lt":endDate}},{DEAD_LINE: {"$gte":startDate,"$lt":endDate}}]
         })
     }
     catch(e) {
@@ -63,15 +64,12 @@ exports.getWeeklyTodo = async function (USER_ID,DATE) {
 
 exports.getMontlyTodo = async function (USER_ID,DATE) {
     try{
-        // 나라 기준으로 0시0분부터 23시 59분까지의 값을 갖고 와야함
-        // let startDate = time_data.getStartTime(DATE)
-        // let endDate = time_data.getEndTime(DATE)
-        let startDate = new Date(DATE.setHours(0,0,0,0))
-        let endDate = new Date(DATE.setHours(24,0,0,0))
+        let startDate = new Date(DATE.getFullYear(), DATE.getMonth(), 1);
+        let endDate = new Date(DATE.getFullYear(), DATE.getMonth() + 1, 0);
         return await todo_data.find({
             USER_ID: USER_ID,
             TYPE:"MONTHLY",
-            $or:[{TARGET_DATE: {"$gte":startDate,"$lte":endDate}},{DEAD_LINE: {"$gte":startDate,"$lte":endDate}}]
+            $or:[{TARGET_DATE: {"$gte":startDate,"$lt":endDate}},{DEAD_LINE: {"$gte":startDate,"$lt":endDate}}]
         })
     }
     catch(e) {
@@ -90,7 +88,7 @@ exports.getDailyNotificationTodo = async function (USER_ID,DATE) {
         return await todo_data.find({
             USER_ID: USER_ID,
             TYPE:"NOTIFICATION",
-            $or:[{TARGET_DATE: {"$gte":startDate,"$lte":endDate}},{DEAD_LINE: {"$gte":startDate,"$lte":endDate}}]
+            $or:[{TARGET_DATE: {"$gte":startDate,"$lt":endDate}},{DEAD_LINE: {"$gte":startDate,"$lt":endDate}}]
         })
     }
     catch(e) {
@@ -101,15 +99,12 @@ exports.getDailyNotificationTodo = async function (USER_ID,DATE) {
 
 exports.getMonthlyNotificationTodo = async function (USER_ID,DATE) {
     try{
-        // 나라 기준으로 0시0분부터 23시 59분까지의 값을 갖고 와야함
-        // let startDate = time_data.getStartTime(DATE)
-        // let endDate = time_data.getEndTime(DATE)
-        let startDate = new Date(DATE.setHours(0,0,0,0))
-        let endDate = new Date(DATE.setHours(24,0,0,0))
+        let startDate = new Date(DATE.getFullYear(), DATE.getMonth(), 1);
+        let endDate = new Date(DATE.getFullYear(), DATE.getMonth() + 1, 0);
         return await todo_data.find({
             USER_ID: USER_ID,
             TYPE:"NOTIFICATION",
-            $or:[{TARGET_DATE: {"$gte":startDate,"$lte":endDate}},{DEAD_LINE: {"$gte":startDate,"$lte":endDate}}]
+            $or:[{TARGET_DATE: {"$gte":startDate,"$lt":endDate}},{DEAD_LINE: {"$gte":startDate,"$lt":endDate}}]
         })
     }
     catch(e) {
