@@ -3,9 +3,10 @@ window.onload = async function (event) {
     let calendar = new JH_calendar(document.getElementById("calendar_div"), new Date(),true)
     await initShared()
     let selectTag = document.getElementById("sharedTodoSelect")
+    let todoObj = null
     let sharedId = selectTag.options[selectTag.selectedIndex].text
     if(sharedId) {
-        let todoObj = await initTodo(sharedId)
+        todoObj = await initTodo(sharedId)
 
         calendar.daySelected = function (day) {
             todoObj.getDateTodo(day,true,sharedId)
@@ -60,18 +61,63 @@ window.onload = async function (event) {
     }
 
     function viewingTodo(event) {
-
+        document.querySelector(".todo_category_span.active").classList.remove("active")
+        event.currentTarget.classList.add("active")
+        let targetDate = ""
+        requestFunction("GET","/todolist/my/notification?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
+            if(result.status) {
+                let temp_list = []
+                for(let i=0;i<result.result.length;i++) {
+                    let temp = result.result[i]
+                    temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
+                }
+                todoObj = new TODO(temp_list,document.getElementById("todo_container_div"),true,"NOTIFICATION")
+            }
+        })
     }
 
     function dailyTodo(event) {
-
+        document.querySelector(".todo_category_span.active").classList.remove("active")
+        event.currentTarget.classList.add("active")
+        requestFunction("GET","/todolist/my/daily?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
+            if(result.status) {
+                let temp_list = []
+                for(let i=0;i<result.result.length;i++) {
+                    let temp = result.result[i]
+                    temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
+                }
+                todoObj = new TODO(temp_list,document.getElementById("todo_container_div"),true,"DAILY")
+            }
+        })
     }
 
     function weeklyTodo(event) {
-
+        document.querySelector(".todo_category_span.active").classList.remove("active")
+        event.currentTarget.classList.add("active")
+        requestFunction("GET","/todolist/my/weekly?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
+            if(result.status) {
+                let temp_list = []
+                for(let i=0;i<result.result.length;i++) {
+                    let temp = result.result[i]
+                    temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
+                }
+                todoObj = new TODO(temp_list,document.getElementById("todo_container_div"),true,"WEEKLY")
+            }
+        })
     }
 
     function monthlyTodo(event) {
-
+        document.querySelector(".todo_category_span.active").classList.remove("active")
+        event.currentTarget.classList.add("active")
+        requestFunction("GET","/todolist/my/monthly?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
+            if(result.status) {
+                let temp_list = []
+                for(let i=0;i<result.result.length;i++) {
+                    let temp = result.result[i]
+                    temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
+                }
+                todoObj = new TODO(temp_list,document.getElementById("todo_container_div"),true,"MONTHLY")
+            }
+        })
     }
 }
