@@ -5,8 +5,8 @@ It's a web application you can use if you want to observe and check what someone
 
 ## Functions
 - Sign up, Sign in, Withdrawal
-- TODO : CRUD
-- Upload image
+- TODO : CRUD, Daily, Weekly, Monthly
+- Upload image (not yet)
 - Assign a observer
 - Realtime chatting with observer
 
@@ -16,6 +16,6 @@ It's a web application you can use if you want to observe and check what someone
 - ejs
 - html
 - css
-- socket.io (not yet)
+- socket.io
 - mocha  
 - TDD (not yet)
