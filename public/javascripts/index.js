@@ -3,6 +3,12 @@ window.onload = async function (event) {
     let calendar = new JH_calendar(document.getElementById("calendar_div"), new Date(),false)
     let todoObj = await initTodo()
 
+    calendar.getSchedule = function (targetDate) {
+        let test = new Map()
+        test.set("2023-4-25",["테스트"])
+        return test
+    }
+
     calendar.daySelected = function (day) {
         let id = document.querySelector(".todo_category_span.active").getAttribute("id")
         todoObj.getDateTodo(day,false,null,id)

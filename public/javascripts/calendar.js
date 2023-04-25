@@ -1,5 +1,5 @@
 const JH_calendar = (function () {
-    function JH_calendar (targetDiv,targetDate,readOnly) {
+    function JH_calendar (targetDiv,targetDate,readOnly,monthlyEvent) {
         if(targetDiv===null || targetDiv===undefined){
             console.error("[JH_calendar error]Target div is not provided")
             return;
@@ -12,6 +12,7 @@ const JH_calendar = (function () {
         this.targetDiv = targetDiv
         this.targetDate = targetDate
         this.seletedDate = targetDate
+        this.monthlyEvent = monthlyEvent
         this.readOnly = readOnly
 
         this.setPaintTarget(targetDate)
@@ -50,10 +51,26 @@ const JH_calendar = (function () {
         return html;
     }
 
+    JH_calendar.prototype.setMonthlyEvent = function (monthlyEvent) {
+        this.monthlyEvent = monthlyEvent
+    }
+
+    JH_calendar.prototype.writeDailyEvent = function (Array) {
+        let str = ""
+        for(let i=0;i<Array.length;i++) {
+            str += Array[i]+"<br>"
+        }
+        return str;
+    }
+
     JH_calendar.prototype.drawTbody = function (targetDate) {
+        let monthlyEvent = this.monthlyEvent
         let thisMonthFirstDay = new Date(targetDate.getFullYear(), targetDate.getMonth(), 1);
         let thisMonthLastDay = new Date(targetDate.getFullYear(), targetDate.getMonth() + 1, 0);
         let currentNowYearMonth = (new Date()).getFullYear() === targetDate.getFullYear() && (new Date()).getMonth() === targetDate.getMonth()
+        let targetYear = targetDate.getFullYear()
+        let targetMonth = targetDate.getMonth()
+        let targetDay = targetDate.getDate()
 
         let tbody = document.getElementById("calendar_table_tbody")
         let cnt = 0;
@@ -62,6 +79,7 @@ const JH_calendar = (function () {
             str += "<td></td>"
             cnt += 1
         }
+
         for(let i=1;i<=thisMonthLastDay.getDate();i++) {
             if(cnt%7===0) {
                 str += "<tr>"
@@ -80,7 +98,15 @@ const JH_calendar = (function () {
                 classStr+= " day_selected"
             }
 
-            str += "<td class='"+classStr+"' id='day-"+thisMonthLastDay.getFullYear()+"-"+thisMonthLastDay.getMonth()+"-"+i+"'><br><label class='day_label'>"+i+"</label></td>"
+            let dayEvent = monthlyEvent.get(targetYear+"-"+targetMonth+"-"+targetDay)
+            if(dayEvent && dayEvent.length !== 0) {
+                str += "<td class='"+classStr+"' id='day-"+thisMonthLastDay.getFullYear()+"-"+thisMonthLastDay.getMonth()+"-"+i+"'><br><label class='day_label'>"+i+"</label>" +
+                    this.writeDailyEvent(dayEvent) +
+                    "</td>"
+            }
+            else {
+                str += "<td class='"+classStr+"' id='day-"+thisMonthLastDay.getFullYear()+"-"+thisMonthLastDay.getMonth()+"-"+i+"'><br><label class='day_label'>"+i+"</label></td>"
+            }
 
             if(cnt%7===0) {
                 str += "</tr>"
