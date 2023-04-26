@@ -13,6 +13,8 @@ window.onload = async function (event) {
         }
     }
 
+    calendar.setPaintTarget()
+
     document.getElementById("calendarViewTodo").addEventListener("click",viewingTodo)
     document.getElementById("dailyTodo").addEventListener("click",dailyTodo)
     document.getElementById("weeklyTodo").addEventListener("click",weeklyTodo)

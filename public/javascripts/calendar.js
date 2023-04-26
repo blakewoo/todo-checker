@@ -14,8 +14,6 @@ const JH_calendar = (function () {
         this.seletedDate = targetDate
         this.monthlyEvent = monthlyEvent
         this.readOnly = readOnly
-
-        this.setPaintTarget(targetDate)
     }
 
     JH_calendar.prototype.daySelected = function (day) {
@@ -23,10 +21,12 @@ const JH_calendar = (function () {
     }
 
     JH_calendar.prototype.setPaintTarget = function (targetDate) {
-        this.targetDate = targetDate
-        this.paint(targetDate)
-        this.drawTbody(targetDate)
-        this.buttonEvent(targetDate)
+        if(targetDate) {
+            this.targetDate = targetDate
+        }
+        this.paint(this.targetDate)
+        this.drawTbody(this.targetDate)
+        this.buttonEvent(this.targetDate)
     }
     JH_calendar.prototype.paint = function (targetDate) {
         this.targetDiv.innerHTML = this.drawTable(targetDate.getFullYear(),targetDate.getMonth()+1)
@@ -58,7 +58,7 @@ const JH_calendar = (function () {
     JH_calendar.prototype.writeDailyEvent = function (Array) {
         let str = ""
         for(let i=0;i<Array.length;i++) {
-            str += Array[i]+"<br>"
+            str += "<label style='display: inline-block'>"+Array[i]+"</label><br>"
         }
         return str;
     }
@@ -69,8 +69,9 @@ const JH_calendar = (function () {
         let thisMonthLastDay = new Date(targetDate.getFullYear(), targetDate.getMonth() + 1, 0);
         let currentNowYearMonth = (new Date()).getFullYear() === targetDate.getFullYear() && (new Date()).getMonth() === targetDate.getMonth()
         let targetYear = targetDate.getFullYear()
-        let targetMonth = targetDate.getMonth()
-        let targetDay = targetDate.getDate()
+        let targetMonth = targetDate.getMonth()+1
+        let targetDay = ""
+        let weekCount = 1
 
         let tbody = document.getElementById("calendar_table_tbody")
         let cnt = 0;
@@ -81,6 +82,7 @@ const JH_calendar = (function () {
         }
 
         for(let i=1;i<=thisMonthLastDay.getDate();i++) {
+            targetDay = i
             if(cnt%7===0) {
                 str += "<tr>"
             }
@@ -100,7 +102,7 @@ const JH_calendar = (function () {
 
             let dayEvent = monthlyEvent.get(targetYear+"-"+targetMonth+"-"+targetDay)
             if(dayEvent && dayEvent.length !== 0) {
-                str += "<td class='"+classStr+"' id='day-"+thisMonthLastDay.getFullYear()+"-"+thisMonthLastDay.getMonth()+"-"+i+"'><br><label class='day_label'>"+i+"</label>" +
+                str += "<td class='"+classStr+"' id='day-"+thisMonthLastDay.getFullYear()+"-"+thisMonthLastDay.getMonth()+"-"+i+"'><br><label class='day_label'>"+i+"</label><br>" +
                     this.writeDailyEvent(dayEvent) +
                     "</td>"
             }
@@ -109,10 +111,15 @@ const JH_calendar = (function () {
             }
 
             if(cnt%7===0) {
+                weekCount += 1
                 str += "</tr>"
             }
         }
         tbody.innerHTML = str;
+        let tds = document.getElementsByClassName("day_td")
+        for(let i=0;i<tds.length;i++) {
+            tds[i].style.height = "calc(100% /"+weekCount+")"
+        }
     }
 
     JH_calendar.prototype.buttonEvent = function (targetDate) {
