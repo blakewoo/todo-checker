@@ -3,8 +3,7 @@ window.onload = async function (event) {
     let calendar = new JH_calendar(document.getElementById("calendar_div"), new Date(),false)
     let todoObj = await initTodo()
 
-    let test = new Map()
-    test.set("2023-4-25",["테스트"])
+    let test = await getNotificationTodo(new Date())
 
     calendar.setMonthlyEvent(test)
 
@@ -116,4 +115,23 @@ window.onload = async function (event) {
         })
     }
 
+    async function getNotificationTodo(targetDate) {
+        return new Promise((resolve,reject)=>{
+            requestFunction("GET","/todolist/my/notification?date="+targetDate.getTime(),{},"JSON",function (result){
+                if(result.status) {
+                    let resultMap = new Map()
+                    if(result.result.length!==0) {
+                        for(let i=0;i<result.result.length;i++) {
+                            let temp = result.result[i]
+                            resultMap.set(temp.CREATED_DATE.getFullYear()+temp.CREATED_DATE.getMonth()+temp.CREATED_DATE.getDate(),temp.DATA)
+                        }
+                    }
+                    resolve(resultMap)
+                }
+                else {
+                    reject(null)
+                }
+            })
+        })
+    }
 }
