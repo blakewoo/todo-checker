@@ -82,7 +82,7 @@ let TODO = (function () {
                 url = "/todolist/my/monthly"
             }
             else {
-                url = "/todolist/my/notification"
+                url = "/todolist/my/notification/daily"
             }
             return await syncRequestFunction("POST",url,sendData,"JSON")
         }
@@ -209,7 +209,7 @@ let TODO = (function () {
                 url = "/todolist/my/monthly?date="+date.getTime()
             }
             else {
-                url = "/todolist/my/notification?date="+date.getTime()
+                url = "/todolist/my/notification/daily?date="+date.getTime()
             }
 
             let result = await syncRequestFunction("GET",url,null,"JSON")

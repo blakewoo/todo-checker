@@ -66,7 +66,7 @@ window.onload = async function (event) {
         document.querySelector(".todo_category_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
         let targetDate = ""
-        requestFunction("GET","/todolist/my/notification?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
+        requestFunction("GET","/todolist/my/notification/daily?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
             if(result.status) {
                 let temp_list = []
                 for(let i=0;i<result.result.length;i++) {

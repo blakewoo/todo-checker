@@ -58,7 +58,7 @@ window.onload = async function (event) {
         document.querySelector(".todo_category_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
         let targetDate = ""
-        requestFunction("GET","/todolist/my/notification?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
+        requestFunction("GET","/todolist/my/notification/daily?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
             if(result.status) {
                 let temp_list = []
                 for(let i=0;i<result.result.length;i++) {
@@ -117,15 +117,24 @@ window.onload = async function (event) {
 
     async function getNotificationTodo(targetDate) {
         return new Promise((resolve,reject)=>{
-            requestFunction("GET","/todolist/my/notification?date="+targetDate.getTime(),{},"JSON",function (result){
+            requestFunction("GET","/todolist/my/notification/monthly?date="+targetDate.getTime(),{},"JSON",function (result){
                 if(result.status) {
                     let resultMap = new Map()
                     if(result.result.length!==0) {
                         for(let i=0;i<result.result.length;i++) {
                             let temp = result.result[i]
-                            resultMap.set(temp.CREATED_DATE.getFullYear()+temp.CREATED_DATE.getMonth()+temp.CREATED_DATE.getDate(),temp.DATA)
+                            let tempDate = new Date(temp.CREATED_DATE).getFullYear()+"-"+new Date(temp.CREATED_DATE).getMonth()+"-"+new Date(temp.CREATED_DATE).getDate()
+                            if (resultMap.has(tempDate)) {
+                                let tempData = resultMap.get(tempDate)
+                                tempData.push(temp.DATA)
+                                resultMap.set(tempDate,tempData)
+                            }
+                            else {
+                                resultMap.set(tempDate,[temp.DATA])
+                            }
                         }
                     }
+                    console.log(resultMap)
                     resolve(resultMap)
                 }
                 else {

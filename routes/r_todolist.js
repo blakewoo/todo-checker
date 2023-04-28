@@ -82,13 +82,33 @@ router.delete('/my/daily',verify.user_auth,async function(req, res, next) {
 });
 
 // 표기될 TODO 불러들이기
-router.get('/my/notification',verify.user_auth,async function(req, res, next) {
+router.get('/my/notification/daily',verify.user_auth,async function(req, res, next) {
     try{
         // get my comment list
         if(!req.query.date) {
             return res.status(400).send({status:false})
         }
         let result = await todoModule.getDailyNotificationTodo(req.session.ID,new Date(Number(req.query.date)),"NOTIFICATION")
+        if(result) {
+            return res.send({status:true,result:result})
+        }
+        else {
+            return res.status(404).send({status:false})
+        }
+    }
+    catch(e){
+        return res.status(404).send({status:false})
+    }
+});
+
+// 표기될 TODO 불러들이기
+router.get('/my/notification/monthly',verify.user_auth,async function(req, res, next) {
+    try{
+        // get my comment list
+        if(!req.query.date) {
+            return res.status(400).send({status:false})
+        }
+        let result = await todoModule.getMonthlyNotificationTodo(req.session.ID,new Date(Number(req.query.date)),"NOTIFICATION")
         if(result) {
             return res.send({status:true,result:result})
         }
