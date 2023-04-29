@@ -3,9 +3,8 @@ window.onload = async function (event) {
     let calendar = new JH_calendar(document.getElementById("calendar_div"), new Date(),false)
     let todoObj = await initTodo()
 
-    let test = await getNotificationTodo(new Date())
-
-    calendar.setMonthlyEvent(test)
+    let monthEvent = await getNotificationTodo(new Date())
+    calendar.setMonthlyEvent(monthEvent)
 
     calendar.daySelected = function (day) {
         let id = document.querySelector(".todo_category_span.active").getAttribute("id")

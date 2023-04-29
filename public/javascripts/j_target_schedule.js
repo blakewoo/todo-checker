@@ -12,6 +12,8 @@ window.onload = async function (event) {
             todoObj.getDateTodo(day,true,sharedId)
         }
     }
+    let monthEvent = await getNotificationTodo(new Date())
+    calendar.setMonthlyEvent(monthEvent)
 
     calendar.setPaintTarget()
 
@@ -66,7 +68,7 @@ window.onload = async function (event) {
         document.querySelector(".todo_category_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
         let targetDate = ""
-        requestFunction("GET","/todolist/my/notification/daily?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
+        requestFunction("GET","/todolist/target/notification/daily?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
             if(result.status) {
                 let temp_list = []
                 for(let i=0;i<result.result.length;i++) {
@@ -81,7 +83,7 @@ window.onload = async function (event) {
     function dailyTodo(event) {
         document.querySelector(".todo_category_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
-        requestFunction("GET","/todolist/my/daily?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
+        requestFunction("GET","/todolist/target/daily?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
             if(result.status) {
                 let temp_list = []
                 for(let i=0;i<result.result.length;i++) {
@@ -96,7 +98,7 @@ window.onload = async function (event) {
     function weeklyTodo(event) {
         document.querySelector(".todo_category_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
-        requestFunction("GET","/todolist/my/weekly?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
+        requestFunction("GET","/todolist/target/weekly?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
             if(result.status) {
                 let temp_list = []
                 for(let i=0;i<result.result.length;i++) {
@@ -111,7 +113,7 @@ window.onload = async function (event) {
     function monthlyTodo(event) {
         document.querySelector(".todo_category_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
-        requestFunction("GET","/todolist/my/monthly?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
+        requestFunction("GET","/todolist/target/monthly?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
             if(result.status) {
                 let temp_list = []
                 for(let i=0;i<result.result.length;i++) {
@@ -120,6 +122,35 @@ window.onload = async function (event) {
                 }
                 todoObj = new TODO(temp_list,document.getElementById("todo_container_div"),true,"MONTHLY")
             }
+        })
+    }
+
+
+    async function getNotificationTodo(targetDate) {
+        return new Promise((resolve,reject)=>{
+            requestFunction("GET","/todolist/target/notification/monthly?date="+targetDate.getTime(),{},"JSON",function (result){
+                if(result.status) {
+                    let resultMap = new Map()
+                    if(result.result.length!==0) {
+                        for(let i=0;i<result.result.length;i++) {
+                            let temp = result.result[i]
+                            let tempDate = new Date(temp.CREATED_DATE).getFullYear()+"-"+new Date(temp.CREATED_DATE).getMonth()+"-"+new Date(temp.CREATED_DATE).getDate()
+                            if (resultMap.has(tempDate)) {
+                                let tempData = resultMap.get(tempDate)
+                                tempData.push(temp.DATA)
+                                resultMap.set(tempDate,tempData)
+                            }
+                            else {
+                                resultMap.set(tempDate,[temp.DATA])
+                            }
+                        }
+                    }
+                    resolve(resultMap)
+                }
+                else {
+                    reject(null)
+                }
+            })
         })
     }
 }

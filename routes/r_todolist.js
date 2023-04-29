@@ -354,12 +354,30 @@ router.get('/target/daily',verify.user_auth,async function(req, res, next) {
     }
 });
 
-router.get('/target/notification',verify.user_auth,async function(req, res, next) {
+router.get('/target/notification/daily',verify.user_auth,async function(req, res, next) {
     try{
         if(!req.query.date) {
             return res.status(400).send({status:false})
         }
         let result = await todoModule.getDailyNotificationTodo(req.query.ID,new Date(Number(req.query.date)),"NOTIFICATION")
+        if(result) {
+            return res.send({status:true,result:result})
+        }
+        else {
+            return res.status(404).send({status:false})
+        }
+    }
+    catch(e){
+        return res.status(404).send({status:false})
+    }
+});
+
+router.get('/target/notification/monthly',verify.user_auth,async function(req, res, next) {
+    try{
+        if(!req.query.date) {
+            return res.status(400).send({status:false})
+        }
+        let result = await todoModule.getMonthlyNotificationTodo(req.query.ID,new Date(Number(req.query.date)),"NOTIFICATION")
         if(result) {
             return res.send({status:true,result:result})
         }
