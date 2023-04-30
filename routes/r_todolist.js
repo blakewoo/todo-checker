@@ -229,7 +229,7 @@ router.put('/my/weekly',verify.user_auth,async function(req, res, next) {
         if(!req.body.TODO_ID) {
             return res.status(400).send({status:false})
         }
-        await todoModule.updateTodo(req.body.TODO_ID,req.body.TODO_DATA,"WEEKLY")
+        await todoModule.updateTodo(req.body.TODO_ID,req.body.TODO_DATA)
         return res.send({status:true})
     }
     catch(e){
@@ -244,7 +244,7 @@ router.delete('/my/weekly',verify.user_auth,async function(req, res, next) {
         if(!req.body.TODO_ID) {
             return res.status(400).send({status:false})
         }
-        let result = await todoModule.deleteTodo(req.body.TODO_ID,"WEEKLY")
+        let result = await todoModule.deleteTodo(req.body.TODO_ID)
         if(result) {
             return res.send({status:true})
         }
@@ -264,7 +264,7 @@ router.get('/my/monthly',verify.user_auth,async function(req, res, next) {
         if(!req.query.date) {
             return res.status(400).send({status:false})
         }
-        let result = await todoModule.getMontlyTodo(req.session.ID,new Date(Number(req.query.date)),"MONTHLY")
+        let result = await todoModule.getMontlyTodo(req.session.ID,new Date(Number(req.query.date)))
         if(result) {
             return res.send({status:true,result:result})
         }
@@ -307,7 +307,7 @@ router.put('/my/monthly',verify.user_auth,async function(req, res, next) {
         if(!req.body.TODO_ID) {
             return res.status(400).send({status:false})
         }
-        await todoModule.updateTodo(req.body.TODO_ID,req.body.TODO_DATA,"MONTHLY")
+        await todoModule.updateTodo(req.body.TODO_ID,req.body.TODO_DATA)
         return res.send({status:true})
     }
     catch(e){
@@ -322,7 +322,7 @@ router.delete('/my/monthly',verify.user_auth,async function(req, res, next) {
         if(!req.body.TODO_ID) {
             return res.status(400).send({status:false})
         }
-        let result = await todoModule.deleteTodo(req.body.TODO_ID,"MONTHLY")
+        let result = await todoModule.deleteTodo(req.body.TODO_ID)
         if(result) {
             return res.send({status:true})
         }
@@ -341,7 +341,7 @@ router.get('/target/daily',verify.user_auth,async function(req, res, next) {
         if(!req.query.date) {
             return res.status(400).send({status:false})
         }
-        let result = await todoModule.getDailyTodo(req.query.ID,new Date(Number(req.query.date)),"DAILY")
+        let result = await todoModule.getDailyTodo(req.query.ID,new Date(Number(req.query.date)))
         if(result) {
             return res.send({status:true,result:result})
         }
@@ -359,7 +359,7 @@ router.get('/target/notification/daily',verify.user_auth,async function(req, res
         if(!req.query.date) {
             return res.status(400).send({status:false})
         }
-        let result = await todoModule.getDailyNotificationTodo(req.query.ID,new Date(Number(req.query.date)),"NOTIFICATION")
+        let result = await todoModule.getDailyNotificationTodo(req.query.ID,new Date(Number(req.query.date)))
         if(result) {
             return res.send({status:true,result:result})
         }
@@ -377,7 +377,7 @@ router.get('/target/notification/monthly',verify.user_auth,async function(req, r
         if(!req.query.date) {
             return res.status(400).send({status:false})
         }
-        let result = await todoModule.getMonthlyNotificationTodo(req.query.ID,new Date(Number(req.query.date)),"NOTIFICATION")
+        let result = await todoModule.getMonthlyNotificationTodo(req.query.ID,new Date(Number(req.query.date)))
         if(result) {
             return res.send({status:true,result:result})
         }
@@ -395,7 +395,7 @@ router.get('/target/weekly',verify.user_auth,async function(req, res, next) {
         if(!req.query.date) {
             return res.status(400).send({status:false})
         }
-        let result = await todoModule.getTodo(req.query.ID,new Date(Number(req.query.date)),"WEEKLY")
+        let result = await todoModule.getWeeklyTodo(req.query.ID,new Date(Number(req.query.date)))
         if(result) {
             return res.send({status:true,result:result})
         }
@@ -413,7 +413,7 @@ router.get('/target/monthly',verify.user_auth,async function(req, res, next) {
         if(!req.query.date) {
             return res.status(400).send({status:false})
         }
-        let result = await todoModule.getTodo(req.query.ID,new Date(Number(req.query.date)),"MONTHLY")
+        let result = await todoModule.getMontlyTodo(req.query.ID,new Date(Number(req.query.date)))
         if(result) {
             return res.send({status:true,result:result})
         }
