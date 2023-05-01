@@ -58,7 +58,7 @@ const JH_calendar = (function () {
     JH_calendar.prototype.writeDailyEvent = function (Array) {
         let str = ""
         for(let i=0;i<Array.length;i++) {
-            str += "<label style='display: inline-block'>"+Array[i]+"</label><br>"
+            str += "<label class='daily_notifictaion_label' >"+Array[i]+"</label><br>"
         }
         return str;
     }

@@ -14,7 +14,6 @@ window.onload = async function (event) {
     }
     let monthEvent = await getNotificationTodo(new Date())
     calendar.setMonthlyEvent(monthEvent)
-
     calendar.setPaintTarget()
 
     document.getElementById("calendarViewTodo").addEventListener("click",viewingTodo)

@@ -122,7 +122,7 @@ window.onload = async function (event) {
                     if(result.result.length!==0) {
                         for(let i=0;i<result.result.length;i++) {
                             let temp = result.result[i]
-                            let tempDate = new Date(temp.CREATED_DATE).getFullYear()+"-"+new Date(temp.CREATED_DATE).getMonth()+"-"+new Date(temp.CREATED_DATE).getDate()
+                            let tempDate = new Date(temp.CREATED_DATE).getFullYear()+"-"+(new Date(temp.CREATED_DATE).getMonth()+1)+"-"+new Date(temp.CREATED_DATE).getDate()
                             if (resultMap.has(tempDate)) {
                                 let tempData = resultMap.get(tempDate)
                                 tempData.push(temp.DATA)
@@ -133,7 +133,6 @@ window.onload = async function (event) {
                             }
                         }
                     }
-                    console.log(resultMap)
                     resolve(resultMap)
                 }
                 else {

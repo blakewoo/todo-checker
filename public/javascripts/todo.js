@@ -38,6 +38,8 @@ let TODO = (function () {
     /**
      * TODO 추가
      * @param TODO_OBJ : TODO_OBJECT
+     * @param TARGET_DATE
+     * @param TYPE
      * @returns {string|Boolean}
      */
     TODO.prototype.addTodo = async function (TODO_OBJ,TARGET_DATE,TYPE) {
@@ -82,7 +84,7 @@ let TODO = (function () {
                 url = "/todolist/my/monthly"
             }
             else {
-                url = "/todolist/my/notification/daily"
+                url = "/todolist/my/notification"
             }
             return await syncRequestFunction("POST",url,sendData,"JSON")
         }

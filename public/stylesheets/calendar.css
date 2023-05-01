@@ -67,3 +67,9 @@
 .red_font{
     color: red;
 }
+
+.daily_notifictaion_label{
+    display: inline-block;
+    margin-left: 10px;
+    margin-top: 10px;
+}
