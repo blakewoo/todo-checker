@@ -49,7 +49,20 @@ window.onload = async function (event) {
             let id = document.querySelector(".todo_category_span.active").getAttribute("id")
             event.currentTarget.value = ""
             let temp = new TODO_OBJECT(null,Data,calendar.seletedDate,null,false)
-            todoObj.addTodo(temp,calendar.seletedDate,id)
+            if(todoObj.addTodo(temp,calendar.seletedDate,id) && id==="calendarViewTodo"){
+                let tempMap = calendar.getMonthlyEvent()
+                let targetDate = calendar.seletedDate
+                let tempObj = tempMap.get(targetDate.getFullYear()+"-"+targetDate.getMonth()+"-"+targetDate.getDate())
+                if(tempObj){
+                    tempObj.push(Data)
+                    tempMap.set(targetDate.getFullYear()+"-"+(targetDate.getMonth()+1)+"-"+targetDate.getDate(),tempObj)
+                }
+                else {
+                    tempMap.set(targetDate.getFullYear()+"-"+(targetDate.getMonth()+1)+"-"+targetDate.getDate(),[Data])
+                }
+                calendar.setMonthlyEvent(tempMap)
+                calendar.setPaintTarget()
+            }
         }
     }
 

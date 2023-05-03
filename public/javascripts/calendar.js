@@ -55,6 +55,10 @@ const JH_calendar = (function () {
         this.monthlyEvent = monthlyEvent
     }
 
+    JH_calendar.prototype.getMonthlyEvent = function () {
+        return this.monthlyEvent
+    }
+
     JH_calendar.prototype.writeDailyEvent = function (Array) {
         let str = ""
         for(let i=0;i<Array.length;i++) {
