@@ -52,7 +52,7 @@ window.onload = async function (event) {
             if(todoObj.addTodo(temp,calendar.seletedDate,id) && id==="calendarViewTodo"){
                 let tempMap = calendar.getMonthlyEvent()
                 let targetDate = calendar.seletedDate
-                let tempObj = tempMap.get(targetDate.getFullYear()+"-"+targetDate.getMonth()+"-"+targetDate.getDate())
+                let tempObj = tempMap.get(targetDate.getFullYear()+"-"+(targetDate.getMonth()+1)+"-"+targetDate.getDate())
                 if(tempObj){
                     tempObj.push(Data)
                     tempMap.set(targetDate.getFullYear()+"-"+(targetDate.getMonth()+1)+"-"+targetDate.getDate(),tempObj)
