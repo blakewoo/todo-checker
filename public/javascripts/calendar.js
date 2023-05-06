@@ -106,9 +106,9 @@ const JH_calendar = (function () {
 
             let dayEvent = monthlyEvent.get(targetYear+"-"+targetMonth+"-"+targetDay)
             if(dayEvent && dayEvent.length !== 0) {
-                str += "<td class='"+classStr+"' id='day-"+thisMonthLastDay.getFullYear()+"-"+thisMonthLastDay.getMonth()+"-"+i+"'><br><label class='day_label'>"+i+"</label><br>" +
+                str += "<td class='"+classStr+"' id='day-"+thisMonthLastDay.getFullYear()+"-"+thisMonthLastDay.getMonth()+"-"+i+"'><br><label class='day_label'>"+i+"</label><br><div class='notifictaion_div'>" +
                     this.writeDailyEvent(dayEvent) +
-                    "</td>"
+                    "</div></td>"
             }
             else {
                 str += "<td class='"+classStr+"' id='day-"+thisMonthLastDay.getFullYear()+"-"+thisMonthLastDay.getMonth()+"-"+i+"'><br><label class='day_label'>"+i+"</label></td>"
