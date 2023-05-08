@@ -6,7 +6,6 @@ It's a web application you can use if you want to observe and check what someone
 ## Functions
 - Sign up, Sign in, Withdrawal
 - TODO : CRUD, Daily, Weekly, Monthly
-- Upload image (not yet)
 - Assign a observer
 - Realtime chatting with observer
 
@@ -17,5 +16,6 @@ It's a web application you can use if you want to observe and check what someone
 - html
 - css
 - socket.io
-- mocha  
-- TDD (not yet)
+
+## Release note
+- 2023-05-08 : version 1.0
