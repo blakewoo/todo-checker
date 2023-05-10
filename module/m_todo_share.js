@@ -1,4 +1,4 @@
-const shared = require("../model/shared-request")
+const shared = require("../model/md_shared-request")
 const conn = require("../connectors/mariadb")
 
 exports.addRequest = async function (requester,target) {

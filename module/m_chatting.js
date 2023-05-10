@@ -1,4 +1,4 @@
-const chattingModel = require("../model/chatting")
+const chattingModel = require("../model/md_chatting")
 
 exports.addChatting = async function (REQUEST_ID,TARGET_ID,MESSAGE) {
     try{
