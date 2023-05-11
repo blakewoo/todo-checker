@@ -25,13 +25,13 @@ window.onload = function () {
             })
         })
 
-        document.getElementById("password_input").addEventListener("keyup",function (event) {
-            let pass = document.getElementById("password_input").value
+        document.getElementById("passwordInput").addEventListener("keyup",function (event) {
+            let pass = document.getElementById("passwordInput").value
             let passConfirm = document.getElementById("password_confirm_input").value
             samePassword(pass,passConfirm,document.getElementById("myinfoModifySubmitButton"))
         })
         document.getElementById("password_confirm_input").addEventListener("keyup",function (event) {
-            let pass = document.getElementById("password_input").value
+            let pass = document.getElementById("passwordInput").value
             let passConfirm = document.getElementById("password_confirm_input").value
             samePassword(pass,passConfirm,document.getElementById("myinfoModifySubmitButton"))
         })
@@ -39,7 +39,7 @@ window.onload = function () {
         document.getElementById("myinfoModifySubmitButton").addEventListener("click",function (event) {
             let data = {}
             data.EMAIL = document.getElementById("email_modify_input").value
-            data.PASSWORD = document.getElementById("password_input").value
+            data.PASSWORD = document.getElementById("passwordInput").value
             data.PASSWORD_CONFIRM = document.getElementById("password_confirm_input").value
             let passwordReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{9,25}$/;
 
@@ -79,7 +79,7 @@ window.onload = function () {
                             event.currentTarget.parentNode.remove()
                         })
                     });
-                    document.getElementById("password_input").value = ""
+                    document.getElementById("passwordInput").value = ""
                     document.getElementById("password_confirm_input").value = ""
                 }
                 else {

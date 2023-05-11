@@ -1,6 +1,6 @@
 window.onload = async function (event) {
     headlineInit()
-    let calendar = new JH_calendar(document.getElementById("calendar_div"), new Date(),true)
+    let calendar = new JH_calendar(document.getElementById("calendarDiv"), new Date(),true)
     await initShared()
     let selectTag = document.getElementById("sharedTodoSelect")
     let todoObj = null
@@ -18,10 +18,10 @@ window.onload = async function (event) {
     }
 
 
-    document.getElementById("calendarViewTodo").addEventListener("click",viewingTodo)
-    document.getElementById("dailyTodo").addEventListener("click",dailyTodo)
-    document.getElementById("weeklyTodo").addEventListener("click",weeklyTodo)
-    document.getElementById("monthlyTodo").addEventListener("click",monthlyTodo)
+    document.getElementById("calendarViewTodoSpan").addEventListener("click",viewingTodo)
+    document.getElementById("dailyTodoSpan").addEventListener("click",dailyTodo)
+    document.getElementById("weeklyTodoSpan").addEventListener("click",weeklyTodo)
+    document.getElementById("monthlyTodoSpan").addEventListener("click",monthlyTodo)
 
     async function initTodo(ID) {
         return new Promise((resolve,reject) => (
@@ -33,10 +33,10 @@ window.onload = async function (event) {
                         temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
                     }
 
-                    resolve(new TODO(temp_list,document.getElementById("todo_container_div"),true))
+                    resolve(new TODO(temp_list,document.getElementById("todoContainerDiv"),true))
                 }
                 else {
-                    reject(new TODO([],document.getElementById("todo_container_div")))
+                    reject(new TODO([],document.getElementById("todoContainerDiv")))
                 }
             })
         ))
@@ -76,7 +76,7 @@ window.onload = async function (event) {
                     let temp = result.result[i]
                     temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
                 }
-                todoObj = new TODO(temp_list,document.getElementById("todo_container_div"),true,"NOTIFICATION")
+                todoObj = new TODO(temp_list,document.getElementById("todoContainerDiv"),true,"NOTIFICATION")
             }
         })
     }
@@ -91,7 +91,7 @@ window.onload = async function (event) {
                     let temp = result.result[i]
                     temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
                 }
-                todoObj = new TODO(temp_list,document.getElementById("todo_container_div"),true,"DAILY")
+                todoObj = new TODO(temp_list,document.getElementById("todoContainerDiv"),true,"DAILY")
             }
         })
     }
@@ -106,7 +106,7 @@ window.onload = async function (event) {
                     let temp = result.result[i]
                     temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
                 }
-                todoObj = new TODO(temp_list,document.getElementById("todo_container_div"),true,"WEEKLY")
+                todoObj = new TODO(temp_list,document.getElementById("todoContainerDiv"),true,"WEEKLY")
             }
         })
     }
@@ -121,7 +121,7 @@ window.onload = async function (event) {
                     let temp = result.result[i]
                     temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
                 }
-                todoObj = new TODO(temp_list,document.getElementById("todo_container_div"),true,"MONTHLY")
+                todoObj = new TODO(temp_list,document.getElementById("todoContainerDiv"),true,"MONTHLY")
             }
         })
     }

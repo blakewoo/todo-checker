@@ -2,14 +2,14 @@ window.onload = function(){
     headlineInit()
     initSchedule()
 
-    document.getElementById("todoSharedRequest").addEventListener("keyup",function (event) {
+    document.getElementById("todoSharedRequestInputText").addEventListener("keyup",function (event) {
         if(event.key === "Enter") {
-            document.getElementById("requestSubmit").click()
+            document.getElementById("requestSubmitButton").click()
         }
     })
 
-    document.getElementById("requestSubmit").addEventListener("click",function (event) {
-        let targetId = document.getElementById("todoSharedRequest").value
+    document.getElementById("requestSubmitButton").addEventListener("click",function (event) {
+        let targetId = document.getElementById("todoSharedRequestInputText").value
         requestFunction("POST","/todo-share/request",{target:targetId},"JSON",function (result){
             if(result.status){
                 location.reload()
@@ -59,7 +59,7 @@ window.onload = function(){
             return
         }
 
-        let tbody = document.getElementById("shared_todo_request_tbody")
+        let tbody = document.getElementById("sharedTodoRequestTbody")
         let temp = document.createDocumentFragment()
 
         for(let i=0;i<list.length;i++) {
@@ -99,7 +99,7 @@ window.onload = function(){
             return
         }
 
-        let tbody = document.getElementById("shared_todo_receive_tbody")
+        let tbody = document.getElementById("sharedTodoReceiveTbody")
         let temp = document.createDocumentFragment()
 
         for(let i=0;i<list.length;i++) {

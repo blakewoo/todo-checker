@@ -1,8 +1,8 @@
 window.onload = function () {
-    document.getElementById("signup_button").addEventListener("click",function (event){
-        let ID = document.getElementById("ID_input").value
-        let PASSWORD = document.getElementById("PASSWORD_input").value
-        let EMAIL = document.getElementById("EMAIL_input").value
+    document.getElementById("signupButton").addEventListener("click",function (event){
+        let ID = document.getElementById("idInputText").value
+        let PASSWORD = document.getElementById("passwordInput").value
+        let EMAIL = document.getElementById("emailInputText").value
         let emailReg = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
         let passwordReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{9,25}$/;
 
@@ -62,7 +62,7 @@ window.onload = function () {
         })
     })
 
-    document.getElementById("cancel_button").addEventListener("click",function (event) {
+    document.getElementById("cancelButton").addEventListener("click",function (event) {
         location.href = location.protocol+"//"+location.host+"/"
     })
 }

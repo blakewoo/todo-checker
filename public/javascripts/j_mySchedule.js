@@ -1,6 +1,6 @@
 window.onload = async function (event) {
     headlineInit()
-    let calendar = new JH_calendar(document.getElementById("calendar_div"), new Date(),false)
+    let calendar = new JH_calendar(document.getElementById("calendarDiv"), new Date(),false)
     let todoObj = await initTodo()
 
     let monthEvent = await getNotificationTodo(new Date())
@@ -13,12 +13,12 @@ window.onload = async function (event) {
 
     calendar.setPaintTarget()
 
-    document.getElementById("todo_input").addEventListener("keyup", todoInputEvent)
+    document.getElementById("todoInputText").addEventListener("keyup", todoInputEvent)
 
-    document.getElementById("calendarViewTodo").addEventListener("click",viewingTodo)
-    document.getElementById("dailyTodo").addEventListener("click",dailyTodo)
-    document.getElementById("weeklyTodo").addEventListener("click",weeklyTodo)
-    document.getElementById("monthlyTodo").addEventListener("click",monthlyTodo)
+    document.getElementById("calendarViewTodoSpan").addEventListener("click",viewingTodo)
+    document.getElementById("dailyTodoSpan").addEventListener("click",dailyTodo)
+    document.getElementById("weeklyTodoSpan").addEventListener("click",weeklyTodo)
+    document.getElementById("monthlyTodoSpan").addEventListener("click",monthlyTodo)
 
     async function initTodo() {
         return new Promise((resolve,reject) => (
@@ -30,10 +30,10 @@ window.onload = async function (event) {
                         temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
                     }
 
-                    resolve(new TODO(temp_list,document.getElementById("todo_container_div"),false,"DAILY"))
+                    resolve(new TODO(temp_list,document.getElementById("todoContainerDiv"),false,"DAILY"))
                 }
                 else {
-                    resolve(new TODO([],document.getElementById("todo_container_div"),false,"DAILY"))
+                    resolve(new TODO([],document.getElementById("todoContainerDiv"),false,"DAILY"))
                 }
             })
         ))
@@ -49,7 +49,7 @@ window.onload = async function (event) {
             let id = document.querySelector(".todo_category_span.active").getAttribute("id")
             event.currentTarget.value = ""
             let temp = new TODO_OBJECT(null,Data,calendar.seletedDate,null,false)
-            if(todoObj.addTodo(temp,calendar.seletedDate,id) && id==="calendarViewTodo"){
+            if(todoObj.addTodo(temp,calendar.seletedDate,id) && id==="calendarViewTodoSpan"){
                 let tempMap = calendar.getMonthlyEvent()
                 let targetDate = calendar.seletedDate
                 let tempObj = tempMap.get(targetDate.getFullYear()+"-"+(targetDate.getMonth()+1)+"-"+targetDate.getDate())
@@ -77,7 +77,7 @@ window.onload = async function (event) {
                     let temp = result.result[i]
                     temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
                 }
-                todoObj = new TODO(temp_list,document.getElementById("todo_container_div"),false,"NOTIFICATION")
+                todoObj = new TODO(temp_list,document.getElementById("todoContainerDiv"),false,"NOTIFICATION")
             }
         })
     }
@@ -92,7 +92,7 @@ window.onload = async function (event) {
                     let temp = result.result[i]
                     temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
                 }
-                todoObj = new TODO(temp_list,document.getElementById("todo_container_div"),false,"DAILY")
+                todoObj = new TODO(temp_list,document.getElementById("todoContainerDiv"),false,"DAILY")
             }
         })
     }
@@ -107,7 +107,7 @@ window.onload = async function (event) {
                     let temp = result.result[i]
                     temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
                 }
-                todoObj = new TODO(temp_list,document.getElementById("todo_container_div"),false,"WEEKLY")
+                todoObj = new TODO(temp_list,document.getElementById("todoContainerDiv"),false,"WEEKLY")
             }
         })
     }
@@ -122,7 +122,7 @@ window.onload = async function (event) {
                     let temp = result.result[i]
                     temp_list.push(new TODO_OBJECT(temp._id,temp.DATA,temp.CREATED_DATE,temp.DEAD_LINE,temp.IS_DONE))
                 }
-                todoObj = new TODO(temp_list,document.getElementById("todo_container_div"),false,"MONTHLY")
+                todoObj = new TODO(temp_list,document.getElementById("todoContainerDiv"),false,"MONTHLY")
             }
         })
     }

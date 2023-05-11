@@ -1,19 +1,19 @@
 window.onload = function () {
-    document.getElementById("idInput").addEventListener("keyup",function (event) {
+    document.getElementById("idInputText").addEventListener("keyup",function (event) {
         if(event.key === "Enter") {
-            document.getElementById("login_button").click()
+            document.getElementById("loginButton").click()
         }
     })
 
     document.getElementById("passwordInput").addEventListener("keyup",function (event) {
         if(event.key === "Enter") {
             event.currentTarget.blur()
-            document.getElementById("login_button").click()
+            document.getElementById("loginButton").click()
         }
     })
 
-    document.getElementById("login_button").addEventListener("click",function (event){
-        let ID = document.getElementById("idInput").value
+    document.getElementById("loginButton").addEventListener("click",function (event){
+        let ID = document.getElementById("idInputText").value
         let PASSWORD = document.getElementById("passwordInput").value
 
         requestFunction("POST","/login/verified-user",{ID:ID,PASSWORD:PASSWORD},"JSON",function (result) {
@@ -39,7 +39,7 @@ window.onload = function () {
         })
     })
 
-    document.getElementById("signup_button").addEventListener("click",function (event) {
+    document.getElementById("signupButton").addEventListener("click",function (event) {
         location.href = location.protocol+"//"+location.host+"/signup"
     })
 }

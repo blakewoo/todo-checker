@@ -14,7 +14,7 @@
 <body>
 <div class="headline_div">
     <div class="user_name_div">
-        <label id="myinfo_label"><%=title%>님 어서오세요.</label>
+        <label id="myInfoLabel"><%=title%>님 어서오세요.</label>
     </div>
     <div class="headline_tab_div">
         <label id="headlineMyScheduleLabel">내 일정</label>
@@ -34,8 +34,8 @@
             </label>
         </div>
         <div>
-            <input type="text" placeholder="아이디" id="todoSharedRequest">
-            <input type="button" value="전송" id="requestSubmit">
+            <input type="text" placeholder="아이디" id="todoSharedRequestInputText">
+            <input type="button" value="전송" id="requestSubmitButton">
         </div>
     </div>
 
@@ -60,7 +60,7 @@
                 </td>
             </tr>
             </thead>
-            <tbody id="shared_todo_request_tbody">
+            <tbody id="sharedTodoRequestTbody">
 
             </tbody>
         </table>
@@ -87,7 +87,7 @@
                 </td>
             </tr>
             </thead>
-            <tbody id="shared_todo_receive_tbody">
+            <tbody id="sharedTodoReceiveTbody">
 
             </tbody>
         </table>

@@ -74,13 +74,13 @@ let TODO = (function () {
     TODO.prototype.addBackTodo =async function (sendData,todoType) {
         try{
             let url = "/todolist/my/daily"
-            if(todoType === "dailyTodo") {
+            if(todoType === "dailyTodoSpan") {
                 url = "/todolist/my/daily"
             }
-            else if(todoType === "weeklyTodo") {
+            else if(todoType === "weeklyTodoSpan") {
                 url = "/todolist/my/weekly"
             }
-            else if(todoType === "monthlyTodo") {
+            else if(todoType === "monthlyTodoSpan") {
                 url = "/todolist/my/monthly"
             }
             else {
@@ -201,13 +201,13 @@ let TODO = (function () {
         }
         else {
             let url = ""
-            if(TYPE === "dailyTodo") {
+            if(TYPE === "dailyTodoSpan") {
                 url = "/todolist/my/daily?date="+date.getTime()
             }
-            else if(TYPE === "weeklyTodo") {
+            else if(TYPE === "weeklyTodoSpan") {
                 url = "/todolist/my/weekly?date="+date.getTime()
             }
-            else if(TYPE === "monthlyTodo") {
+            else if(TYPE === "monthlyTodoSpan") {
                 url = "/todolist/my/monthly?date="+date.getTime()
             }
             else {

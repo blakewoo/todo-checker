@@ -14,7 +14,7 @@ function headlineInit() {
         }
     })
 
-    document.getElementById("myinfo_label").addEventListener("click",myInfoModalEvent)
+    document.getElementById("myInfoLabel").addEventListener("click",myInfoModalEvent)
 
     function myInfoModalEvent(event) {
         event.stopPropagation()
