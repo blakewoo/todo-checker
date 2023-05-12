@@ -36,15 +36,15 @@ const JH_calendar = (function () {
         let html = "<table class='calendar_table'>" +
             "<thead>" +
             "<tr class='title_arrow_tr'>"+
-            "<td id='calendar_prevMonth'><label>< 이전달</label></td>" +
+            "<td id='calendarPrevMonthTd'><label>< 이전달</label></td>" +
             "<td class='current_Month' colspan='5'>"+year+"년 "+month+"월</td>" +
-            "<td id='calendar_nextMonth'><label>다음달 ></label></td>" +
+            "<td id='calendarNextMonthTd'><label>다음달 ></label></td>" +
             "</tr>" +
             "<tr class='day_head_tr'>" +
             "<td class='red_font'>일</td><td>월</td><td>화</td><td>수</td><td>목</td><td>금</td><td class='blue_font'>토</td>" +
             "</tr>" +
             "</thead>" +
-            "<tbody id='calendar_table_tbody'>" +
+            "<tbody id='calendarTableTbody'>" +
             "</tbody>" +
             "</table>"
 
@@ -77,7 +77,7 @@ const JH_calendar = (function () {
         let targetDay = ""
         let weekCount = 1
 
-        let tbody = document.getElementById("calendar_table_tbody")
+        let tbody = document.getElementById("calendarTableTbody")
         let cnt = 0;
         let str = "<tr>"
         for(let i=0;i<thisMonthFirstDay.getDay();i++) {
@@ -127,11 +127,11 @@ const JH_calendar = (function () {
     }
 
     JH_calendar.prototype.buttonEvent = function (targetDate) {
-        document.getElementById("calendar_prevMonth").removeEventListener("click",this.prevMonthEvent.bind(this))
-        document.getElementById("calendar_prevMonth").addEventListener("click",this.prevMonthEvent.bind(this))
+        document.getElementById("calendarPrevMonthTd").removeEventListener("click",this.prevMonthEvent.bind(this))
+        document.getElementById("calendarPrevMonthTd").addEventListener("click",this.prevMonthEvent.bind(this))
 
-        document.getElementById("calendar_nextMonth").removeEventListener("click",this.nextMonthEvent.bind(this))
-        document.getElementById("calendar_nextMonth").addEventListener("click",this.nextMonthEvent.bind(this))
+        document.getElementById("calendarNextMonthTd").removeEventListener("click",this.nextMonthEvent.bind(this))
+        document.getElementById("calendarNextMonthTd").addEventListener("click",this.nextMonthEvent.bind(this))
 
         let allDay = document.getElementsByClassName("day_td")
         for(let i=0;i<allDay.length;i++) {

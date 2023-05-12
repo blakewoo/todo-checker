@@ -41,21 +41,21 @@
     font-size: 20px;
 }
 
-#calendar_prevMonth>label{
+#calendarPrevMonthTd>label{
     font-size: 20px;
 
 }
 
-#calendar_nextMonth>label{
+#calendarNextMonthTd>label{
     font-size: 20px;
 }
 
-#calendar_prevMonth>label:hover{
+#calendarPrevMonthTd>label:hover{
     cursor: pointer;
     font-weight: bold;
 }
 
-#calendar_nextMonth>label:hover{
+#calendarNextMonthTd>label:hover{
     cursor: pointer;
     font-weight: bold;
 }
