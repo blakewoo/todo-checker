@@ -118,7 +118,7 @@ window.onload = function(){
                 let submitButton = document.createElement("input")
                 submitButton.type = "button"
                 submitButton.value= "허용"
-                submitButton.classList.add("receive_submmit_button")
+                submitButton.classList.add("receiveSubmmit_button")
                 submitButton.id="submit_"+list[i].OVERSEER_USER_ID
                 submitButton.addEventListener("click",function (event) {
                     requestFunction("PUT","/todo-share/receive",{requester:list[i].OVERSEER_USER_ID,state:"ACCEPT"},"JSON",function (result) {
@@ -131,7 +131,7 @@ window.onload = function(){
                 let declineButton = document.createElement("input")
                 declineButton.type = "button"
                 declineButton.value= "거절"
-                declineButton.classList.add("receive_decline_button")
+                declineButton.classList.add("receiveDecline_button")
                 declineButton.id="decline_"+list[i].OVERSEER_USER_ID
                 declineButton.addEventListener("click",function (event) {
                     requestFunction("PUT","/todo-share/receive",{requester:list[i].OVERSEER_USER_ID,state:"DECLINE"},"JSON",function (result) {

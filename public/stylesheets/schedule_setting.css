@@ -9,25 +9,25 @@ body {
     box-sizing: border-box;
 }
 
-.shared_schedule_request_status_table{
+.sharedScheduleRequestStatus_table{
     width: 100%;
     text-align: center;
 }
 
-.shared_schedule_request_status_table td{
+.sharedScheduleRequestStatus_table td{
     border: 1px solid black;
 }
 
-.shared_schedule_receive_status_table{
+.sharedScheduleReceiveStatus_table{
     width: 100%;
     text-align: center;
 }
 
-.shared_schedule_receive_status_table td {
+.sharedScheduleReceiveStatus_table td {
     border: 1px solid black;
 }
 
-.schedule_manage_div{
+.scheduleManage_div{
     position: absolute;
     left:calc(50% - 300px);
     top:calc(50% - 300px);
@@ -37,25 +37,20 @@ body {
     height: 600px;
 }
 
-.shared_schedule_request_div{
+.sharedScheduleRequest_div{
     box-sizing: border-box;
     height: 10%;
 }
 
-.shared_schedule_request_status_div{
+.sharedScheduleRequestStatus_div{
     box-sizing: border-box;
     height: 40%;
 }
 
-.shared_schedule_table_div{
-    box-sizing: border-box;
-    height: 40%;
-}
-
-.receive_submmit_button:hover {
+.receiveSubmmit_button:hover {
     cursor: pointer;
 }
 
-.receive_decline_button:hover {
+.receiveDecline_button:hover {
     cursor: pointer;
 }

@@ -10,7 +10,7 @@ body {
     background-size: cover;
 }
 
-.login_paper{
+.loginPaper_div{
     float: right;
     box-sizing: border-box;
     height: 100%;
@@ -20,11 +20,11 @@ body {
     color: white;
     text-align: center;
 }
-.login_inner_box{
+.loginInnerBox_div{
     margin-top: 50%;
 }
 
-.login_title{
+.loginTitle_label{
     font-size: 30pt;
 }
 .login_label{
@@ -53,7 +53,7 @@ body {
         background-position-x: 20%;
     }
 
-    .login_paper{
+    .loginPaper_div{
         box-sizing: border-box;
         position: absolute;
         top:30rem;
@@ -64,11 +64,11 @@ body {
         color: white;
         text-align: center;
     }
-    .login_inner_box{
+    .loginInnerBox_div{
         margin-top: 10%;
     }
 
-    .login_title{
+    .loginTitle_label{
         font-size: 8rem;
     }
     .login_label{
@@ -96,7 +96,7 @@ body {
         font-size: 8px;
     }
 
-    .login_paper{
+    .loginPaper_div{
         box-sizing: border-box;
         position: absolute;
         top:30rem;
@@ -107,11 +107,11 @@ body {
         color: white;
         text-align: center;
     }
-    .login_inner_box{
+    .loginInnerBox_div{
         margin-top: 10%;
     }
 
-    .login_title{
+    .loginTitle_label{
         font-size: 8rem;
     }
     .login_label{

@@ -13,7 +13,7 @@ body {
 
 }
 
-.under_construction_img{
+.underConstruction_img{
     margin: auto;
     width: 800px;
     height: 400px;
@@ -22,7 +22,7 @@ body {
     left:calc(50% - 400px);
 }
 
-.under_construction_label{
+.underConstruction_label{
     margin: auto;
     font-size: x-large;
     font-weight: bold;

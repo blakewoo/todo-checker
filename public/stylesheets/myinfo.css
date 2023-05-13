@@ -27,7 +27,7 @@ body {
     height: 150px;
 }
 
-.myinfo_delete_account_div{
+.myinfo_deleteAccount_div{
     position: absolute;
     left:calc(50% - 50px);
     top:calc(50% + 150px);
@@ -36,20 +36,20 @@ body {
     height: 150px;
 }
 
-.myinfo_delete_account_div:hover{
+.myinfo_deleteAccount_div:hover{
     cursor: pointer;
     font-weight: bold;
 }
 
-.myinfo_id_info_div{
+.myinfo_idInfo_div{
     margin-top: 5px;
 }
 
-.myinfo_password_info_div{
+.myinfo_passwordInfo_div{
     margin-top: 5px;
 }
 
-.myinfo_email_info_div{
+.myinfo_emailInfo_div{
     margin-top: 5px;
 }
 

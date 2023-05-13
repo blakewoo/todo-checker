@@ -7,7 +7,7 @@ window.onload = function () {
         emailInput.value = result.result.EMAIL
 
 
-        document.getElementsByClassName("myinfo_delete_account_div")[0].addEventListener("click",function (event) {
+        document.getElementsByClassName("myinfo_deleteAccount_div")[0].addEventListener("click",function (event) {
             // delete account function
             yesNoModal("정말로 탈퇴 하시겠습니까?",300,50,function (yesButton,noButton) {
                 yesButton.addEventListener("click",function (event) {

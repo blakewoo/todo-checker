@@ -10,7 +10,7 @@ body {
     background-size: cover;
 }
 
-.signup_paper{
+.signUpPaper_div{
     float: right;
     box-sizing: border-box;
     height: 100%;
@@ -20,11 +20,11 @@ body {
     color: white;
     text-align: center;
 }
-.signup_inner_box{
+.signupInnerBox_div{
     margin-top: 50%;
 }
 
-.signup_title{
+.signupTitle_label{
     font-size: 30pt;
 }
 .signup_label{

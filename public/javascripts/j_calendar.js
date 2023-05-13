@@ -37,11 +37,11 @@ const JH_calendar = (function () {
             "<thead>" +
             "<tr class='title_arrow_tr'>"+
             "<td id='calendarPrevMonthTd'><label>< 이전달</label></td>" +
-            "<td class='current_Month' colspan='5'>"+year+"년 "+month+"월</td>" +
+            "<td class='current_month_td' colspan='5'>"+year+"년 "+month+"월</td>" +
             "<td id='calendarNextMonthTd'><label>다음달 ></label></td>" +
             "</tr>" +
             "<tr class='day_head_tr'>" +
-            "<td class='red_font'>일</td><td>월</td><td>화</td><td>수</td><td>목</td><td>금</td><td class='blue_font'>토</td>" +
+            "<td class='red_td_font'>일</td><td>월</td><td>화</td><td>수</td><td>목</td><td>금</td><td class='blue_td_font'>토</td>" +
             "</tr>" +
             "</thead>" +
             "<tbody id='calendarTableTbody'>" +
@@ -93,15 +93,15 @@ const JH_calendar = (function () {
             cnt+=1
             let classStr = "day_td"
             if(cnt%7===0) {
-                classStr+=" blue_font"
+                classStr+=" blue_td_font"
             }
 
             if(cnt%7===1) {
-                classStr+=" red_font"
+                classStr+=" red_td_font"
             }
 
             if(currentNowYearMonth && i===(new Date()).getDate()) {
-                classStr+= " day_selected"
+                classStr+= " day_td_selected"
             }
 
             let dayEvent = monthlyEvent.get(targetYear+"-"+targetMonth+"-"+targetDay)
@@ -152,11 +152,11 @@ const JH_calendar = (function () {
 
     JH_calendar.prototype.dailySelectEvent = function (event) {
         let dayID = event.currentTarget.getAttribute("id");
-        let currentSelected = document.getElementsByClassName("day_selected")
+        let currentSelected = document.getElementsByClassName("day_td_selected")
         for(let i=0;i<currentSelected.length;i++) {
-            currentSelected[i].classList.remove("day_selected")
+            currentSelected[i].classList.remove("day_td_selected")
         }
-        event.currentTarget.classList.add("day_selected")
+        event.currentTarget.classList.add("day_td_selected")
 
         let dayStr = dayID.split("-")
         this.daySelected(new Date(dayStr[1],dayStr[2],dayStr[3]))

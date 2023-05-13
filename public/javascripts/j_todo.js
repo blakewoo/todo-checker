@@ -119,7 +119,7 @@ let TODO = (function () {
         completedSpan.appendChild(showCheckBoxLabel)
 
         let labelContainerDiv = document.createElement("div")
-        labelContainerDiv.classList.add("todo_label_container_div")
+        labelContainerDiv.classList.add("todoLabelContainer_div")
 
         let todoLabel = document.createElement("label")
         todoLabel.classList.add("todo_label")
