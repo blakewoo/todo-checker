@@ -100,7 +100,7 @@ let TODO = (function () {
         containerDiv.classList.add("todo_div")
 
         let completedSpan =document.createElement("span")
-        completedSpan.classList.add("completed_check_span")
+        completedSpan.classList.add("completedCheck_span")
 
         let hiddenCheckBox = document.createElement("input");
         hiddenCheckBox.type = "checkbox"
@@ -124,7 +124,7 @@ let TODO = (function () {
         let todoLabel = document.createElement("label")
         todoLabel.classList.add("todo_label")
         if(TODO.IS_DONE) {
-            todoLabel.classList.add("text_middle_line")
+            todoLabel.classList.add("todoTextMiddleLine_label")
         }
         todoLabel.innerText = TODO.Value
         todoLabel.addEventListener("click",modifyTodoEvent.bind(this))
@@ -132,14 +132,14 @@ let TODO = (function () {
         let modifyDiv = document.createElement("span")
         modifyDiv.addEventListener("click", addTodoModifyEvent)
         modifyDiv.innerText = "···"
-        modifyDiv.classList.add("todo_modify")
+        modifyDiv.classList.add("todoModifyDots_span")
         let deleteDiv = document.createElement("span")
         deleteDiv.addEventListener("click", addTodoDeleteEvent)
         deleteDiv.innerText = "X"
-        deleteDiv.classList.add("todo_delete")
+        deleteDiv.classList.add("todoDelete_span")
 
         let dateDiv = document.createElement("div")
-        dateDiv.classList.add("todo_date_limit_div")
+        dateDiv.classList.add("todoDateLimit_div")
 
         if(TODO.DeadLine) {
             dateDiv.innerText = Intl.DateTimeFormat("ko").format(new Date(TODO.DeadLine)) + "까지"
@@ -276,7 +276,7 @@ let TODO = (function () {
         textInput.innerText = textBuffer
         textInput.classList.add("modify_textarea")
         textInput.addEventListener("focusout",function (event2) {
-            let todoID = event.target.parentNode.parentNode.querySelector(".completed_check_span").firstChild.id
+            let todoID = event.target.parentNode.parentNode.querySelector(".completedCheck_span").firstChild.id
             let afterText= event2.target.value
             requestFunction("PUT","/todolist/my/daily",{TODO_ID:todoID,TODO_DATA:{DATA:afterText}},"JSON",function (result){
                 if(result.status) {
@@ -310,7 +310,7 @@ let TODO = (function () {
             let id = currentTodo.parentNode.parentNode.querySelector("input[type=checkbox]").getAttribute("id")
             requestFunction("PUT","/todolist/my/daily",{TODO_ID:id,TODO_DATA:{DEAD_LINE:today}},"JSON",function (result) {
                 if(result.status) {
-                    currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = "오늘까지"
+                    currentTodo.parentNode.querySelector(".todoDateLimit_div").innerText = "오늘까지"
                     todoModify.remove()
                 }
             })
@@ -322,7 +322,7 @@ let TODO = (function () {
             let id = currentTodo.parentNode.parentNode.querySelector("input[type=checkbox]").getAttribute("id")
             requestFunction("PUT","/todolist/my/daily",{TODO_ID:id,TODO_DATA:{DEAD_LINE:tomorrowDay}},"JSON",function (result) {
                 if(result.status) {
-                    currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = "내일까지"
+                    currentTodo.parentNode.querySelector(".todoDateLimit_div").innerText = "내일까지"
                     todoModify.remove()
                 }
             })
@@ -334,7 +334,7 @@ let TODO = (function () {
                 let id = currentTodo.parentNode.parentNode.querySelector("input[type=checkbox]").getAttribute("id")
                 requestFunction("PUT","/todolist/my/daily",{TODO_ID:id,TODO_DATA:{DEAD_LINE:day}},"JSON",function (result) {
                     if(result.status) {
-                        currentTodo.parentNode.querySelector(".todo_date_limit_div").innerText = Intl.DateTimeFormat("ko").format(day)+"까지"
+                        currentTodo.parentNode.querySelector(".todoDateLimit_div").innerText = Intl.DateTimeFormat("ko").format(day)+"까지"
                     }
                 })
             }
@@ -349,10 +349,10 @@ let TODO = (function () {
                 if(result.status) {
                     check.checked = !flag
                     if(flag) {
-                        check.parentNode.parentNode.querySelector(".todo_label").classList.remove("text_middle_line")
+                        check.parentNode.parentNode.querySelector(".todo_label").classList.remove("todoTextMiddleLine_label")
                     }
                     else{
-                        check.parentNode.parentNode.querySelector(".todo_label").classList.add("text_middle_line")
+                        check.parentNode.parentNode.querySelector(".todo_label").classList.add("todoTextMiddleLine_label")
                     }
                 }
             })
@@ -367,10 +367,10 @@ let TODO = (function () {
         let flag = event.currentTarget.parentNode.querySelector("input[type=checkbox]").checked
         requestFunction("PUT","/todolist/my/daily",{TODO_ID:id,TODO_DATA:{IS_DONE:!flag}},"JSON",function (result) {
             if(flag) {
-                currentTarget.parentNode.parentNode.querySelector(".todo_label").classList.remove("text_middle_line")
+                currentTarget.parentNode.parentNode.querySelector(".todo_label").classList.remove("todoTextMiddleLine_label")
             }
             else{
-                currentTarget.parentNode.parentNode.querySelector(".todo_label").classList.add("text_middle_line")
+                currentTarget.parentNode.parentNode.querySelector(".todo_label").classList.add("todoTextMiddleLine_label")
             }
         })
     }
@@ -404,19 +404,19 @@ let TODO = (function () {
 
         let todayLabel = document.createElement("div")
         todayLabel.innerText = "오늘까지"
-        todayLabel.classList.add("todo_detail_div")
+        todayLabel.classList.add("todoModifyDetail_div")
 
         let tomorrowLabel = document.createElement("div")
         tomorrowLabel.innerText = "다음날까지"
-        tomorrowLabel.classList.add("todo_detail_div")
+        tomorrowLabel.classList.add("todoModifyDetail_div")
 
         let selectDate = document.createElement("div")
         selectDate.innerText = "날짜 선택"
-        selectDate.classList.add("todo_detail_div")
+        selectDate.classList.add("todoModifyDetail_div")
 
         let toggleCompleted = document.createElement("div")
         toggleCompleted.innerText = "완료/미완료 전환"
-        toggleCompleted.classList.add("todo_detail_div")
+        toggleCompleted.classList.add("todoModifyDetail_div")
 
         toastMessageDiv.appendChild(todayLabel)
         toastMessageDiv.appendChild(tomorrowLabel)

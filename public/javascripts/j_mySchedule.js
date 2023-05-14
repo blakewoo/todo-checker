@@ -7,7 +7,7 @@ window.onload = async function (event) {
     calendar.setMonthlyEvent(monthEvent)
 
     calendar.daySelected = function (day) {
-        let id = document.querySelector(".todo_category_span.active").getAttribute("id")
+        let id = document.querySelector(".todoCategory_span.active").getAttribute("id")
         todoObj.getDateTodo(day,false,null,id)
     }
 
@@ -46,7 +46,7 @@ window.onload = async function (event) {
             if (Data === "") {
                 return
             }
-            let id = document.querySelector(".todo_category_span.active").getAttribute("id")
+            let id = document.querySelector(".todoCategory_span.active").getAttribute("id")
             event.currentTarget.value = ""
             let temp = new TODO_OBJECT(null,Data,calendar.seletedDate,null,false)
             if(todoObj.addTodo(temp,calendar.seletedDate,id) && id==="calendarViewTodoSpan"){
@@ -67,7 +67,7 @@ window.onload = async function (event) {
     }
 
     function viewingTodo(event) {
-        document.querySelector(".todo_category_span.active").classList.remove("active")
+        document.querySelector(".todoCategory_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
         let targetDate = ""
         requestFunction("GET","/todolist/my/notification/daily?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
@@ -83,7 +83,7 @@ window.onload = async function (event) {
     }
 
     function dailyTodo(event) {
-        document.querySelector(".todo_category_span.active").classList.remove("active")
+        document.querySelector(".todoCategory_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
         requestFunction("GET","/todolist/my/daily?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
             if(result.status) {
@@ -98,7 +98,7 @@ window.onload = async function (event) {
     }
 
     function weeklyTodo(event) {
-        document.querySelector(".todo_category_span.active").classList.remove("active")
+        document.querySelector(".todoCategory_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
         requestFunction("GET","/todolist/my/weekly?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
             if(result.status) {
@@ -113,7 +113,7 @@ window.onload = async function (event) {
     }
 
     function monthlyTodo(event) {
-        document.querySelector(".todo_category_span.active").classList.remove("active")
+        document.querySelector(".todoCategory_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
         requestFunction("GET","/todolist/my/monthly?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
             if(result.status) {

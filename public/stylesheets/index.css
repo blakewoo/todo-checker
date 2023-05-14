@@ -59,43 +59,43 @@ body {
     height: 100%;
 }
 
-.todo_modify{
+.todoModifyDots_span{
     float: right;
     vertical-align: middle;
     height: 100%;
     margin-right: 5px;
 }
 
-.todo_modify:hover{
+.todoModifyDots_span:hover{
     cursor: pointer;
     font-weight: bold;
 }
 
-.todo_delete{
+.todoDelete_span{
     float: right;
     vertical-align: middle;
     height: 100%;
 }
 
-.todo_delete:hover{
+.todoDelete_span:hover{
     cursor: pointer;
     font-weight: bold;
 }
 
-.todo_detail_div{
+.todoModifyDetail_div{
     font-size: 8pt;
 }
 
-.todo_detail_div:hover{
+.todoModifyDetail_div:hover{
     cursor: pointer;
     font-weight: bold;
 }
 
-.todo_date_limit_div{
+.todoDateLimit_div{
     font-size: 6pt;
 }
 
-.completed_check_span{
+.completedCheck_span{
     box-sizing: border-box;
     height: 100%;
     width: 30px;
@@ -120,7 +120,7 @@ input[type="checkbox"]:checked + label:after {
     text-align: center;
 }
 
-.text_middle_line{
+.todoTextMiddleLine_label{
     text-decoration: line-through;
 }
 
@@ -130,21 +130,21 @@ input[type="checkbox"]:checked + label:after {
     resize: none;
 }
 
-.todo_category_container_div{
+.todoCategoryContainer_div{
     height: 2rem;
     width: 100%;
 }
 
-.todo_category_span{
+.todoCategory_span{
     border: 1px solid black;
 }
 
-.todo_category_span:hover{
+.todoCategory_span:hover{
     cursor: pointer;
     font-weight: bold;
 }
 
-.todo_category_span.active{
+.todoCategory_span.active{
     cursor: pointer;
     font-weight: bold;
 }
@@ -174,7 +174,7 @@ input[type="checkbox"]:checked + label:after {
         height: 10%;
     }
 
-    .todo_category_container_div{
+    .todoCategoryContainer_div{
         height: 10%;
     }
 }

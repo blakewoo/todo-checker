@@ -66,7 +66,7 @@ window.onload = async function (event) {
     }
 
     function viewingTodo(event) {
-        document.querySelector(".todo_category_span.active").classList.remove("active")
+        document.querySelector(".todoCategory_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
         let targetDate = ""
         requestFunction("GET","/todolist/target/notification/daily?ID="+sharedId+"&date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
@@ -82,7 +82,7 @@ window.onload = async function (event) {
     }
 
     function dailyTodo(event) {
-        document.querySelector(".todo_category_span.active").classList.remove("active")
+        document.querySelector(".todoCategory_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
         requestFunction("GET","/todolist/target/daily?ID="+sharedId+"&date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
             if(result.status) {
@@ -97,7 +97,7 @@ window.onload = async function (event) {
     }
 
     function weeklyTodo(event) {
-        document.querySelector(".todo_category_span.active").classList.remove("active")
+        document.querySelector(".todoCategory_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
         requestFunction("GET","/todolist/target/weekly?ID="+sharedId+"&date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
             if(result.status) {
@@ -112,7 +112,7 @@ window.onload = async function (event) {
     }
 
     function monthlyTodo(event) {
-        document.querySelector(".todo_category_span.active").classList.remove("active")
+        document.querySelector(".todoCategory_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
         requestFunction("GET","/todolist/target/monthly?ID="+sharedId+"&date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
             if(result.status) {
