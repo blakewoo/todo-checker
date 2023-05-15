@@ -1,7 +1,7 @@
-const JH_calendar = (function () {
-    function JH_calendar (targetDiv,targetDate,readOnly,monthlyEvent) {
+const JHCalendar = (function () {
+    function JHCalendar (targetDiv,targetDate,readOnly,monthlyEvent) {
         if(targetDiv===null || targetDiv===undefined){
-            console.error("[JH_calendar error]Target div is not provided")
+            console.error("[JHCalendar error]Target div is not provided")
             return;
         }
 
@@ -16,11 +16,11 @@ const JH_calendar = (function () {
         this.readOnly = readOnly
     }
 
-    JH_calendar.prototype.daySelected = function (day) {
+    JHCalendar.prototype.daySelected = function (day) {
         // This function is kind of interface function
     }
 
-    JH_calendar.prototype.setPaintTarget = function (targetDate) {
+    JHCalendar.prototype.setPaintTarget = function (targetDate) {
         if(targetDate) {
             this.targetDate = targetDate
         }
@@ -28,11 +28,11 @@ const JH_calendar = (function () {
         this.drawTbody(this.targetDate)
         this.buttonEvent(this.targetDate)
     }
-    JH_calendar.prototype.paint = function (targetDate) {
+    JHCalendar.prototype.paint = function (targetDate) {
         this.targetDiv.innerHTML = this.drawTable(targetDate.getFullYear(),targetDate.getMonth()+1)
     }
 
-    JH_calendar.prototype.drawTable = function (year,month) {
+    JHCalendar.prototype.drawTable = function (year,month) {
         let html = "<table class='calendar_table'>" +
             "<thead>" +
             "<tr class='title_arrow_tr'>"+
@@ -51,15 +51,15 @@ const JH_calendar = (function () {
         return html;
     }
 
-    JH_calendar.prototype.setMonthlyEvent = function (monthlyEvent) {
+    JHCalendar.prototype.setMonthlyEvent = function (monthlyEvent) {
         this.monthlyEvent = monthlyEvent
     }
 
-    JH_calendar.prototype.getMonthlyEvent = function () {
+    JHCalendar.prototype.getMonthlyEvent = function () {
         return this.monthlyEvent
     }
 
-    JH_calendar.prototype.writeDailyEvent = function (Array) {
+    JHCalendar.prototype.writeDailyEvent = function (Array) {
         let str = ""
         for(let i=0;i<Array.length;i++) {
             str += "<label class='daily_notifictaion_label' >"+Array[i]+"</label><br>"
@@ -67,7 +67,7 @@ const JH_calendar = (function () {
         return str;
     }
 
-    JH_calendar.prototype.drawTbody = function (targetDate) {
+    JHCalendar.prototype.drawTbody = function (targetDate) {
         let monthlyEvent = this.monthlyEvent
         let thisMonthFirstDay = new Date(targetDate.getFullYear(), targetDate.getMonth(), 1);
         let thisMonthLastDay = new Date(targetDate.getFullYear(), targetDate.getMonth() + 1, 0);
@@ -126,7 +126,7 @@ const JH_calendar = (function () {
         }
     }
 
-    JH_calendar.prototype.buttonEvent = function (targetDate) {
+    JHCalendar.prototype.buttonEvent = function (targetDate) {
         document.getElementById("calendarPrevMonthTd").removeEventListener("click",this.prevMonthEvent.bind(this))
         document.getElementById("calendarPrevMonthTd").addEventListener("click",this.prevMonthEvent.bind(this))
 
@@ -140,17 +140,17 @@ const JH_calendar = (function () {
         }
     }
 
-    JH_calendar.prototype.prevMonthEvent = function (event) {
+    JHCalendar.prototype.prevMonthEvent = function (event) {
         let newTarget = new Date(this.targetDate.getFullYear(), this.targetDate.getMonth() - 1, this.targetDate.getDate());
         this.setPaintTarget(newTarget)
     }
 
-    JH_calendar.prototype.nextMonthEvent = function (event) {
+    JHCalendar.prototype.nextMonthEvent = function (event) {
         let newTarget = new Date(this.targetDate.getFullYear(), this.targetDate.getMonth() + 1, this.targetDate.getDate());
         this.setPaintTarget(newTarget)
     }
 
-    JH_calendar.prototype.dailySelectEvent = function (event) {
+    JHCalendar.prototype.dailySelectEvent = function (event) {
         let dayID = event.currentTarget.getAttribute("id");
         let currentSelected = document.getElementsByClassName("day_td_selected")
         for(let i=0;i<currentSelected.length;i++) {
@@ -163,5 +163,5 @@ const JH_calendar = (function () {
         this.seletedDate = new Date(dayStr[1],dayStr[2],dayStr[3])
     }
 
-    return JH_calendar;
+    return JHCalendar;
 }())

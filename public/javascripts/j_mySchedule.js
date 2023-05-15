@@ -1,6 +1,6 @@
 window.onload = async function (event) {
     headlineInit()
-    let calendar = new JH_calendar(document.getElementById("calendarDiv"), new Date(),false)
+    let calendar = new JHCalendar(document.getElementById("calendarDiv"), new Date(),false)
     let todoObj = await initTodo()
 
     let monthEvent = await getNotificationTodo(new Date())

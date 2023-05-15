@@ -1,6 +1,6 @@
 window.onload = async function (event) {
     headlineInit()
-    let calendar = new JH_calendar(document.getElementById("calendarDiv"), new Date(),true)
+    let calendar = new JHCalendar(document.getElementById("calendarDiv"), new Date(),true)
     await initShared()
     let selectTag = document.getElementById("sharedTodoSelect")
     let todoObj = null
