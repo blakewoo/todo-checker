@@ -51,13 +51,14 @@ const JHCalendar = (function () {
         return html;
     }
 
-    JHCalendar.prototype.setMonthlyEvent = function (monthlyEvent) {
-        this.monthlyEvent = monthlyEvent
-    }
-
-    JHCalendar.prototype.getMonthlyEvent = function () {
-        return this.monthlyEvent
-    }
+    Object.defineProperty(this, "monthlyEvent", {
+        get() {
+            return this.monthlyEvent;
+        },
+        set(value) {
+            this.monthlyEvent = value
+        }
+    });
 
     JHCalendar.prototype.writeDailyEvent = function (Array) {
         let str = ""

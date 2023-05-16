@@ -4,7 +4,7 @@ window.onload = async function (event) {
     let todoObj = await initTodo()
 
     let monthEvent = await getNotificationTodo(new Date())
-    calendar.setMonthlyEvent(monthEvent)
+    calendar.monthlyEvent = monthEvent
 
     calendar.daySelected = function (day) {
         let id = document.querySelector(".todoCategory_span.active").getAttribute("id")
@@ -50,7 +50,7 @@ window.onload = async function (event) {
             event.currentTarget.value = ""
             let temp = new TODO_OBJECT(null,Data,calendar.seletedDate,null,false)
             if(todoObj.addTodo(temp,calendar.seletedDate,id) && id==="calendarViewTodoSpan"){
-                let tempMap = calendar.getMonthlyEvent()
+                let tempMap = calendar.monthlyEvent
                 let targetDate = calendar.seletedDate
                 let tempObj = tempMap.get(targetDate.getFullYear()+"-"+(targetDate.getMonth()+1)+"-"+targetDate.getDate())
                 if(tempObj){
@@ -60,7 +60,7 @@ window.onload = async function (event) {
                 else {
                     tempMap.set(targetDate.getFullYear()+"-"+(targetDate.getMonth()+1)+"-"+targetDate.getDate(),[Data])
                 }
-                calendar.setMonthlyEvent(tempMap)
+                calendar.monthlyEvent = tempMap
                 calendar.setPaintTarget()
             }
         }
