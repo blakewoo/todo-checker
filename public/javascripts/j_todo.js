@@ -15,7 +15,6 @@ let TODO = (function () {
         for(let i=0;i<TODO_LIST.length;i++) {
             tempMap.set(TODO_LIST[i].ID,TODO_LIST[i].DATA)
         }
-        this.TODO_Map = tempMap
         // 이후 프론트 엔드 병합시 사용
         this.TODO_CONTAINER = TODO_CONTAINER
         this.READ_ONLY = READ_ONLY
@@ -62,7 +61,6 @@ let TODO = (function () {
             TODO_OBJ.DeadLine = null
             TODO_OBJ.IS_DONE = false
             TODO_OBJ.ID = result.result._id
-            this.TODO_Map.set(TODO_OBJ.ID,TODO_OBJ);
             this.addFrontTodo(TODO_OBJ)
             return true
         }
@@ -160,24 +158,6 @@ let TODO = (function () {
     }
 
 
-
-    /**
-     * TODO 변경
-     * @param TODO_ID : string
-     * @param TODO_OBJ : TODO_OBJECT
-     * @returns {boolean}
-     */
-    TODO.prototype.updateTodo = function (TODO_ID,TODO_OBJ) {
-        let result = true
-        //front update
-        this.TODO_Map.set(TODO_ID,TODO_OBJ)
-
-        // back update
-
-        return result
-    }
-
-
     TODO.prototype.listConvertTodoObject = function (RAW_LIST) {
         let result = []
         for(let i=0;i<RAW_LIST.length;i++) {
@@ -221,49 +201,6 @@ let TODO = (function () {
         }
     }
 
-    /**
-     * TODO 값 가져오기
-     * @param TODO_ID : string
-     * @returns {TODO_OBJECT}
-     */
-    TODO.prototype.getTodo = function (TODO_ID) {
-        return this.TODO_Map.get(TODO_ID)
-    }
-
-    /**
-     * TODO 완료 처리
-     * @param TODO_ID : string
-     * @returns {boolean}
-     */
-    TODO.prototype.toggleTodoCompleted = function (TODO_ID) {
-        let result = true
-        //front update
-        let temp = this.TODO_Map.get(TODO_ID)
-        temp.isCompleted = true
-        this.TODO_Map.set(TODO_ID,temp)
-
-        // back update
-
-        return result
-    }
-
-    /**
-     * TODO 삭제
-     * @param TODO_ID : string
-     * @returns {boolean}
-     */
-    TODO.prototype.deleteTodo = function (TODO_ID) {
-        let result = true
-        // front update
-        this.TODO_Map.delete(TODO_ID)
-
-        // back update
-        return result
-    }
-
-    TODO.prototype.setDateTodoEvent = function () {
-
-    }
     function modifyTodoEvent(event) {
         if(this.READ_ONLY) {
             return
