@@ -11,38 +11,37 @@ describe('USER CRUD TEST',  function () {
     const userTestUpdateResultData = [true,true,true]
     const userTestDeleteResultData = [true,true,true]
 
-    let count = 0;
     let dataLength = userTestInputData.length
 
-    before(function (){
+    before(function (done){
         mariadb.getConnection()
-            .then(result =>{ console.log("[SYSTEM] Maria DB connected")})
-            .catch(error =>{ console.log(error); console.log("[SYSTEM] Maria DB not connected")})
+            .then(result =>{ console.log("[SYSTEM] Maria DB connected"); done()})
+            .catch(error =>{ console.log(error); console.log("[SYSTEM] Maria DB not connected"); done()})
     })
 
-    for(;count<dataLength;count++) {
+    userTestInputData.forEach(function (value,count){
         describe((count+1)+'번째 테스트 케이스',function () {
-            it('CREATE USER',async function (done) {
+            it('CREATE USER',async function () {
                 let temp = await userModule.addUser(userTestInputData[count][0],userTestInputData[count][1],userTestInputData[count][2])
-                assert.equal(temp.status, userTestAddResultData[count]);
-                done()
+                assert.strictEqual(temp.status, userTestAddResultData[count]);
+
             });
-            it('READ USER',async function (done) {
+            it('READ USER',async function () {
                 let temp = await userModule.getUser(userTestInputData[count][0])
-                assert.equal(temp.toString(), {ID:userTestInputData[count][0],PASSWORD:userTestInputData[count][1],EMAIL:userTestInputData[count][2]}.toString());
-                done()
+                assert.strictEqual(temp.toString(), {ID:userTestInputData[count][0],PASSWORD:userTestInputData[count][1],EMAIL:userTestInputData[count][2]}.toString());
+
             });
-            it('UPDATE USER',async function (done) {
+            it('UPDATE USER',async function () {
                 let temp = await userModule.updateUser(userTestInputData[count][0],userTestUpdateInputData[count][0],userTestUpdateInputData[count][1])
-                assert.equal(temp.status, userTestUpdateResultData[count]);
-                done()
+                assert.strictEqual(temp.status, userTestUpdateResultData[count]);
+
             });
-            it('DELETE USER',async function (done) {
+            it('DELETE USER',async function () {
                 let temp = await userModule.deleteUser(userTestInputData[count][0])
-                assert.equal(temp.status, userTestDeleteResultData[count]);
-                done()
+                assert.strictEqual(temp.status, userTestDeleteResultData[count]);
+
             });
         })
-    }
+    })
 
 });
