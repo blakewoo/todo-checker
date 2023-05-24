@@ -1,8 +1,7 @@
 const userModule = require('../module/m_user');
 const assert = require('assert');
 const mariadb = require("../connectors/mariadb")
-const mongooseConnect = require("../connectors/mongodb")
-const mongoose = require("mongoose")
+
 
 /**
  *  총 5개의 테스트 케이스
@@ -52,36 +51,3 @@ describe('USER CRUD TEST',  function () {
     })
 
 });
-
-/**
- *  총 5개의 테스트 케이스
- *  1. CRUD 성공 대상 테스트 케이스
- *  2. C 실패
- *  3. R 실패
- *  4. U 실패
- *  5. D 실패
- */
-describe('TODO CRUD TEST',  function () {
-    let todoTestInputData = []
-
-    before(function (done){
-        mongooseConnect();
-    })
-
-    todoTestInputData.forEach(function (value,count){
-        describe((count+1)+'번째 테스트 케이스',function () {
-            it('CREATE USER',async function () {
-
-            });
-            it('READ USER',async function () {
-
-            });
-            it('UPDATE USER',async function () {
-
-            });
-            it('DELETE USER',async function () {
-
-            });
-        })
-    })
-})
