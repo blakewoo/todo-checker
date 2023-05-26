@@ -28,8 +28,9 @@ exports.getDailyTodo = async function (USER_ID,DATE) {
         // 나라 기준으로 0시0분부터 23시 59분까지의 값을 갖고 와야함
         // let startDate = time_data.getStartTime(DATE)
         // let endDate = time_data.getEndTime(DATE)
-        let startDate = new Date(DATE.setHours(0,0,0,0))
-        let endDate = new Date(DATE.setHours(24,0,0,0))
+        let tempDate = new Date(DATE)
+        let startDate = new Date(tempDate.setHours(0,0,0,0))
+        let endDate = new Date(tempDate.setHours(24,0,0,0))
         return await todo_data.find({
             USER_ID: USER_ID,
             TYPE:"DAILY",
@@ -83,8 +84,10 @@ exports.getDailyNotificationTodo = async function (USER_ID,DATE) {
         // 나라 기준으로 0시0분부터 23시 59분까지의 값을 갖고 와야함
         // let startDate = time_data.getStartTime(DATE)
         // let endDate = time_data.getEndTime(DATE)
-        let startDate = new Date(DATE.setHours(0,0,0,0))
-        let endDate = new Date(DATE.setHours(24,0,0,0))
+        let tempDate = new Date(DATE)
+        let startDate = new Date(tempDate.setHours(0,0,0,0))
+        let endDate = new Date(tempDate.setHours(24,0,0,0))
+
         return await todo_data.find({
             USER_ID: USER_ID,
             TYPE:"NOTIFICATION",

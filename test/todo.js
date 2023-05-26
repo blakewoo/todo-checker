@@ -8,11 +8,6 @@ const todoModule = require("./../module/m_todo")
  */
 describe('TODO CRUD TEST',  function () {
     let todoTestInputData = [["testman",new Date(),new Date(),"1","DAILY"],["testman1",new Date(),new Date(),"2","WEEKLY"],["testman2",new Date(),new Date(),"3","MONTHLY"],["testman3",new Date(),new Date(),"4","NOTIFICATION"],["testman4",new Date(),new Date(),"5","NOTIFICATION"]]
-    let todoTestResultData1 = []
-    let todoTestResultData2 = []
-    let todoTestResultData3 = []
-    let todoTestResultData4 = []
-    let todoTestResultData5 = []
 
     before(function (){
         mongooseConnect();
