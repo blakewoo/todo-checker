@@ -5,7 +5,10 @@
 - module의 접두사는 m_
 - router의 접두사는  r_
 - frontend에 있는 javascript의 접두사는  j_
-- 스키마 파일의 접두사는  md_
+- 스키마 파일의 접두사는  md_   
+- 테스트 파일은 테스트하고자 하는 파일 뒤에 .test를 붙임   
+ ex) m_user.js => m_user.test.js
+
 #### HTML id
 - 카멜표기법으로 작성한다.
 - [목적][태그명]형태로 작성한다 ex) todoContainerDiv
