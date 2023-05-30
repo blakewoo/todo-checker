@@ -1,6 +1,4 @@
 const todo_data = require("../model/md_to-do")
-const time_data = require("../module/m_timezone")
-
 
 exports.addTodo = async function (USER_ID,DATE,TARGET_DATE,TODO_DATA,TYPE) {
    try{

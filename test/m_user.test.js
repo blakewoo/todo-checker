@@ -10,7 +10,7 @@ const mariadb = require("../connectors/mariadb")
  *  5. D 실패
  */
 describe('USER CRUD TEST',  function () {
-    const userTestInputData = [['testman1','xptmxm123!','testman1@test.com'],['testman2','xptmxm123!','testman2@test.com'],['testman3','xptmxm123!','testman3@test.com']]
+    const userTestInputData = [['testman1','xptmm123!','testman1test.com'],['testman2','xptmxm23!','testman2@test.com'],['testman3','xptmxm12!','testman3@test.com']]
     const userTestAddResultData = [true,true,true]
 
     const userTestUpdateInputData = [['',''],['',''],['','']]
@@ -30,6 +30,29 @@ describe('USER CRUD TEST',  function () {
                 expect(temp.status).toBe(userTestAddResultData[count]);
 
             });
+
+            test('VERIFY USER',async function () {
+                if(count === 1) {
+                    let temp = await userModule.verifyUser(userTestInputData[count][0],userTestInputData[count][1])
+                    expect(temp.status).toBe(true);
+                }
+                else {
+                    let temp = await userModule.verifyUser(userTestInputData[count][0],userTestInputData[count][2])
+                    expect(temp.status).toBe(false);
+                }
+            });
+
+            test('VERIFY EMAIL',async function () {
+                if(count === 0) {
+                    let temp = await userModule.verifyEmail(userTestInputData[count][2])
+                    expect(temp).toBe(true);
+                }
+                else {
+                    let temp = await userModule.verifyEmail(userTestInputData[count][2])
+                    expect(temp).toBe(false);
+                }
+            });
+
             test('READ USER',async function () {
                 let temp = await userModule.getUser(userTestInputData[count][0])
                 expect(temp.toString()).toBe({ID:userTestInputData[count][0],PASSWORD:userTestInputData[count][1],EMAIL:userTestInputData[count][2]}.toString());
