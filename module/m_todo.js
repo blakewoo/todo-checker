@@ -43,7 +43,8 @@ exports.getDailyTodo = async function (USER_ID,DATE) {
 
 exports.getWeeklyTodo = async function (USER_ID,DATE) {
     try{
-        let startDate = new Date(DATE.setHours(0,0,0,0))
+        let tempDate = new Date(DATE)
+        let startDate = new Date(tempDate.setHours(0,0,0,0))
         let dow = startDate.getDay()
         startDate.setDate(startDate.getDate()-dow)
         let endDate = new Date(startDate)

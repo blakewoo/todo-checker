@@ -141,13 +141,15 @@ const JHCalendar = (function () {
         }
     }
 
-    JHCalendar.prototype.prevMonthEvent = function (event) {
-        let newTarget = new Date(this.targetDate.getFullYear(), this.targetDate.getMonth() - 1, this.targetDate.getDate());
+    JHCalendar.prototype.prevMonthEvent = async function (event) {
+        let newTarget = new Date(this.targetDate.getFullYear(), this.targetDate.getMonth() - 1, 1);
+        this.monthlyEvent = await this.getRecentMonthlyNotification(newTarget)
         this.setPaintTarget(newTarget)
     }
 
-    JHCalendar.prototype.nextMonthEvent = function (event) {
-        let newTarget = new Date(this.targetDate.getFullYear(), this.targetDate.getMonth() + 1, this.targetDate.getDate());
+    JHCalendar.prototype.nextMonthEvent = async function (event) {
+        let newTarget = new Date(this.targetDate.getFullYear(), this.targetDate.getMonth() + 1, 1);
+        this.monthlyEvent = await this.getRecentMonthlyNotification(newTarget)
         this.setPaintTarget(newTarget)
     }
 
@@ -162,6 +164,10 @@ const JHCalendar = (function () {
         let dayStr = dayID.split("-")
         this.daySelected(new Date(dayStr[1],dayStr[2],dayStr[3]))
         this.seletedDate = new Date(dayStr[1],dayStr[2],dayStr[3])
+    }
+
+    JHCalendar.prototype.getRecentMonthlyNotification = async function (DATE){
+        return new Promise(resolve => {resolve(new Map())})
     }
 
     return JHCalendar;

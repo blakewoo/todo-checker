@@ -5,6 +5,8 @@ window.onload = async function (event) {
 
     let monthEvent = await getNotificationTodo(new Date())
     calendar.monthlyEvent = monthEvent
+    calendar.getRecentMonthlyNotification = getNotificationTodo
+
 
     calendar.daySelected = function (day) {
         let id = document.querySelector(".todoCategory_span.active").getAttribute("id")
