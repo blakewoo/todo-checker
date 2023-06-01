@@ -12,6 +12,7 @@ exports.getUser = async function (ID) {
     }
     catch(e){
         console.log(e)
+        return undefined
     }
     finally {
         await con.end()
@@ -93,6 +94,7 @@ exports.verifyUser = async function (ID,PASSWORD) {
     }
     catch(e){
         console.log(e)
+        return {status:false,reason:"Undefined error"}
     }
     finally {
         await con.end()

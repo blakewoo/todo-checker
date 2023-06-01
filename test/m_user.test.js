@@ -28,11 +28,14 @@ describe('USER CRUD TEST',  function () {
             test('CREATE USER',async function () {
                 let temp = await userModule.addUser(userTestInputData[count][0],userTestInputData[count][1],userTestInputData[count][2])
                 expect(temp.status).toBe(userTestAddResultData[count]);
-
             });
 
             test('VERIFY USER',async function () {
-                if(count === 1) {
+                if(count === 0) {
+                    let temp = await userModule.verifyUser("0","0")
+                    expect(temp.reason).toBe("ID or Password");
+                }
+                else if(count === 1) {
                     let temp = await userModule.verifyUser(userTestInputData[count][0],userTestInputData[count][1])
                     expect(temp.status).toBe(true);
                 }

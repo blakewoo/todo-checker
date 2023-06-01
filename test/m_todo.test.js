@@ -1,5 +1,4 @@
 const mongooseConnect = require("../connectors/mongodb")
-let mongoose = require("mongoose")
 const todoModule = require("./../module/m_todo")
 
 beforeAll(() => {
