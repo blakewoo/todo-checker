@@ -28,6 +28,13 @@ describe('USER CRUD TEST',  function () {
             test('CREATE USER',async function () {
                 let temp = await userModule.addUser(userTestInputData[count][0],userTestInputData[count][1],userTestInputData[count][2])
                 expect(temp.status).toBe(userTestAddResultData[count]);
+                if(count ===0) {
+                    temp = await userModule.addUser(userTestInputData[count][0],userTestInputData[count][1],userTestInputData[count][2])
+                    expect(temp.reason).toBe("ID_duplicated");
+
+                    temp = await userModule.addUser("0",userTestInputData[count][1],userTestInputData[count][2])
+                    expect(temp.reason).toBe("EMAIL_duplicated");
+                }
             });
 
             test('VERIFY USER',async function () {
