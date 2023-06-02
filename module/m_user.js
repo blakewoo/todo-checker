@@ -53,9 +53,16 @@ exports.updateUser = async function (ID,PASSWORD,EMAIL) {
         if(emailFind.length !==0) {
             return {status:false,reason:"EMAIL_duplicated"}
         }
-        if(PASSWORD!=="") {
+        if(PASSWORD!=="" && EMAIL!=="") {
             let hash = bcrypt.hashSync(PASSWORD, Number(config.SALT_ROUND))
             await con.query("UPDATE user SET PASSWORD=?,EMAIL=? WHERE ID=?", [hash,EMAIL,ID])
+        }
+        else if(PASSWORD!=="") {
+            let hash = bcrypt.hashSync(PASSWORD, Number(config.SALT_ROUND))
+            await con.query("UPDATE user SET PASSWORD=? WHERE ID=?", [hash,ID])
+        }
+        else if(EMAIL!==""){
+            await con.query("UPDATE user SET EMAIL=? WHERE ID=?", [EMAIL,ID])
         }
     }
     catch(e){
