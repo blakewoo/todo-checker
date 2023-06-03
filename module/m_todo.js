@@ -23,9 +23,6 @@ exports.addTodo = async function (USER_ID,DATE,TARGET_DATE,TODO_DATA,TYPE) {
 
 exports.getDailyTodo = async function (USER_ID,DATE) {
     try{
-        // 나라 기준으로 0시0분부터 23시 59분까지의 값을 갖고 와야함
-        // let startDate = time_data.getStartTime(DATE)
-        // let endDate = time_data.getEndTime(DATE)
         let tempDate = new Date(DATE)
         let startDate = new Date(tempDate.setHours(0,0,0,0))
         let endDate = new Date(tempDate.setHours(24,0,0,0))
@@ -44,11 +41,12 @@ exports.getDailyTodo = async function (USER_ID,DATE) {
 exports.getWeeklyTodo = async function (USER_ID,DATE) {
     try{
         let tempDate = new Date(DATE)
-        let startDate = new Date(tempDate.setHours(0,0,0,0))
+        tempDate.setHours(0,0,0,0)
+        let startDate = new Date(tempDate)
         let dow = startDate.getDay()
         startDate.setDate(startDate.getDate()-dow)
         let endDate = new Date(startDate)
-        endDate.setDate(endDate.getDate()+6)
+        endDate.setDate(endDate.getDate()+7)
 
         return await todo_data.find({
             USER_ID: USER_ID,
