@@ -67,7 +67,6 @@ app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/user', userRouter);
 app.use('/todolist', todolistRouter);
-app.use('/commentlist', commentlistRouter);
 app.use('/todo-share',todoShareRouter);
 app.use('/chatting', chattingRouter);
 //
