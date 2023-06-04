@@ -13,7 +13,7 @@ describe('USER CRUD TEST',  function () {
     const userTestInputData = [['testman1','xptmm123!','testman1test.com'],['testman2','xptmxm23!','testman2@test.com'],['testman3','xptmxm12!','testman3@test.com']]
     const userTestAddResultData = [true,true,true]
 
-    const userTestUpdateInputData = [['',''],['',''],['','']]
+    const userTestUpdateInputData = [['22','33'],['123@haa',''],['','aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa']]
     const userTestUpdateResultData = [true,true,true]
     const userTestDeleteResultData = [true,true,true]
 
@@ -34,6 +34,9 @@ describe('USER CRUD TEST',  function () {
 
                     temp = await userModule.addUser("0",userTestInputData[count][1],userTestInputData[count][2])
                     expect(temp.reason).toBe("EMAIL_duplicated");
+
+                    temp = await userModule.addUser("0","testtest","testtest33@naver.com")
+                    expect(temp.status).toBe(true);
                 }
             });
 
@@ -69,11 +72,20 @@ describe('USER CRUD TEST',  function () {
 
             });
             test('UPDATE USER',async function () {
+                if(count === 0) {
+                    let temp = await userModule.updateUser(userTestInputData[count][0],"testtest","testtest33@naver.com")
+                    expect(temp.reason).toBe("EMAIL_duplicated");
+                }
+
                 let temp = await userModule.updateUser(userTestInputData[count][0],userTestUpdateInputData[count][0],userTestUpdateInputData[count][1])
                 expect(temp.status).toBe(userTestUpdateResultData[count]);
 
             });
             test('DELETE USER',async function () {
+                if(count ===0) {
+                    let temp = await userModule.deleteUser(0)
+                    expect(temp.status).toBe(true);
+                }
                 let temp = await userModule.deleteUser(userTestInputData[count][0])
                 expect(temp.status).toBe(userTestDeleteResultData[count]);
             });

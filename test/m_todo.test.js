@@ -67,12 +67,17 @@ describe("TODO TEST",()=>{
             });
 
             test('UPDATE TODO',async () => {
-                let result = await todoModule.updateTodo(currentId,"test_value")
+                let result = await todoModule.updateTodo(currentId,{DEAD_LINE:new Date(),IS_DONE:true,DATA:"test1"})
                 expect(result).toBe(true)
             });
 
             test('DELETE TODO',async () => {
                 let result = await todoModule.deleteTodo(currentId)
+                expect(result).toBe(true)
+            });
+
+            test('DELETE TODOS',async () => {
+                let result = await todoModule.deleteUserTodos(currentId)
                 expect(result).toBe(true)
             });
         })
