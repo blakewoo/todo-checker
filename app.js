@@ -11,11 +11,10 @@ var indexRouter = require('./routes/r_index');
 const loginRouter = require('./routes/r_login')
 const userRouter = require('./routes/r_user')
 const todolistRouter = require('./routes/r_todolist')
-const commentlistRouter = require("./routes/r_commentlist")
 const todoShareRouter= require("./routes/r_todo_share")
 const chattingRouter = require("./routes/r_chatting")
 const session = require('express-session');
-const MemoryStore = require('memorystore')(session);
+const fileStore = require("session-file-store")(session)
 const helmet = require("helmet");
 
 var app = express();
@@ -25,7 +24,7 @@ const sessionObj = {
   secret: config.SESSION_KEY,
   resave: false,
   saveUninitialized: false,
-  store: new MemoryStore({ checkPeriod: maxAge }),
+  store: new fileStore(),
   cookie: {
     maxAge: maxAge
   },
