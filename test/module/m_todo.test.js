@@ -1,5 +1,5 @@
-const mongooseConnect = require("../connectors/mongodb")
-const todoModule = require("./../module/m_todo")
+const mongooseConnect = require("../../connectors/mongodb")
+const todoModule = require("../../module/m_todo")
 
 beforeAll(() => {
     mongooseConnect();

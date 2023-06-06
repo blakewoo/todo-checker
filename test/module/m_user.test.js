@@ -1,5 +1,5 @@
-const userModule = require('../module/m_user');
-const mariadb = require("../connectors/mariadb")
+const userModule = require('../../module/m_user');
+const mariadb = require("../../connectors/mariadb")
 
 /**
  *  총 5개의 테스트 케이스
