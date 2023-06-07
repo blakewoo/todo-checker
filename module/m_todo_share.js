@@ -44,7 +44,6 @@ exports.getRequest = async function (requester) {
 
 exports.getAcceptRequest = async function (requester) {
     try{
-        console.log(requester)
         return await shared.find({OVERSEER_USER_ID:requester,STATUS:"ACCEPT"})
     }
     catch(e) {
@@ -53,13 +52,9 @@ exports.getAcceptRequest = async function (requester) {
     }
 }
 
-exports.deleteRequest = async function () {
-
-}
-
-exports.addReceive = async function () {
+exports.deleteRequest = async function (_id) {
     try{
-
+        return await shared.deleteOne({_id:_id})
     }
     catch(e) {
         console.error(e)
@@ -85,10 +80,6 @@ exports.updateReceive = async function (requester,receiver,status) {
         console.error(e)
         return false
     }
-}
-
-exports.deleteReceive = async function () {
-
 }
 
 exports.getChatList = async function(requester) {
