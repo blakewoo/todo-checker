@@ -24,8 +24,8 @@ router.get('/request/accept',async function(req, res, next) {
 
 router.post('/request',async function(req, res, next) {
     let result = await todoShare.addRequest(req.session.ID,req.body.target)
-    if(result) {
-        res.send({status:true,result:result})
+    if(result.status) {
+        res.send({status:true,result:result.status})
     }
     else {
         res.send({status:false})

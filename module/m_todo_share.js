@@ -8,15 +8,15 @@ exports.addRequest = async function (requester,target) {
         let ReceiveFind = await con.query("SELECT ID,EMAIL FROM user WHERE user.ID=?",target)
 
         if(ReceiveFind.length===0) {
-            return false
+            return {status:false}
         }
 
         if(RequestFind[0].ID === ReceiveFind[0].ID) {
-            return false
+            return {status:false}
         }
 
 
-        await shared.create({
+        let result = await shared.create({
             OVERSEER_USER_ID: requester,
             OVERSEER_EMAIL: RequestFind[0].EMAIL,
             TARGET_USER_ID: target,
@@ -24,11 +24,11 @@ exports.addRequest = async function (requester,target) {
             CREATED_DATE: new Date(),
             STATUS:"Waiting"})
 
-        return true
+        return {status:true,result:result}
     }
     catch(e) {
         console.error(e)
-        return false
+        return {status:false}
     }
 }
 
