@@ -1,31 +1,23 @@
-const conn = require("../connectors/mariadb")
 const bcrypt = require("bcrypt");
 const config = require("../config/config")
+const mariaDB = require("./repo/mariaRepo")
 
 
 exports.getUser = async function (ID) {
-    let con;
-    let userFind = null;
     try{
-        con = await conn.getConnection()
-        userFind = await con.query("SELECT ID,EMAIL FROM user WHERE user.ID=?",ID)
+        let userFind = await mariaDB("SELECT ID,EMAIL FROM user WHERE user.ID=?","SINGLE",[ID])
+        return userFind[0]
     }
     catch(e){
         console.log(e)
         return undefined
     }
-    finally {
-        await con.end()
-    }
-    return userFind[0]
 }
 
 exports.addUser = async function (ID,PASSWORD,EMAIL) {
-    let con;
     try{
-        con = await conn.getConnection()
-        let userFind = await con.query("SELECT ID FROM user WHERE user.ID=?",ID)
-        let emailFind = await con.query("SELECT EMAIL FROM user WHERE user.EMAIL=?",EMAIL)
+        let userFind = await mariaDB("SELECT ID FROM user WHERE user.ID=?","SINGLE",[ID])
+        let emailFind = await mariaDB("SELECT EMAIL FROM user WHERE user.EMAIL=?","SINGLE",[EMAIL])
         if(userFind.length !==0) {
             return {status:false,reason:"ID_duplicated"}
         }
@@ -33,90 +25,70 @@ exports.addUser = async function (ID,PASSWORD,EMAIL) {
             return {status:false,reason:"EMAIL_duplicated"}
         }
         let hash = bcrypt.hashSync(PASSWORD, Number(config.SALT_ROUND))
-        await con.query("INSERT INTO user value (?,?,?)", [ID,hash,EMAIL])
+        await mariaDB("INSERT INTO user value (?,?,?)", "MULTI",[ID,hash,EMAIL])
+        return {status:true}
     }
     catch(e){
         console.log(e)
-        await con.end()
         return {status:false}
     }
-
-    await con.end()
-    return {status:true}
 }
 
 exports.updateUser = async function (ID,PASSWORD,EMAIL) {
-    let con;
     try{
-        con = await conn.getConnection()
-        let emailFind = await con.query("SELECT EMAIL FROM user WHERE user.EMAIL=? and user.ID!=?",[EMAIL,ID])
+        let emailFind = await mariaDB("SELECT EMAIL FROM user WHERE user.EMAIL=? and user.ID!=?","MULTI",[EMAIL,ID])
         if(emailFind.length !==0) {
             return {status:false,reason:"EMAIL_duplicated"}
         }
         if(PASSWORD!=="" && EMAIL!=="") {
             let hash = bcrypt.hashSync(PASSWORD, Number(config.SALT_ROUND))
-            await con.query("UPDATE user SET PASSWORD=?,EMAIL=? WHERE ID=?", [hash,EMAIL,ID])
+            await mariaDB("UPDATE user SET PASSWORD=?,EMAIL=? WHERE ID=?","MULTI", [hash,EMAIL,ID])
         }
         else if(PASSWORD!=="") {
             let hash = bcrypt.hashSync(PASSWORD, Number(config.SALT_ROUND))
-            await con.query("UPDATE user SET PASSWORD=? WHERE ID=?", [hash,ID])
+            await mariaDB("UPDATE user SET PASSWORD=? WHERE ID=?","MULTI", [hash,ID])
         }
         else if(EMAIL!==""){
-            await con.query("UPDATE user SET EMAIL=? WHERE ID=?", [EMAIL,ID])
+            await mariaDB("UPDATE user SET EMAIL=? WHERE ID=?","MULTI", [EMAIL,ID])
         }
+        return {status:true}
     }
     catch(e){
         console.log(e)
-        await con.end()
         return {status:false}
     }
-
-    await con.end()
-    return {status:true}
 }
 
 exports.deleteUser = async function(ID) {
-    let con;
     try{
-        con = await conn.getConnection()
-        await con.query("DELETE FROM user WHERE user.ID=?",ID)
+        await mariaDB("DELETE FROM user WHERE user.ID=?","SINGLE",[ID])
+        return {status:true}
     }
     catch(e){
         console.log(e)
-        await con.end()
         return {status:false}
     }
-
-    await con.end()
-    return {status:true}
 }
 
 
 exports.verifyUser = async function (ID,PASSWORD) {
-    let con;
-    let userFind;
     try{
-        con = await conn.getConnection()
-        userFind = await con.query("SELECT ID,PASSWORD FROM user WHERE user.ID=?",ID)
+        let userFind = await mariaDB("SELECT ID,PASSWORD FROM user WHERE user.ID=?","SINGLE",[ID])
+        if(userFind.length!==0) {
+            if(bcrypt.compareSync(PASSWORD,userFind[0].PASSWORD)){
+                return {status:true}
+            }
+            else {
+                return {status:false,reason:"ID or Password"}
+            }
+        }
+        else{
+            return {status:false,reason:"ID or Password"}
+        }
     }
     catch(e){
         console.log(e)
         return {status:false,reason:"Undefined error"}
-    }
-    finally {
-        await con.end()
-    }
-
-    if(userFind.length!==0) {
-        if(bcrypt.compareSync(PASSWORD,userFind[0].PASSWORD)){
-            return {status:true}
-        }
-        else {
-            return {status:false,reason:"ID or Password"}
-        }
-    }
-    else{
-        return {status:false,reason:"ID or Password"}
     }
 }
 
