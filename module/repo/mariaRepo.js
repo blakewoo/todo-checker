@@ -1,17 +1,23 @@
 const conn = require("../../connectors/mariadb")
 
 const QUERY = async function (QUERY,TYPE,ATTRIBUTE) {
+    let con;
     try{
-        let con = await conn.getConnection()
+        con = await conn.getConnection()
         if(TYPE === "SINGLE") {
-            return await con.query(QUERY,...ATTRIBUTE)
+            let result = await con.query(QUERY,...ATTRIBUTE)
+            await con.end()
+            return result
         }
         else {
-            return await con.query(QUERY,ATTRIBUTE)
+            let result = await con.query(QUERY,ATTRIBUTE)
+            await con.end()
+            return result
         }
     }
     catch(e) {
         console.error(e)
+        await con.end()
         throw e
     }
 }

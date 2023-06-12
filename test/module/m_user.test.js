@@ -1,5 +1,4 @@
 const userModule = require('../../module/m_user');
-const mariadb = require("../../connectors/mariadb")
 
 /**
  *  총 5개의 테스트 케이스
@@ -16,12 +15,6 @@ describe.only('USER CRUD TEST',  function () {
     const userTestUpdateInputData = [['22','33'],['123@haa',''],['','aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa']]
     const userTestUpdateResultData = [true,true,true]
     const userTestDeleteResultData = [true,true,true]
-
-    beforeAll(() => {
-        mariadb.getConnection()
-            .then(result =>{ console.log("[SYSTEM] Maria DB connected"); })
-            .catch(error =>{ console.log(error); console.log("[SYSTEM] Maria DB not connected"); })
-    })
 
     userTestInputData.forEach(function (value,count){
         describe((count+1)+'번째 테스트 케이스',function () {
