@@ -10,4 +10,57 @@ const todoList = new mongoose.Schema({
     IS_DONE: Boolean
 });
 
-module.exports = mongoose.model('TODO_LIST', todoList);
+let todoObj = mongoose.model('TODO_LIST', todoList);
+
+async function create (query) {
+    try{
+        return await todoObj.create(query)
+    }
+    catch(e){
+        console.error(e)
+        throw e
+    }
+}
+
+async function find(query) {
+    try{
+        return await todoObj.find(query)
+    }
+    catch(e){
+        console.error(e)
+        throw e
+    }
+}
+
+async function deleteOne(query) {
+    try{
+        return await todoObj.deleteOne(query)
+    }
+    catch(e){
+        console.error(e)
+        throw e
+    }
+}
+
+async function deleteMany(query){
+    try{
+        return await todoObj.deleteMany(query)
+    }
+    catch(e){
+        console.error(e)
+        throw e
+    }
+}
+
+async function updateOne(query,updateObject) {
+    try{
+        return await todoObj.updateOne(query,updateObject)
+    }
+    catch(e){
+        console.error(e)
+        throw e
+    }
+}
+
+
+module.exports = {create,find,deleteOne,deleteMany,updateOne}
