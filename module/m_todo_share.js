@@ -1,11 +1,10 @@
 const shared = require("../model/md_shared-request")
-const conn = require("../connectors/mariadb")
+const mariadb = require("./repo/mariaRepo")
 
 exports.addRequest = async function (requester,target) {
     try{
-        let con = await conn.getConnection()
-        let RequestFind = await con.query("SELECT ID,EMAIL FROM user WHERE user.ID=?",requester)
-        let ReceiveFind = await con.query("SELECT ID,EMAIL FROM user WHERE user.ID=?",target)
+        let RequestFind = await mariadb("SELECT ID,EMAIL FROM user WHERE user.ID=?","SINGLE",[requester])
+        let ReceiveFind = await mariadb("SELECT ID,EMAIL FROM user WHERE user.ID=?","SINGLE",[target])
 
         if(ReceiveFind.length===0) {
             return {status:false}

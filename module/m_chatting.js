@@ -20,7 +20,7 @@ exports.getChatting = async function (REQUEST_ID,TARGET_ID) {
     try{
         return await chattingModel.find({"$or":[{REQUEST_ID: REQUEST_ID},{
             DESTINATION_ID: TARGET_ID}]
-        }).sort({CREATED:1})
+        },true,false,"CREATED")
     }
     catch(e) {
         console.error(e)
