@@ -5,7 +5,7 @@ beforeAll(() => {
     mongooseConnect();
 });
 
-describe.skip("TODO SHARE TEST",()=>{
+describe("TODO SHARE TEST",()=>{
     let todoShareData = [{REQUEST_ID:"chat_req_id",RESPONSE_ID:"chat_res_id"}]
 
     for(let i=0;i<todoShareData.length;i++){
@@ -43,7 +43,7 @@ describe.skip("TODO SHARE TEST",()=>{
 
         test("delete request", async ()=>{
             let temp = await todoShare.deleteRequest(todoShareData[i].RESPONSE_ID)
-            expect(temp[0].OVERSEER_USER_ID).toBe(todoShareData[i].REQUEST_ID)
+            expect(temp.status).toBe(true)
         })
     }
 })

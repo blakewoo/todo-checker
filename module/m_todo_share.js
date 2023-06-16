@@ -32,11 +32,12 @@ exports.addRequest = async function (requester,target) {
 
 exports.getRequest = async function (requester) {
     try{
-        return await shared.find({OVERSEER_USER_ID:requester})
+        let result = await shared.find({OVERSEER_USER_ID:requester})
+        return {status:true, result:result}
     }
     catch(e) {
         console.error(e)
-        return false
+        return {status:false}
     }
 }
 
@@ -52,11 +53,12 @@ exports.getAcceptRequest = async function (requester) {
 
 exports.deleteRequest = async function (_id) {
     try{
-        return await shared.deleteOne({_id:_id})
+        await shared.deleteOne({_id:_id})
+        return {status:true}
     }
     catch(e) {
         console.error(e)
-        return false
+        return {status:false}
     }
 }
 
