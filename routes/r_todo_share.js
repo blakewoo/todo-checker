@@ -14,8 +14,8 @@ router.get('/request',async function(req, res, next) {
 
 router.get('/request/accept',async function(req, res, next) {
     let result = await todoShare.getAcceptRequest(req.session.ID)
-    if(result) {
-        return res.send({status:true,result:result})
+    if(result.status) {
+        return res.send({status:true,result:result.result})
     }
     else {
         return res.send({status:false})
@@ -33,13 +33,19 @@ router.post('/request',async function(req, res, next) {
 });
 
 router.delete('/request',async function(req, res, next) {
-
+    let result = await todoShare.deleteRequest(req.body.target)
+    if(result.status) {
+        return res.send({status:true})
+    }
+    else {
+        return res.send({status:false})
+    }
 });
 
 router.get('/receive',async function(req, res, next) {
     let result = await todoShare.getReceive(req.session.ID)
-    if(result) {
-        return res.send({status:true,result:result})
+    if(result.status) {
+        return res.send({status:true,result:result.result})
     }
     else {
         return res.send({status:false})
@@ -48,8 +54,8 @@ router.get('/receive',async function(req, res, next) {
 
 router.put('/receive',async function(req, res, next) {
     let result = await todoShare.updateReceive(req.body.requester,req.session.ID,req.body.state)
-    if(result) {
-        return res.send({status:true,result:result})
+    if(result.status) {
+        return res.send({status:true,result:result.result})
     }
     else {
         return res.send({status:false})
@@ -58,8 +64,8 @@ router.put('/receive',async function(req, res, next) {
 
 router.get('/chatlist',async function(req, res, next) {
     let result = await todoShare.getChatList(req.session.ID)
-    if(result) {
-        return res.send({status:true,result:result,myId:req.session.ID})
+    if(result.status) {
+        return res.send({status:true,result:result.result,myId:req.session.ID})
     }
     else {
         return res.send({status:false})

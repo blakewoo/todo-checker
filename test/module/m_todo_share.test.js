@@ -28,7 +28,7 @@ describe("TODO SHARE TEST",()=>{
 
         test("update receive", async ()=>{
             let temp = await todoShare.updateReceive(todoShareData[i].REQUEST_ID,todoShareData[i].RESPONSE_ID,"ACCEPT")
-            expect(temp[0].OVERSEER_USER_ID).toBe(todoShareData[i].REQUEST_ID)
+            expect(temp[0].status).toBe(true)
         })
 
         test("get share list", async ()=>{

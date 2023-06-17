@@ -43,11 +43,12 @@ exports.getRequest = async function (requester) {
 
 exports.getAcceptRequest = async function (requester) {
     try{
-        return await shared.find({OVERSEER_USER_ID:requester,STATUS:"ACCEPT"})
+        let result = await shared.find({OVERSEER_USER_ID:requester,STATUS:"ACCEPT"})
+        return {status:true,result:result}
     }
     catch(e) {
         console.error(e)
-        return false
+        return {status:false}
     }
 }
 
@@ -64,30 +65,33 @@ exports.deleteRequest = async function (_id) {
 
 exports.getReceive = async function (receiver) {
     try{
-        return await shared.find({TARGET_USER_ID:receiver})
+        let result = await shared.find({TARGET_USER_ID:receiver})
+        return {status:true,result:result}
     }
     catch(e) {
         console.error(e)
-        return false
+        return {status:false}
     }
 }
 
 exports.updateReceive = async function (requester,receiver,status) {
     try{
-        return await shared.updateOne({OVERSEER_USER_ID:requester,TARGET_USER_ID:receiver},{STATUS:status})
+        let result = await shared.updateOne({OVERSEER_USER_ID:requester,TARGET_USER_ID:receiver},{STATUS:status})
+        return {status:true,result:result}
     }
     catch(e) {
         console.error(e)
-        return false
+        return {status:false}
     }
 }
 
 exports.getChatList = async function(requester) {
     try{
-        return await shared.find({"$or":[{OVERSEER_USER_ID:requester},{TARGET_USER_ID:requester}]})
+        let result = await shared.find({"$or":[{OVERSEER_USER_ID:requester},{TARGET_USER_ID:requester}]})
+        return {status:true,result:result}
     }
     catch(e) {
         console.error(e)
-        return false
+        return {status:false}
     }
 }
