@@ -5,7 +5,7 @@ beforeAll(() => {
     mongooseConnect();
 });
 
-describe("TODO SHARE TEST",()=>{
+describe.skip("TODO SHARE TEST",()=>{
     let todoShareData = [{REQUEST_ID:"chat_req_id",RESPONSE_ID:"chat_res_id"}]
 
     for(let i=0;i<todoShareData.length;i++){

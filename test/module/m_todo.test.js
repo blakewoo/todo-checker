@@ -1,11 +1,39 @@
 const mongooseConnect = require("../../connectors/mongodb")
 const todoModule = require("../../module/m_todo")
+const todoModel = require("../../model/md_to-do")
+jest.mock("../../model/md_to-do")
 
 beforeAll(() => {
     mongooseConnect();
 });
 
 describe("TODO TEST",()=>{
+    const find = jest.fn(async (query) => {
+
+    })
+
+    const create = jest.fn(async (query) => {
+
+    })
+
+    const updateOne = jest.fn(async (query,updateObject) => {
+
+    })
+
+    const deleteOne = jest.fn(async (query) => {
+
+    })
+
+    const deleteMany = jest.fn(async (query) => {
+
+    })
+
+    todoModel.mockImplementation(()=>{
+        return {
+            find,create,updateOne,deleteOne,deleteMany
+        }
+    })
+
     let todoTestInputData = [["testman",new Date(),new Date(),"1","DAILY"],["testman1",new Date(),new Date(),"2","WEEKLY"],["testman2",new Date(),new Date(),"3","MONTHLY"],["testman3",new Date(),new Date(),"4","NOTIFICATION"],["testman4",new Date(),new Date(),"5","NOTIFICATION"]]
 
     todoTestInputData.forEach(function (value,count){
