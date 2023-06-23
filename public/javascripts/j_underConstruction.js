@@ -1,3 +1,1 @@
-window.onload = function(){
-    headlineInit()
-}
+window.onload=function(){headlineInit()};
