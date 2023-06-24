@@ -16,20 +16,20 @@ window.onload = function () {
         let ID = document.getElementById("idInputText").value
         let PASSWORD = document.getElementById("passwordInput").value
 
-        requestFunction("POST","/login/verified-user",{ID:ID,PASSWORD:PASSWORD},"JSON",function (result) {
+        publicFunction.requestFunction("POST","/login/verified-user",{ID:ID,PASSWORD:PASSWORD},"JSON",function (result) {
             if(result.status) {
                 location.reload()
             }
             else {
                 if(result.reason==="ID_Unverified") {
-                    okCancelModal("ID or Password is not verified",400,200,function (target) {
+                    publicFunction.okCancelModal("ID or Password is not verified",400,200,function (target) {
                         target.addEventListener("click",function (event) {
                             event.currentTarget.parentNode.remove()
                         })
                     });
                 }
                 else {
-                    okCancelModal("Login error",400,100,function (target) {
+                    publicFunction.okCancelModal("Login error",400,100,function (target) {
                         target.addEventListener("click",function (event) {
                             event.currentTarget.parentNode.remove()
                         })
