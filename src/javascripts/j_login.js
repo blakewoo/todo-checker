@@ -1,3 +1,5 @@
+let publicFunction = require("./j_publicFunction")
+
 window.onload = function () {
     document.getElementById("idInputText").addEventListener("keyup",function (event) {
         if(event.key === "Enter") {
