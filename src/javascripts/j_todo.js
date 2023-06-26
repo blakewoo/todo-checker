@@ -1,4 +1,6 @@
 'use strict'
+let publicFunction = require("./j_publicFunction")
+let JH_datepicker = require("./j_datepicker")
 
 let todoModify;
 let prevTodoModify;
@@ -84,7 +86,7 @@ let TODO = (function () {
             else {
                 url = "/todolist/my/notification"
             }
-            return await syncRequestFunction("POST",url,sendData,"JSON")
+            return await publicFunction.syncRequestFunction("POST",url,sendData,"JSON")
         }
         catch(e) {
             console.error(e)
@@ -174,7 +176,7 @@ let TODO = (function () {
         this.TARGET_DATE = date;
         // 백엔드에서 요청해서 갖고 오기
         if(isOthers) {
-            let result = await syncRequestFunction("GET","/todolist/target/daily?ID="+ID+"&date="+date.getTime(),null,"JSON")
+            let result = await publicFunction.syncRequestFunction("GET","/todolist/target/daily?ID="+ID+"&date="+date.getTime(),null,"JSON")
             if(result.status) {
                 this.printTodo(this.listConvertTodoObject(result.result))
             }
@@ -194,7 +196,7 @@ let TODO = (function () {
                 url = "/todolist/my/notification/daily?date="+date.getTime()
             }
 
-            let result = await syncRequestFunction("GET",url,null,"JSON")
+            let result = await publicFunction.syncRequestFunction("GET",url,null,"JSON")
             if(result.status) {
                 this.printTodo(this.listConvertTodoObject(result.result))
             }
@@ -215,7 +217,7 @@ let TODO = (function () {
         textInput.addEventListener("focusout",function (event2) {
             let todoID = event.target.parentNode.parentNode.querySelector(".completedCheck_span").firstChild.id
             let afterText= event2.target.value
-            requestFunction("PUT","/todolist/my/daily",{TODO_ID:todoID,TODO_DATA:{DATA:afterText}},"JSON",function (result){
+            publicFunction.requestFunction("PUT","/todolist/my/daily",{TODO_ID:todoID,TODO_DATA:{DATA:afterText}},"JSON",function (result){
                 if(result.status) {
                     originLabel.innerText = event2.target.value;
                     originLabel.style.display = ""
@@ -245,7 +247,7 @@ let TODO = (function () {
         function setTodayEvent(event) {
             let today = new Date((new Date()).setHours(0,0,0,0))
             let id = currentTodo.parentNode.parentNode.querySelector("input[type=checkbox]").getAttribute("id")
-            requestFunction("PUT","/todolist/my/daily",{TODO_ID:id,TODO_DATA:{DEAD_LINE:today}},"JSON",function (result) {
+            publicFunction.requestFunction("PUT","/todolist/my/daily",{TODO_ID:id,TODO_DATA:{DEAD_LINE:today}},"JSON",function (result) {
                 if(result.status) {
                     currentTodo.parentNode.querySelector(".todoDateLimit_div").innerText = "오늘까지"
                     todoModify.remove()
@@ -257,7 +259,7 @@ let TODO = (function () {
             let today = new Date()
             let tomorrowDay = new Date(today.getFullYear(),today.getMonth(),today.getDate()+1)
             let id = currentTodo.parentNode.parentNode.querySelector("input[type=checkbox]").getAttribute("id")
-            requestFunction("PUT","/todolist/my/daily",{TODO_ID:id,TODO_DATA:{DEAD_LINE:tomorrowDay}},"JSON",function (result) {
+            publicFunction.requestFunction("PUT","/todolist/my/daily",{TODO_ID:id,TODO_DATA:{DEAD_LINE:tomorrowDay}},"JSON",function (result) {
                 if(result.status) {
                     currentTodo.parentNode.querySelector(".todoDateLimit_div").innerText = "내일까지"
                     todoModify.remove()
@@ -269,7 +271,7 @@ let TODO = (function () {
             let datepicker = new JH_datepicker(event.clientX,event.clientY,new Date())
             datepicker.getDay = function (day) {
                 let id = currentTodo.parentNode.parentNode.querySelector("input[type=checkbox]").getAttribute("id")
-                requestFunction("PUT","/todolist/my/daily",{TODO_ID:id,TODO_DATA:{DEAD_LINE:day}},"JSON",function (result) {
+                publicFunction.requestFunction("PUT","/todolist/my/daily",{TODO_ID:id,TODO_DATA:{DEAD_LINE:day}},"JSON",function (result) {
                     if(result.status) {
                         currentTodo.parentNode.querySelector(".todoDateLimit_div").innerText = Intl.DateTimeFormat("ko").format(day)+"까지"
                     }
@@ -282,7 +284,7 @@ let TODO = (function () {
             let check = currentTodo.parentNode.parentNode.querySelector("input[type=checkbox]")
             let flag = currentTodo.parentNode.parentNode.querySelector("input[type=checkbox]").checked
             let id = currentTodo.parentNode.parentNode.querySelector("input[type=checkbox]").getAttribute("id")
-            requestFunction("PUT","/todolist/my/daily",{TODO_ID:id,TODO_DATA:{IS_DONE:!flag}},"JSON",function (result) {
+            publicFunction.requestFunction("PUT","/todolist/my/daily",{TODO_ID:id,TODO_DATA:{IS_DONE:!flag}},"JSON",function (result) {
                 if(result.status) {
                     check.checked = !flag
                     if(flag) {
@@ -302,7 +304,7 @@ let TODO = (function () {
         let currentTarget= event.currentTarget
         let id = event.currentTarget.parentNode.querySelector("input[type=checkbox]").getAttribute("id")
         let flag = event.currentTarget.parentNode.querySelector("input[type=checkbox]").checked
-        requestFunction("PUT","/todolist/my/daily",{TODO_ID:id,TODO_DATA:{IS_DONE:!flag}},"JSON",function (result) {
+        publicFunction.requestFunction("PUT","/todolist/my/daily",{TODO_ID:id,TODO_DATA:{IS_DONE:!flag}},"JSON",function (result) {
             if(flag) {
                 currentTarget.parentNode.parentNode.querySelector(".todo_label").classList.remove("todoTextMiddleLine_label")
             }
@@ -318,7 +320,7 @@ let TODO = (function () {
         }
         let id = event.currentTarget.parentNode.parentNode.querySelector("input[type=checkbox]").getAttribute("id")
         let current = event.currentTarget
-        requestFunction("DELETE","/todolist/my/daily",{TODO_ID:id},"JSON",function (result) {
+        publicFunction.requestFunction("DELETE","/todolist/my/daily",{TODO_ID:id},"JSON",function (result) {
             // frontend
             if(result.status) {
                 current.parentNode.parentNode.remove()
@@ -386,3 +388,5 @@ let TODO_OBJECT = (function () {
     return TODO_OBJECT;
 }())
 
+exports.TODO = TODO
+exports.TODO_OBJECT = TODO_OBJECT

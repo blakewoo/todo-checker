@@ -1,5 +1,9 @@
+let headlineInit = require("./j_headline")
+let publicFunction = require("./j_publicFunction")
+let JHCalendar = require("./j_calendar")
+
 window.onload = async function (event) {
-    headlineInit()
+    headlineInit.headlineInit()
     let calendar = new JHCalendar(document.getElementById("calendarDiv"), new Date(),false)
     let todoObj = await initTodo()
 
@@ -24,7 +28,7 @@ window.onload = async function (event) {
 
     async function initTodo() {
         return new Promise((resolve,reject) => (
-            requestFunction("GET","/todolist/my/daily?date="+new Date().getTime(),{},"JSON",function (result) {
+            publicFunction.requestFunction("GET","/todolist/my/daily?date="+new Date().getTime(),{},"JSON",function (result) {
                 if(result.status) {
                     let temp_list = []
                     for(let i=0;i<result.result.length;i++) {
@@ -72,7 +76,7 @@ window.onload = async function (event) {
         document.querySelector(".todoCategory_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
         let targetDate = ""
-        requestFunction("GET","/todolist/my/notification/daily?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
+        publicFunction.requestFunction("GET","/todolist/my/notification/daily?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
             if(result.status) {
                 let temp_list = []
                 for(let i=0;i<result.result.length;i++) {
@@ -87,7 +91,7 @@ window.onload = async function (event) {
     function dailyTodo(event) {
         document.querySelector(".todoCategory_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
-        requestFunction("GET","/todolist/my/daily?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
+        publicFunction.requestFunction("GET","/todolist/my/daily?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
             if(result.status) {
                 let temp_list = []
                 for(let i=0;i<result.result.length;i++) {
@@ -102,7 +106,7 @@ window.onload = async function (event) {
     function weeklyTodo(event) {
         document.querySelector(".todoCategory_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
-        requestFunction("GET","/todolist/my/weekly?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
+        publicFunction.requestFunction("GET","/todolist/my/weekly?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
             if(result.status) {
                 let temp_list = []
                 for(let i=0;i<result.result.length;i++) {
@@ -117,7 +121,7 @@ window.onload = async function (event) {
     function monthlyTodo(event) {
         document.querySelector(".todoCategory_span.active").classList.remove("active")
         event.currentTarget.classList.add("active")
-        requestFunction("GET","/todolist/my/monthly?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
+        publicFunction.requestFunction("GET","/todolist/my/monthly?date="+(calendar.seletedDate).getTime(),{},"JSON",function (result) {
             if(result.status) {
                 let temp_list = []
                 for(let i=0;i<result.result.length;i++) {
@@ -131,7 +135,7 @@ window.onload = async function (event) {
 
     async function getNotificationTodo(targetDate) {
         return new Promise((resolve,reject)=>{
-            requestFunction("GET","/todolist/my/notification/monthly?date="+targetDate.getTime(),{},"JSON",function (result){
+            publicFunction.requestFunction("GET","/todolist/my/notification/monthly?date="+targetDate.getTime(),{},"JSON",function (result){
                 if(result.status) {
                     let resultMap = new Map()
                     if(result.result.length!==0) {

@@ -1,10 +1,13 @@
+let headlineInit = require("./j_headline")
+let publicFunction = require("./j_publicFunction")
+
 window.onload = async function (event) {
-    headlineInit()
+    headlineInit.headlineInit()
     let myId = ""
     const socket = io();
     await initShared()
     await getMessage()
-    requestFunction("GET","/user/my",{},"JSON",function (result) {
+    publicFunction.requestFunction("GET","/user/my",{},"JSON",function (result) {
         if(result.status) {
             socket.emit("access", {ID:result.result.ID});
         }
@@ -31,7 +34,7 @@ window.onload = async function (event) {
         let targetSelect = document.getElementById("sharedChatSelect")
         let targetId = targetSelect.options[targetSelect.selectedIndex].text
         //backend update
-        requestFunction("POST","/chatting/my",{targetId:targetId,message:text},"JSON",function (result) {
+        publicFunction.requestFunction("POST","/chatting/my",{targetId:targetId,message:text},"JSON",function (result) {
             if(result.status) {
                 //socket connect
                 socket.emit("chat",{message:text,target:targetId})
@@ -46,7 +49,7 @@ window.onload = async function (event) {
         let targetSelect = document.getElementById("sharedChatSelect")
         let targetId = targetSelect.options[targetSelect.selectedIndex].text
         return new Promise((resolve,reject) => (
-            requestFunction("GET","/chatting/my?targetId="+targetId,{},"JSON",function (result) {
+            publicFunction.requestFunction("GET","/chatting/my?targetId="+targetId,{},"JSON",function (result) {
                 if(result.status) {
                     let chatData = result.result;
                     let str = ""
@@ -81,7 +84,7 @@ window.onload = async function (event) {
 
     async function initShared() {
         return new Promise((resolve,reject) => (
-            requestFunction("GET","/todo-share/chatlist",{},"JSON",function (result) {
+            publicFunction.requestFunction("GET","/todo-share/chatlist",{},"JSON",function (result) {
                 if(result.status) {
                     let container = document.getElementById("sharedChatSelect")
                     if(result.result.length!==0) {

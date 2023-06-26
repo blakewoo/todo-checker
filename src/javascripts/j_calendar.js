@@ -172,3 +172,5 @@ const JHCalendar = (function () {
 
     return JHCalendar;
 }())
+
+module.exports = JHCalendar

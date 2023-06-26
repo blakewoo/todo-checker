@@ -1,4 +1,4 @@
-function headlineInit() {
+exports.headlineInit = function () {
     document.getElementById("headlineMyScheduleLabel").addEventListener("click",function (event) {
         location.href = location.protocol+"//"+location.host
     })

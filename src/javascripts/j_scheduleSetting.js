@@ -1,5 +1,8 @@
+let headlineInit = require("./j_headline")
+let publicFunction = require("./j_publicFunction")
+
 window.onload = function(){
-    headlineInit()
+    headlineInit.headlineInit()
     initSchedule()
 
     document.getElementById("todoSharedRequestInputText").addEventListener("keyup",function (event) {
@@ -10,7 +13,7 @@ window.onload = function(){
 
     document.getElementById("requestSubmitButton").addEventListener("click",function (event) {
         let targetId = document.getElementById("todoSharedRequestInputText").value
-        requestFunction("POST","/todo-share/request",{target:targetId},"JSON",function (result){
+        publicFunction.requestFunction("POST","/todo-share/request",{target:targetId},"JSON",function (result){
             if(result.status){
                 location.reload()
             }
@@ -33,7 +36,7 @@ window.onload = function(){
     }
 
     function sharedRequestStatus(callback) {
-        requestFunction("GET","/todo-share/request",{},"JSON",function (result){
+        publicFunction.requestFunction("GET","/todo-share/request",{},"JSON",function (result){
             if(result.status){
                 callback(result.result)
             }
@@ -44,7 +47,7 @@ window.onload = function(){
     }
 
     function sharedRequestReceiveStatus(callback) {
-        requestFunction("GET","/todo-share/receive",{},"JSON",function (result){
+        publicFunction.requestFunction("GET","/todo-share/receive",{},"JSON",function (result){
             if(result.status){
                 callback(result.result)
             }

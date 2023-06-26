@@ -33,7 +33,7 @@ exports.requestFunction = function (method_type,url,send_data,responseType="JSON
 
 exports.syncRequestFunction = async function (method_type,url,send_data,responseType) {
     return new Promise((resolve,reject)=>{
-        requestFunction(method_type,url,send_data,responseType,function (result,error) {
+        this.requestFunction(method_type,url,send_data,responseType,function (result,error) {
             if(error) {
                 reject(result)
             }

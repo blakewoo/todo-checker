@@ -183,3 +183,5 @@ const JH_datepicker = (function () {
 
     return JH_datepicker
 }())
+
+module.exports = JH_datepicker
