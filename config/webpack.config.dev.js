@@ -3,18 +3,13 @@ const path = require("path");
 module.exports = {
     mode: "development",
     entry: {
-        j_calendar:"./src/javascripts/j_calendar.js",
-        j_chatting:"./src/javascripts/j_chatting.js",
-        j_datepicker:"./src/javascripts/j_datepicker.js",
-        j_headline:"./src/javascripts/j_headline.js",
-        j_login:"./src/javascripts/j_login.js",
-        j_myInfo:"./src/javascripts/j_myInfo.js",
-        j_mySchedule:"./src/javascripts/j_mySchedule.js",
-        j_publicFunction:"./src/javascripts/j_publicFunction.js",
-        j_signUp:"./src/javascripts/j_signUp.js",
-        j_targetSchedule:"./src/javascripts/j_targetSchedule.js",
-        j_todo:"./src/javascripts/j_todo.js",
-        j_underConstruction:"./src/javascripts/j_underConstruction.js"
+        j_login:["@babel/polyfill","./src/javascripts/j_publicFunction.js","./src/javascripts/j_login.js"],
+        j_chatting:["@babel/polyfill","./src/javascripts/j_headline.js","./src/javascripts/j_publicFunction.js","./src/javascripts/j_chatting.js"],
+        j_myInfo:["@babel/polyfill","./src/javascripts/j_headline.js","./src/javascripts/j_publicFunction.js","./src/javascripts/j_myInfo.js"],
+        j_mySchedule:["@babel/polyfill","./src/javascripts/j_datepicker.js","./src/javascripts/j_todo.js","./src/javascripts/j_headline.js","./src/javascripts/j_calendar.js","./src/javascripts/j_publicFunction.js","./src/javascripts/j_mySchedule.js"],
+        j_signUp:["@babel/polyfill","./src/javascripts/j_publicFunction.js","./src/javascripts/j_signUp.js"],
+        j_targetSchedule:["@babel/polyfill","./src/javascripts/j_headline.js","./src/javascripts/j_publicFunction.js","./src/javascripts/j_calendar.js","./src/javascripts/j_targetSchedule.js"],
+        j_underConstruction:["@babel/polyfill","./src/javascripts/j_headline.js","./src/javascripts/j_underConstruction.js"]
     },
     output: {
         path: path.resolve(__dirname,"..","public","javascripts"),
