@@ -8,8 +8,10 @@ window.onload = async function (event) {
     await initShared()
     let selectTag = document.getElementById("sharedTodoSelect")
     let todoObj = null
-    let sharedId = selectTag.options[selectTag.selectedIndex].text
-    if(sharedId) {
+
+    if(selectTag.selectedIndex !== -1) {
+        let sharedId = selectTag.options[selectTag.selectedIndex].text
+
         todoObj = await initTodo(sharedId)
 
         calendar.daySelected = function (day) {
@@ -20,7 +22,9 @@ window.onload = async function (event) {
         calendar.monthlyEvent = monthEvent
         calendar.setPaintTarget()
     }
+    else {
 
+    }
 
     document.getElementById("calendarViewTodoSpan").addEventListener("click",viewingTodo)
     document.getElementById("dailyTodoSpan").addEventListener("click",dailyTodo)

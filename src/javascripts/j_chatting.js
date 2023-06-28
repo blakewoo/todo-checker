@@ -5,8 +5,8 @@ window.onload = async function (event) {
     headlineInit.headlineInit()
     let myId = ""
     const socket = io();
-    await initShared()
-    await getMessage()
+    await initShared();
+    await getMessage();
     publicFunction.requestFunction("GET","/user/my",{},"JSON",function (result) {
         if(result.status) {
             socket.emit("access", {ID:result.result.ID});
@@ -15,9 +15,11 @@ window.onload = async function (event) {
 
     socket.on('chat', function(data) {
         let targetSelect = document.getElementById("sharedChatSelect")
-        let targetId = targetSelect.options[targetSelect.selectedIndex].text
-        document.getElementById("textDisplayDiv").innerText += targetId+" ["+new Intl.DateTimeFormat("ko", { timeStyle: 'short' }).format(new Date())+"] : "+data + "\n"
-    });
+        if(targetSelect.selectedIndex !== -1) {
+            let targetId = targetSelect.options[targetSelect.selectedIndex].text
+            document.getElementById("textDisplayDiv").innerText += targetId+" ["+new Intl.DateTimeFormat("ko", { timeStyle: 'short' }).format(new Date())+"] : "+data + "\n"
+        }
+   });
 
     // Chatting with your viewer
     document.getElementById("messageSendButton").addEventListener("click",sendMessage)
@@ -32,21 +34,26 @@ window.onload = async function (event) {
     function sendMessage(event) {
         let text = document.getElementById("chattingTextInput").value
         let targetSelect = document.getElementById("sharedChatSelect")
-        let targetId = targetSelect.options[targetSelect.selectedIndex].text
-        //backend update
-        publicFunction.requestFunction("POST","/chatting/my",{targetId:targetId,message:text},"JSON",function (result) {
-            if(result.status) {
-                //socket connect
-                socket.emit("chat",{message:text,target:targetId})
-                //front update
-                document.getElementById("textDisplayDiv").innerText += "나 ["+new Intl.DateTimeFormat("ko", { timeStyle: 'short' }).format(new Date())+"] : "+text + "\n"
-                document.getElementById("chattingTextInput").value = ""
-            }
-        })
+        if(targetSelect.selectedIndex !== -1) {
+            let targetId = targetSelect.options[targetSelect.selectedIndex].text
+            //backend update
+            publicFunction.requestFunction("POST","/chatting/my",{targetId:targetId,message:text},"JSON",function (result) {
+                if(result.status) {
+                    //socket connect
+                    socket.emit("chat",{message:text,target:targetId})
+                    //front update
+                    document.getElementById("textDisplayDiv").innerText += "나 ["+new Intl.DateTimeFormat("ko", { timeStyle: 'short' }).format(new Date())+"] : "+text + "\n"
+                    document.getElementById("chattingTextInput").value = ""
+                }
+            })
+        }
     }
 
     async function getMessage() {
         let targetSelect = document.getElementById("sharedChatSelect")
+        if(targetSelect.selectedIndex === -1) {
+            return;
+        }
         let targetId = targetSelect.options[targetSelect.selectedIndex].text
         return new Promise((resolve,reject) => (
             publicFunction.requestFunction("GET","/chatting/my?targetId="+targetId,{},"JSON",function (result) {
