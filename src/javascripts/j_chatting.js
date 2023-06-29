@@ -47,6 +47,13 @@ window.onload = async function (event) {
                 }
             })
         }
+        else {
+            publicFunction.okCancelModal("일정 공유하는 사람이 있어야\n 채팅이 가능합니다.",400,90,function (target) {
+                target.addEventListener("click",function (event) {
+                    event.currentTarget.parentNode.remove()
+                })
+            });
+        }
     }
 
     async function getMessage() {

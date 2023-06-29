@@ -8,8 +8,18 @@ router.post('/verified-user',async function(req, res, next) {
     if(result.status) {
         req.session.isLogin = true
         req.session.ID = req.body.ID
+        req.session.save(function (err){
+            if(err) {
+                return res.send({status:false,reason:"Session store error"})
+            }
+            else {
+                return res.send(result)
+            }
+        })
     }
-    return res.send(result)
+    else {
+        return res.send(result)
+    }
 });
 
 module.exports = router;

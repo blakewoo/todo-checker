@@ -55,7 +55,7 @@ exports.okCancelModal = function (message,width=400,height=200,callback) {
     toastMessageDiv.style.top = "calc(50% - "+height/2+"px)"
     toastMessageDiv.style.left = "calc(50% - "+width/2+"px)"
     toastMessageDiv.style.border = "#ffffff 1px solid"
-    toastMessageDiv.style.background = "#591902"
+    toastMessageDiv.style.background = "#000000"
     toastMessageDiv.style.textAlign = "center"
 
     let titleDiv = document.createElement("div")

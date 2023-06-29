@@ -40,10 +40,12 @@ router.get('/chatting', function(req, res, next) {
 });
 
 router.get('/logout', function(req, res, next) {
-  req.session.ID = null
-  req.session.isLogin = null
-  req.session.isAdmin = null
-  return res.redirect("/")
+  req.session.destroy(function (err) {
+    if(err) {
+      console.error("err",err)
+    }
+    return res.redirect("/")
+  })
 });
 
 router.get('/signup', function(req, res, next) {
