@@ -42,7 +42,7 @@ router.get('/chatting', function(req, res, next) {
 router.get('/logout', function(req, res, next) {
   req.session.destroy(function (err) {
     if(err) {
-      console.error("err",err)
+      console.error(err)
     }
     return res.redirect("/")
   })
@@ -51,6 +51,7 @@ router.get('/logout', function(req, res, next) {
 router.get('/signup', function(req, res, next) {
     return res.render('signUp');
 });
+
 router.get('/schedule_setting', function(req, res, next) {
   if(req.session.isLogin) {
     return res.render('scheduleSetting',{title:req.session.ID,USER_ID:req.session.ID});

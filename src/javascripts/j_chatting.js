@@ -7,6 +7,7 @@ window.onload = async function (event) {
     const socket = io();
     await initShared();
     await getMessage();
+
     publicFunction.requestFunction("GET","/user/my",{},"JSON",function (result) {
         if(result.status) {
             socket.emit("access", {ID:result.result.ID});
@@ -37,6 +38,15 @@ window.onload = async function (event) {
         if(targetSelect.selectedIndex !== -1) {
             let targetId = targetSelect.options[targetSelect.selectedIndex].text
             //backend update
+            if(document.getElementById("chattingTextInput").value === "") {
+                publicFunction.okCancelModal("전송할 내용을 입력해주세요.",400,60,function (target) {
+                    target.addEventListener("click",function (event) {
+                        event.currentTarget.parentNode.remove()
+                    })
+                });
+                return;
+            }
+
             publicFunction.requestFunction("POST","/chatting/my",{targetId:targetId,message:text},"JSON",function (result) {
                 if(result.status) {
                     //socket connect
@@ -44,6 +54,9 @@ window.onload = async function (event) {
                     //front update
                     document.getElementById("textDisplayDiv").innerText += "나 ["+new Intl.DateTimeFormat("ko", { timeStyle: 'short' }).format(new Date())+"] : "+text + "\n"
                     document.getElementById("chattingTextInput").value = ""
+
+                    let tempTextarea = document.getElementById('textDisplayDiv');
+                    tempTextarea.scrollTop = tempTextarea.scrollHeight;
                 }
             })
         }
@@ -87,6 +100,8 @@ window.onload = async function (event) {
                         }
                     }
                     document.getElementById("textDisplayDiv").innerText = str
+                    let tempTextarea = document.getElementById('textDisplayDiv');
+                    tempTextarea.scrollTop = tempTextarea.scrollHeight;
                     resolve(true)
                 }
                 else{
