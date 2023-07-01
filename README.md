@@ -16,6 +16,7 @@ It's a web application you can use if you want to observe and check what someone
 - html
 - css
 - socket.io
+- jest
 
 ## Release note
 - 2023-05-08 : version 1.0
