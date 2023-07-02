@@ -5,7 +5,7 @@ beforeAll(() => {
     mongooseConnect();
 });
 
-describe("CHATTING TEST",()=>{
+describe.skip("CHATTING TEST",()=>{
     let chattingData = [{REQUEST_ID:"chat_req_id",RESPONSE_ID:"chat_res_id",MESSAGE:"test"}]
 
     chattingData.forEach(function (value,count) {

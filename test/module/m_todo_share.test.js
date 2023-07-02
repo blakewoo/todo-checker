@@ -1,8 +1,11 @@
-const mongooseConnect = require("../../connectors/mongodb")
+// const mongooseConnect = require("../../connectors/mongodb")
 const todoShare = require("../../module/m_todo_share")
+const MongoMemoryServer = require('mongodb-memory-server');
+const mongoose = require("mongoose")
 
-beforeAll(() => {
-    mongooseConnect();
+beforeAll(async () => {
+    const mongoServer  = await MongoMemoryServer.create();
+    await mongoose.connect(mongoServer.getUri(), { dbName: "todo" });
 });
 
 describe.skip("TODO SHARE TEST",()=>{

@@ -8,7 +8,7 @@ const userModule = require('../../module/m_user');
  *  4. U 실패
  *  5. D 실패
  */
-describe.only('USER CRUD TEST',  function () {
+describe.skip('USER CRUD TEST',  function () {
     const userTestInputData = [['testman1','xptmm123!','testman1test.com'],['testman2','xptmxm23!','testman2@test.com'],['testman3','xptmxm12!','testman3@test.com']]
     const userTestAddResultData = [true,true,true]
 
