@@ -1,11 +1,13 @@
-const mongooseConnect = require("../../connectors/mongodb")
+const MongoMemoryServer = require('mongodb-memory-server');
+const mongoose = require("mongoose")
 const chattingModule = require("../../module/m_chatting")
 
-beforeAll(() => {
-    mongooseConnect();
+beforeAll(async () => {
+    const mongoServer  = await MongoMemoryServer.create();
+    await mongoose.connect(mongoServer.getUri(), { dbName: "todo" });
 });
 
-describe.skip("CHATTING TEST",()=>{
+describe("CHATTING TEST",()=>{
     let chattingData = [{REQUEST_ID:"chat_req_id",RESPONSE_ID:"chat_res_id",MESSAGE:"test"}]
 
     chattingData.forEach(function (value,count) {
