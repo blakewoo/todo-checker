@@ -1,4 +1,4 @@
-const MongoMemoryServer = require('mongodb-memory-server');
+const {MongoMemoryServer} = require('mongodb-memory-server-core')
 const mongoose = require("mongoose")
 const todoModule = require("../../module/m_todo")
 const todoModel = require("../../model/md_to-do")

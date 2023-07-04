@@ -1,6 +1,6 @@
 // const mongooseConnect = require("../../connectors/mongodb")
 const todoShare = require("../../module/m_todo_share")
-const MongoMemoryServer = require('mongodb-memory-server');
+const {MongoMemoryServer} = require('mongodb-memory-server-core');
 const mongoose = require("mongoose")
 
 beforeAll(async () => {

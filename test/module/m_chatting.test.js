@@ -1,4 +1,4 @@
-const MongoMemoryServer = require('mongodb-memory-server');
+const {MongoMemoryServer} = require('mongodb-memory-server-core')
 const mongoose = require("mongoose")
 const chattingModule = require("../../module/m_chatting")
 
