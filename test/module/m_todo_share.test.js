@@ -8,11 +8,11 @@ beforeAll(async () => {
     await mongoose.connect(mongoServer.getUri(), { dbName: "todo" });
 });
 
-describe.skip("TODO SHARE TEST",()=>{
+describe("TODO SHARE TEST",()=>{
     let todoShareData = [{REQUEST_ID:"chat_req_id",RESPONSE_ID:"chat_res_id"}]
 
     for(let i=0;i<todoShareData.length;i++){
-        let objId=undefined
+        let objId = undefined
         test("add request",async ()=>{
             let temp = await todoShare.addRequest(todoShareData[i].REQUEST_ID,todoShareData[i].RESPONSE_ID)
             expect(temp.status).toBe(true)

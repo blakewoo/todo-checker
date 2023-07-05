@@ -8,6 +8,11 @@
     "prod_build": "webpack --config ./config/webpack.config.prod.js",
     "dev_build": "webpack --config ./config/webpack.config.dev.js"
   },
+  "config": {
+    "mongodbMemoryServer": {
+      "downloadDir": "..\\memoryMongo"
+    }
+  },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "babel-loader": "^9.1.2",
@@ -34,7 +39,7 @@
     "babel-jest": "^29.5.0",
     "html-webpack-plugin": "^5.5.3",
     "jest": "^29.5.0",
-    "mongodb-memory-server-core": "^8.13.0",
+    "mongodb-memory-server": "^8.13.0",
     "webpack": "^5.87.0",
     "webpack-cli": "^5.1.4"
   }

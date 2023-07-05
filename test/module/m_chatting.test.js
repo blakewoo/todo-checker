@@ -8,6 +8,7 @@ beforeAll(async () => {
 });
 
 describe("CHATTING TEST",()=>{
+
     let chattingData = [{REQUEST_ID:"chat_req_id",RESPONSE_ID:"chat_res_id",MESSAGE:"test"}]
 
     chattingData.forEach(function (value,count) {
@@ -22,3 +23,8 @@ describe("CHATTING TEST",()=>{
         })
     })
 })
+
+afterAll(async () => {
+    // put your client disconnection code here, example with mongodb:
+    await mongoose.disconnect();
+});
