@@ -16,11 +16,15 @@ let socketIo = require("../module/socket/m_socket_connect")
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
+
+const mariadb = require("../connectors/mariadb")
+const mongodb = require("../connectors/mongodb")
+
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = http.createServer(app(mariadb,mongodb));
 
 /**
  * Listen on provided port, on all network interfaces.
