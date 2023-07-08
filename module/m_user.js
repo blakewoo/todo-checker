@@ -1,12 +1,12 @@
 const bcrypt = require("bcrypt");
 const config = require("../config/config")
 
-export default function(maria,mongo) {
+module.exports=function(maria,mongo) {
     let module = {};
     module.getUser = async function (ID) {
         try{
             let con = await maria.getConnection()
-            let userFind = await con.query("SELECT ID,EMAIL FROM user WHERE user.ID=?",[ID])
+            let userFind = await con.query("SELECT ID,EMAIL FROM user WHERE user.ID=?",ID)
             await con.end()
             return userFind[0]
         }
@@ -19,8 +19,8 @@ export default function(maria,mongo) {
     module.addUser = async function (ID,PASSWORD,EMAIL) {
         try{
             let con = await maria.getConnection()
-            let userFind =await con.query("SELECT ID FROM user WHERE user.ID=?",[ID])
-            let emailFind = await con.query("SELECT EMAIL FROM user WHERE user.EMAIL=?",[EMAIL])
+            let userFind =await con.query("SELECT ID FROM user WHERE user.ID=?",ID)
+            let emailFind = await con.query("SELECT EMAIL FROM user WHERE user.EMAIL=?",EMAIL)
             if(userFind.length !==0) {
                 return {status:false,reason:"ID_duplicated"}
             }
@@ -68,7 +68,7 @@ export default function(maria,mongo) {
     module.deleteUser = async function(ID) {
         try{
             let con = await maria.getConnection()
-            await con.query("DELETE FROM user WHERE user.ID=?",[ID])
+            await con.query("DELETE FROM user WHERE user.ID=?",ID)
             await con.end()
             return {status:true}
         }
@@ -81,7 +81,9 @@ export default function(maria,mongo) {
 
     module.verifyUser = async function (ID,PASSWORD) {
         try{
-            let userFind = await con.query("SELECT ID,PASSWORD FROM user WHERE user.ID=?",[ID])
+            let con = await maria.getConnection()
+            let userFind = await con.query("SELECT ID,PASSWORD FROM user WHERE user.ID=?",ID)
+            await con.end()
             if(userFind.length!==0) {
                 if(bcrypt.compareSync(PASSWORD,userFind[0].PASSWORD)){
                     return {status:true}

@@ -10,21 +10,24 @@ var http = require('http');
 let socketIo = require("../module/socket/m_socket_connect")
 
 /**
+ * Get database connection
+ */
+const mariadb = require("../connectors/mariadb")
+const mongodb = require("../connectors/mongodb")
+let injectedApp = app(mariadb,mongodb)
+
+/**
  * Get port from environment and store in Express.
  */
 
 var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
-
-
-const mariadb = require("../connectors/mariadb")
-const mongodb = require("../connectors/mongodb")
+injectedApp.set('port', port);
 
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app(mariadb,mongodb));
+var server = http.createServer(injectedApp);
 
 /**
  * Listen on provided port, on all network interfaces.

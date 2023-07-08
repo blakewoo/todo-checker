@@ -124,7 +124,7 @@ window.onload = function(){
                 submitButton.classList.add("receiveSubmmit_button")
                 submitButton.id="submit_"+list[i].OVERSEER_USER_ID
                 submitButton.addEventListener("click",function (event) {
-                    requestFunction("PUT","/todo-share/receive",{requester:list[i].OVERSEER_USER_ID,state:"ACCEPT"},"JSON",function (result) {
+                    publicFunction.requestFunction("PUT","/todo-share/receive",{requester:list[i].OVERSEER_USER_ID,state:"ACCEPT"},"JSON",function (result) {
                         if(result.status) {
                             location.reload()
                         }
@@ -137,7 +137,7 @@ window.onload = function(){
                 declineButton.classList.add("receiveDecline_button")
                 declineButton.id="decline_"+list[i].OVERSEER_USER_ID
                 declineButton.addEventListener("click",function (event) {
-                    requestFunction("PUT","/todo-share/receive",{requester:list[i].OVERSEER_USER_ID,state:"DECLINE"},"JSON",function (result) {
+                    publicFunction.requestFunction("PUT","/todo-share/receive",{requester:list[i].OVERSEER_USER_ID,state:"DECLINE"},"JSON",function (result) {
                         if(result.status) {
                             location.reload()
                         }
@@ -152,7 +152,6 @@ window.onload = function(){
             else {
                 tempSubmit.innerText = "수락 완료"
             }
-
 
             tempTr.appendChild(tempId)
             tempTr.appendChild(tempEmail)

@@ -16,7 +16,7 @@ const session = require('express-session');
 const fileStore = require("session-file-store")(session)
 const helmet = require("helmet");
 
-export default function (mariaDB,mongoDB) {
+module.exports = function (mariaDB,mongoDB) {
   var app = express();
 
   const maxAge = 1000 * 60 * 30
@@ -58,10 +58,10 @@ export default function (mariaDB,mongoDB) {
 // router field
   app.use('/', indexRouter);
   app.use('/login', loginRouter(mariaDB,mongoDB));
-  app.use('/user', userRouter);
-  app.use('/todolist', todolistRouter);
-  app.use('/todo-share',todoShareRouter);
-  app.use('/chatting', chattingRouter);
+  app.use('/user', userRouter(mariaDB,mongoDB));
+  app.use('/todolist', todolistRouter(mariaDB,mongoDB));
+  app.use('/todo-share', todoShareRouter(mariaDB,mongoDB));
+  app.use('/chatting', chattingRouter(mariaDB,mongoDB));
 //
 
 // catch 404 and forward to error handler

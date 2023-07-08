@@ -1,13 +1,13 @@
+const m_userOrigin = require("../module/m_user")
 
-
-export default function (maria,mongo) {
+module.exports=function (maria,mongo) {
     var express = require('express');
     var router = express.Router();
-    const m_user = require("../module/m_user")
+    let m_user = m_userOrigin(maria,mongo)
 
     // This function does not conform to the api specification
     router.post('/verified-user',async function(req, res, next) {
-        let result = await m_user(maria,mongo).verifyUser(req.body.ID,req.body.PASSWORD)
+        let result = await m_user.verifyUser(req.body.ID,req.body.PASSWORD)
         if(result.status) {
             req.session.isLogin = true
             req.session.ID = req.body.ID

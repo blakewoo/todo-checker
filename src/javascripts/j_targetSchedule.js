@@ -1,6 +1,8 @@
 let headlineInit = require("./j_headline")
 let publicFunction = require("./j_publicFunction")
 let JHCalendar = require("./j_calendar")
+let TODO_OBJECT = require("./j_todo").TODO_OBJECT
+let TODO = require("./j_todo").TODO
 
 window.onload = async function (event) {
     headlineInit.headlineInit()
