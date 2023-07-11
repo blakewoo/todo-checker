@@ -1,15 +1,16 @@
-const {MongoMemoryServer} = require('mongodb-memory-server-core')
+const {MongoMemoryServer} = require('mongodb-memory-server')
 const mongoose = require("mongoose")
-const chattingModuleOrigin = require("../../module/m_chatting")
 let mongoMocking;
 let mariaMocking;
 
 beforeAll(async () => {
     const mongoServer  = await MongoMemoryServer.create();
-    mongoMocking = mongoose.createConnection(mongoServer.getUri(), { dbName: "todo" });
+    mongoMocking = mongoose.createConnection(mongoServer.getUri(), {useNewUrlParser: true, dbName: "DATA" });
 });
 
 describe("CHATTING TEST",()=>{
+    const chattingModuleOrigin = require("../../module/m_chatting")
+
     let chattingModule = chattingModuleOrigin(mariaMocking,mongoMocking)
     let chattingData = [{REQUEST_ID:"chat_req_id",RESPONSE_ID:"chat_res_id",MESSAGE:"test"}]
 

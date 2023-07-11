@@ -1,15 +1,16 @@
-const {MongoMemoryServer} = require('mongodb-memory-server-core')
+const {MongoMemoryServer} = require('mongodb-memory-server')
 const mongoose = require("mongoose")
-const todoModuleOrigin = require("../../module/m_todo")
 let mongoMocking;
 let mariaMocking;
 
 beforeAll(async () => {
     const mongoServer  = await MongoMemoryServer.create();
-    mongoMocking = mongoose.createConnection(mongoServer.getUri(), { dbName: "todo" });
+    mongoMocking = mongoose.createConnection(mongoServer.getUri(), {useNewUrlParser: true, dbName: "DATA" });
 });
 
 describe("TODO TEST",()=>{
+    const todoModuleOrigin = require("../../module/m_todo")
+
     let todoModule = todoModuleOrigin(mariaMocking,mongoMocking)
     let todoTestInputData = [["testman",new Date(),new Date(),"1","DAILY"],["testman1",new Date(),new Date(),"2","WEEKLY"],["testman2",new Date(),new Date(),"3","MONTHLY"],["testman3",new Date(),new Date(),"4","NOTIFICATION"],["testman4",new Date(),new Date(),"5","NOTIFICATION"]]
 

@@ -1,12 +1,10 @@
-const userModuleOrigin = require('../../module/m_user');
-const {MongoMemoryServer} = require('mongodb-memory-server-core')
+const {MongoMemoryServer} = require('mongodb-memory-server')
 const mongoose = require("mongoose")
 let mongoMocking;
 let mariaMocking;
 
 beforeAll(async () => {
-    const mongoServer  = await MongoMemoryServer.create();
-    mongoMocking = mongoose.createConnection(mongoServer.getUri(), { dbName: "todo" });
+    // maria DB mocking require
 });
 
 /**
@@ -18,6 +16,8 @@ beforeAll(async () => {
  *  5. D 실패
  */
 describe.skip('USER CRUD TEST',  function () {
+    const userModuleOrigin = require('../../module/m_user');
+
     let userModule = userModuleOrigin(mariaMocking,mongoMocking)
 
     const userTestInputData = [['testman1','xptmm123!','testman1test.com'],['testman2','xptmxm23!','testman2@test.com'],['testman3','xptmxm12!','testman3@test.com']]

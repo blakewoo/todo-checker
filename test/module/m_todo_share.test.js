@@ -1,15 +1,18 @@
-const todoShareOrigin = require("../../module/m_todo_share")
-const {MongoMemoryServer} = require('mongodb-memory-server-core');
+const {MongoMemoryServer} = require('mongodb-memory-server');
 const mongoose = require("mongoose")
 let mongoMocking;
 let mariaMocking;
 
 beforeAll(async () => {
+    // maria DB mocking require
+
     const mongoServer  = await MongoMemoryServer.create();
-    mongoMocking = mongoose.createConnection(mongoServer.getUri(), { dbName: "todo" });
+    mongoMocking = mongoose.createConnection(mongoServer.getUri(), {useNewUrlParser: true, dbName: "DATA" });
 });
 
-describe.skip("TODO SHARE TEST",()=>{
+describe("TODO SHARE TEST",()=>{
+    const todoShareOrigin = require("../../module/m_todo_share")
+
     let todoShare = todoShareOrigin(mariaMocking,mongoMocking)
     let todoShareData = [{REQUEST_ID:"chat_req_id",RESPONSE_ID:"chat_res_id"}]
 
