@@ -1,6 +1,6 @@
-const maria = require("../../connectors/mariadb")
+const maria = require("../../../connectors/mariadb")
 
-export async function getUserFromId(ID) {
+exports.getUserFromId = async function (ID) {
     try{
         let con = await maria.getConnection();
         let result = await con.query("SELECT ID,EMAIL FROM user WHERE user.ID=?",ID)
@@ -12,7 +12,7 @@ export async function getUserFromId(ID) {
     }
 }
 
-export async function getUserFromEmail(EMAIL) {
+exports.getUserFromEmail = async function (EMAIL) {
     try{
         let con = await maria.getConnection();
         let result = await con.query("SELECT ID,EMAIL FROM user WHERE user.EMAIL=?",EMAIL)
@@ -24,7 +24,19 @@ export async function getUserFromEmail(EMAIL) {
     }
 }
 
-export async function createUser(ID,PASSWORD_HASH,EMAIL) {
+exports.getUserFromEmailAndID = async function (ID,EMAIL) {
+    try{
+        let con = await maria.getConnection();
+        let result = await con.query("SELECT EMAIL FROM user WHERE user.EMAIL=? and user.ID!=?",[EMAIL,ID])
+        await con.end()
+        return result;
+    }
+    catch(e){
+        console.error(e)
+    }
+}
+
+exports.createUser = async function (ID,PASSWORD_HASH,EMAIL) {
     try{
         let con = await maria.getConnection();
         await con.query("INSERT INTO user value (?,?,?)",[ID,PASSWORD_HASH,EMAIL])
@@ -37,7 +49,7 @@ export async function createUser(ID,PASSWORD_HASH,EMAIL) {
     }
 }
 
-export async function updateUserPasswordFromId(ID,PASSWORD_HASH) {
+exports.updateUserPasswordFromId = async function (ID,PASSWORD_HASH) {
     try{
         let con = await maria.getConnection();
         await con.query("UPDATE user SET PASSWORD=? WHERE ID=?", [PASSWORD_HASH,ID])
@@ -50,7 +62,7 @@ export async function updateUserPasswordFromId(ID,PASSWORD_HASH) {
     }
 }
 
-export async function updateUserEmailFromId(ID,EMAIL) {
+exports.updateUserEmailFromId = async function (ID,EMAIL) {
     try{
         let con = await maria.getConnection();
         await con.query("UPDATE user SET EMAIL=? WHERE ID=?", [EMAIL,ID])
@@ -63,7 +75,7 @@ export async function updateUserEmailFromId(ID,EMAIL) {
     }
 }
 
-export async function updateUserEmailAndPasswordFromId(ID,PASSWORD_HASH,EMAIL) {
+exports.updateUserEmailAndPasswordFromId = async function (ID,PASSWORD_HASH,EMAIL) {
     try{
         let con = await maria.getConnection();
         await con.query("UPDATE user SET PASSWORD=?,EMAIL=? WHERE ID=?", [PASSWORD_HASH,EMAIL,ID])
@@ -76,7 +88,7 @@ export async function updateUserEmailAndPasswordFromId(ID,PASSWORD_HASH,EMAIL) {
     }
 }
 
-export async function deleteUserFromId(ID) {
+exports.deleteUserFromId = async function (ID) {
     try{
         let con = await maria.getConnection();
         await con.query("DELETE FROM user WHERE user.ID=?",ID)

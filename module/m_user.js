@@ -5,9 +5,7 @@ module.exports=function(maria,mongo) {
     let module = {};
     module.getUser = async function (ID) {
         try{
-            let con = await maria.getConnection()
-            let userFind = await con.query("SELECT ID,EMAIL FROM user WHERE user.ID=?",ID)
-            await con.end()
+            let userFind = await maria.user.getUserFromId(ID)
             return userFind[0]
         }
         catch(e){
@@ -18,9 +16,8 @@ module.exports=function(maria,mongo) {
 
     module.addUser = async function (ID,PASSWORD,EMAIL) {
         try{
-            let con = await maria.getConnection()
-            let userFind =await con.query("SELECT ID FROM user WHERE user.ID=?",ID)
-            let emailFind = await con.query("SELECT EMAIL FROM user WHERE user.EMAIL=?",EMAIL)
+            let userFind = await maria.user.getUserFromId(ID)
+            let emailFind = await maria.user.getUserFromEmail(EMAIL)
             if(userFind.length !==0) {
                 return {status:false,reason:"ID_duplicated"}
             }
@@ -28,8 +25,7 @@ module.exports=function(maria,mongo) {
                 return {status:false,reason:"EMAIL_duplicated"}
             }
             let hash = bcrypt.hashSync(PASSWORD, Number(config.SALT_ROUND))
-            await con.query("INSERT INTO user value (?,?,?)",[ID,hash,EMAIL])
-            await con.end()
+            await maria.user.createUser(ID,hash,EMAIL)
             return {status:true}
         }
         catch(e){
@@ -40,23 +36,21 @@ module.exports=function(maria,mongo) {
 
     module.updateUser = async function (ID,PASSWORD,EMAIL) {
         try{
-            let con = await maria.getConnection()
-            let emailFind = await con.query("SELECT EMAIL FROM user WHERE user.EMAIL=? and user.ID!=?",[EMAIL,ID])
+            let emailFind = maria.user.getUserFromEmailAndID(ID,EMAIL)
             if(emailFind.length !==0) {
                 return {status:false,reason:"EMAIL_duplicated"}
             }
             if(PASSWORD!=="" && EMAIL!=="") {
                 let hash = bcrypt.hashSync(PASSWORD, Number(config.SALT_ROUND))
-                await con.query("UPDATE user SET PASSWORD=?,EMAIL=? WHERE ID=?", [hash,EMAIL,ID])
+                await maria.user.updateUserEmailAndPasswordFromId(ID,hash,EMAIL)
             }
             else if(PASSWORD!=="") {
                 let hash = bcrypt.hashSync(PASSWORD, Number(config.SALT_ROUND))
-                await con.query("UPDATE user SET PASSWORD=? WHERE ID=?", [hash,ID])
+                await maria.user.updateUserPasswordFromId(ID,hash)
             }
             else if(EMAIL!==""){
-                await con.query("UPDATE user SET EMAIL=? WHERE ID=?", [EMAIL,ID])
+                await maria.user.updateUserEmailFromId(ID,EMAIL)
             }
-            await con.end()
             return {status:true}
         }
         catch(e){
@@ -67,9 +61,7 @@ module.exports=function(maria,mongo) {
 
     module.deleteUser = async function(ID) {
         try{
-            let con = await maria.getConnection()
-            await con.query("DELETE FROM user WHERE user.ID=?",ID)
-            await con.end()
+            await maria.user.deleteUserFromId(ID)
             return {status:true}
         }
         catch(e){
@@ -81,9 +73,7 @@ module.exports=function(maria,mongo) {
 
     module.verifyUser = async function (ID,PASSWORD) {
         try{
-            let con = await maria.getConnection()
-            let userFind = await con.query("SELECT ID,PASSWORD FROM user WHERE user.ID=?",ID)
-            await con.end()
+            let userFind = await maria.user.getUserFromId(ID)
             if(userFind.length!==0) {
                 if(bcrypt.compareSync(PASSWORD,userFind[0].PASSWORD)){
                     return {status:true}
