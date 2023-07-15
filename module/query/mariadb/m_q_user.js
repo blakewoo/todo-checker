@@ -3,7 +3,7 @@ const maria = require("../../../connectors/mariadb")
 exports.getUserFromId = async function (ID) {
     try{
         let con = await maria.getConnection();
-        let result = await con.query("SELECT ID,EMAIL FROM user WHERE user.ID=?",ID)
+        let result = await con.query("SELECT ID,EMAIL,PASSWORD FROM user WHERE user.ID=?",ID)
         await con.end()
         return result;
     }
@@ -15,7 +15,7 @@ exports.getUserFromId = async function (ID) {
 exports.getUserFromEmail = async function (EMAIL) {
     try{
         let con = await maria.getConnection();
-        let result = await con.query("SELECT ID,EMAIL FROM user WHERE user.EMAIL=?",EMAIL)
+        let result = await con.query("SELECT ID,EMAIL,PASSWORD FROM user WHERE user.EMAIL=?",EMAIL)
         await con.end()
         return result;
     }
