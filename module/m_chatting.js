@@ -2,11 +2,10 @@ const chattingModelOrigin = require("../model/md_chatting")
 
 module.exports=function(maria,mongo) {
     let module = {}
-    let chattingModel = mongo.model("CHATTING_LIST",chattingModelOrigin)
 
     module.addChatting = async function (REQUEST_ID,TARGET_ID,MESSAGE) {
         try{
-            await chattingModel.create({
+            await mongo.chatting.create({
                 REQUEST_ID: REQUEST_ID,
                 DESTINATION_ID: TARGET_ID,
                 MESSAGE:MESSAGE,
@@ -22,7 +21,7 @@ module.exports=function(maria,mongo) {
 
     module.getChatting = async function (REQUEST_ID,TARGET_ID) {
         try{
-            return await chattingModel.find({"$or":[{REQUEST_ID: REQUEST_ID},{
+            return await mongo.chatting.find({"$or":[{REQUEST_ID: REQUEST_ID},{
                     DESTINATION_ID: TARGET_ID}]
             }).sort({"CREATED":-1});
         }

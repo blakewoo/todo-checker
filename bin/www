@@ -13,7 +13,7 @@ let socketIo = require("../module/socket/m_socket_connect")
  * Get database connection
  */
 const mariadb = require("../module/dbSet/mariadb")
-const mongodb = require("../connectors/mongodb")
+const mongodb = require("../module/dbSet/mongodb")
 let injectedApp = app(mariadb,mongodb)
 
 /**

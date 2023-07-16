@@ -2,11 +2,10 @@ const todoDataOrigin = require("../model/md_to-do")
 
 module.exports=function(maria,mongo) {
     let module = {}
-    let todo_data = mongo.model("TODO_LIST",todoDataOrigin)
 
     module.addTodo = async function (USER_ID,DATE,TARGET_DATE,TODO_DATA,TYPE) {
         try{
-            let result = await todo_data.create({
+            let result = await mongo.todo.create({
                 USER_ID: USER_ID,
                 TARGET_DATE:TARGET_DATE,
                 CREATED_DATE: DATE,
@@ -30,7 +29,7 @@ module.exports=function(maria,mongo) {
             let tempDate = new Date(DATE)
             let startDate = new Date(tempDate.setHours(0,0,0,0))
             let endDate = new Date(tempDate.setHours(24,0,0,0))
-            return await todo_data.find({
+            return await mongo.todo.find({
                 USER_ID: USER_ID,
                 TYPE:"DAILY",
                 $or:[{TARGET_DATE: {"$gte":startDate,"$lt":endDate}},{DEAD_LINE: {"$gte":startDate,"$lt":endDate}}]
@@ -52,7 +51,7 @@ module.exports=function(maria,mongo) {
             let endDate = new Date(startDate)
             endDate.setDate(endDate.getDate()+7)
 
-            return await todo_data.find({
+            return await mongo.todo.find({
                 USER_ID: USER_ID,
                 TYPE:"WEEKLY",
                 $or:[{TARGET_DATE: {"$gte":startDate,"$lt":endDate}},{DEAD_LINE: {"$gte":startDate,"$lt":endDate}}]
@@ -68,7 +67,7 @@ module.exports=function(maria,mongo) {
         try{
             let startDate = new Date(DATE.getFullYear(), DATE.getMonth(), 1);
             let endDate = new Date(DATE.getFullYear(), DATE.getMonth() + 1, 0);
-            return await todo_data.find({
+            return await mongo.todo.find({
                 USER_ID: USER_ID,
                 TYPE:"MONTHLY",
                 $or:[{TARGET_DATE: {"$gte":startDate,"$lt":endDate}},{DEAD_LINE: {"$gte":startDate,"$lt":endDate}}]
@@ -89,7 +88,7 @@ module.exports=function(maria,mongo) {
             let startDate = new Date(tempDate.setHours(0,0,0,0))
             let endDate = new Date(tempDate.setHours(24,0,0,0))
 
-            return await todo_data.find({
+            return await mongo.todo.find({
                 USER_ID: USER_ID,
                 TYPE:"NOTIFICATION",
                 $or:[{TARGET_DATE: {"$gte":startDate,"$lt":endDate}},{DEAD_LINE: {"$gte":startDate,"$lt":endDate}}]
@@ -105,7 +104,7 @@ module.exports=function(maria,mongo) {
         try{
             let startDate = new Date(DATE.getFullYear(), DATE.getMonth(), 1);
             let endDate = new Date(DATE.getFullYear(), DATE.getMonth() + 1, 0);
-            return await todo_data.find({
+            return await mongo.todo.find({
                 USER_ID: USER_ID,
                 TYPE:"NOTIFICATION",
                 $or:[{TARGET_DATE: {"$gte":startDate,"$lt":endDate}},{DEAD_LINE: {"$gte":startDate,"$lt":endDate}}]
@@ -130,7 +129,7 @@ module.exports=function(maria,mongo) {
             if(Parsed_Todo.DATA!==undefined) {
                 targetObj.DATA = Parsed_Todo.DATA
             }
-            await todo_data.updateOne({
+            await mongo.todo.updateOne({
                 _id: TODO_ID
             },targetObj)
             return true
@@ -143,7 +142,7 @@ module.exports=function(maria,mongo) {
 
     module.deleteTodo = async function (TODO_ID) {
         try{
-            await todo_data.deleteOne({
+            await mongo.todo.deleteOne({
                 _id: TODO_ID
             })
             return true
@@ -156,7 +155,7 @@ module.exports=function(maria,mongo) {
 
     module.deleteUserTodos = async function (USER_ID) {
         try{
-            await todo_data.deleteMany({
+            await mongo.todo.deleteMany({
                 USER_ID: USER_ID
             })
             return true

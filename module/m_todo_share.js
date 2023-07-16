@@ -2,13 +2,11 @@ const sharedOrigin = require("../model/md_shared-request")
 
 module.exports=function(maria,mongo) {
     let module = {}
-    let shared = mongo.model("SHARED_TODO_REQUEST",sharedOrigin)
 
     module.addRequest = async function (requester,target) {
         try{
-            let con = await maria.getConnection()
-            let RequestFind = await con.query("SELECT ID,EMAIL FROM user WHERE user.ID=?",[requester])
-            let ReceiveFind = await con.query("SELECT ID,EMAIL FROM user WHERE user.ID=?",[target])
+            let RequestFind = await maria.user.getUserFromId(requester)
+            let ReceiveFind = await maria.user.getUserFromId(target)
 
             if(ReceiveFind.length===0) {
                 return {status:false}
@@ -18,7 +16,7 @@ module.exports=function(maria,mongo) {
                 return {status:false}
             }
 
-            let result = await shared.create({
+            let result = await mongo.shared.create({
                 OVERSEER_USER_ID: requester,
                 OVERSEER_EMAIL: RequestFind[0].EMAIL,
                 TARGET_USER_ID: target,
@@ -26,7 +24,6 @@ module.exports=function(maria,mongo) {
                 CREATED_DATE: new Date(),
                 STATUS:"Waiting"})
 
-            await con.end()
             return {status:true,result:result}
         }
         catch(e) {
@@ -37,7 +34,7 @@ module.exports=function(maria,mongo) {
 
     module.getRequest = async function (requester) {
         try{
-            let result = await shared.find({OVERSEER_USER_ID:requester})
+            let result = await mongo.shared.find({OVERSEER_USER_ID:requester})
             return {status:true, result:result}
         }
         catch(e) {
@@ -48,7 +45,7 @@ module.exports=function(maria,mongo) {
 
     module.getAcceptRequest = async function (requester) {
         try{
-            let result = await shared.find({OVERSEER_USER_ID:requester,STATUS:"ACCEPT"})
+            let result = await mongo.shared.find({OVERSEER_USER_ID:requester,STATUS:"ACCEPT"})
             return {status:true,result:result}
         }
         catch(e) {
@@ -59,7 +56,7 @@ module.exports=function(maria,mongo) {
 
     module.deleteRequest = async function (_id) {
         try{
-            await shared.deleteOne({_id:_id})
+            await mongo.shared.deleteOne({_id:_id})
             return {status:true}
         }
         catch(e) {
@@ -70,7 +67,7 @@ module.exports=function(maria,mongo) {
 
     module.getReceive = async function (receiver) {
         try{
-            let result = await shared.find({TARGET_USER_ID:receiver})
+            let result = await mongo.shared.find({TARGET_USER_ID:receiver})
             return {status:true,result:result}
         }
         catch(e) {
@@ -81,7 +78,7 @@ module.exports=function(maria,mongo) {
 
     module.updateReceive = async function (requester,receiver,status) {
         try{
-            let result = await shared.updateOne({OVERSEER_USER_ID:requester,TARGET_USER_ID:receiver},{STATUS:status})
+            let result = await mongo.shared.updateOne({OVERSEER_USER_ID:requester,TARGET_USER_ID:receiver},{STATUS:status})
             return {status:true,result:result}
         }
         catch(e) {
@@ -92,7 +89,7 @@ module.exports=function(maria,mongo) {
 
     module.getChatList = async function(requester) {
         try{
-            let result = await shared.find({"$or":[{OVERSEER_USER_ID:requester},{TARGET_USER_ID:requester}]})
+            let result = await mongo.shared.find({"$or":[{OVERSEER_USER_ID:requester},{TARGET_USER_ID:requester}]})
             return {status:true,result:result}
         }
         catch(e) {
