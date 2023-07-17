@@ -23,7 +23,7 @@ module.exports=function(maria,mongo) {
         try{
             return await mongo.chatting.find({"$or":[{REQUEST_ID: REQUEST_ID},{
                     DESTINATION_ID: TARGET_ID}]
-            }).sort({"CREATED":-1});
+            },{"CREATED":-1});
         }
         catch(e) {
             console.error(e)

@@ -13,11 +13,10 @@ exports.create = async function(obj) {
     }
 }
 
-exports.find = async function(obj) {
+exports.find = async function(obj,sort) {
     try{
         let chat = mongo.model("CHATTING_LIST",chatting);
-        let result = await chat.find(obj)
-        return result
+        return await chat.find(obj).sort(sort)
     }
     catch(e) {
         console.log(e)
