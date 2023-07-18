@@ -1,21 +1,49 @@
 const {MongoMemoryServer} = require('mongodb-memory-server')
 const mongoose = require("mongoose")
+const todoModuleOrigin = require("../../module/m_todo")
+let todoModule
 let mongoMocking;
 let mariaMocking;
+let create=jest.fn();
+let find=jest.fn();
+let updateOne=jest.fn();
+let deleteOne=jest.fn();
+let deleteMany=jest.fn();
 
 beforeAll(async () => {
-    const mongoServer  = await MongoMemoryServer.create();
-    mongoMocking = mongoose.createConnection(mongoServer.getUri(), {useNewUrlParser: true, dbName: "DATA" });
+    create.mockReset()
+    updateOne.mockReset()
+    deleteOne.mockReset()
+    deleteMany.mockReset()
+    create.mockResolvedValue(true)
+    updateOne.mockResolvedValue(true)
+    deleteOne.mockResolvedValue(true)
+    deleteMany.mockResolvedValue(true)
+
+    // mongo DB mocking require
+    mongoMocking = {
+        todo: {
+            create: create,
+            find:find,
+            updateOne:updateOne,
+            deleteOne:deleteOne,
+            deleteMany:deleteMany
+        }
+    }
+
+    todoModule = todoModuleOrigin(mariaMocking,mongoMocking)
 });
 
 describe("TODO TEST",()=>{
-    const todoModuleOrigin = require("../../module/m_todo")
-
-    let todoModule = todoModuleOrigin(mariaMocking,mongoMocking)
     let todoTestInputData = [["testman",new Date(),new Date(),"1","DAILY"],["testman1",new Date(),new Date(),"2","WEEKLY"],["testman2",new Date(),new Date(),"3","MONTHLY"],["testman3",new Date(),new Date(),"4","NOTIFICATION"],["testman4",new Date(),new Date(),"5","NOTIFICATION"]]
 
     todoTestInputData.forEach(function (value,count){
         describe((count+1)+'번째 테스트 케이스',function () {
+            beforeEach(()=>{
+                find.mockReset()
+                find.mockResolvedValue(todoTestInputData[count])
+            })
+
             let currentId = null
             test('CREATE daily to-do',async () => {
                 let result = await todoModule.addTodo(todoTestInputData[count][0],todoTestInputData[count][1],todoTestInputData[count][2],todoTestInputData[count][3],todoTestInputData[count][4])
