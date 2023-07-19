@@ -1,10 +1,32 @@
-const {MongoMemoryServer} = require('mongodb-memory-server')
-const mongoose = require("mongoose")
+const userModuleOrigin = require('../../module/m_user');
+let userModule;
 let mongoMocking;
 let mariaMocking;
+let getUserFromId = jest.fn();
+let getUserFromEmail = jest.fn();
+let getUserFromEmailAndID = jest.fn();
+let createUser = jest.fn()
+let updateUserPasswordFromId = jest.fn()
+let updateUserEmailFromId = jest.fn()
+let updateUserEmailAndPasswordFromId = jest.fn()
+let deleteUserFromId = jest.fn()
 
 beforeAll(async () => {
+    mariaMocking = {
+        user:{
+            getUserFromId:getUserFromId,
+            getUserFromEmail:getUserFromEmail,
+            getUserFromEmailAndID:getUserFromEmailAndID,
+            createUser:createUser,
+            updateUserPasswordFromId:updateUserPasswordFromId,
+            updateUserEmailFromId:updateUserEmailFromId,
+            updateUserEmailAndPasswordFromId:updateUserEmailAndPasswordFromId,
+            deleteUserFromId:deleteUserFromId
+        }
+    }
+
     // maria DB mocking require
+    userModule = userModuleOrigin(mariaMocking,mongoMocking)
 });
 
 /**
@@ -16,10 +38,6 @@ beforeAll(async () => {
  *  5. D 실패
  */
 describe.skip('USER CRUD TEST',  function () {
-    const userModuleOrigin = require('../../module/m_user');
-
-    let userModule = userModuleOrigin(mariaMocking,mongoMocking)
-
     const userTestInputData = [['testman1','xptmm123!','testman1test.com'],['testman2','xptmxm23!','testman2@test.com'],['testman3','xptmxm12!','testman3@test.com']]
     const userTestAddResultData = [true,true,true]
 
@@ -29,6 +47,17 @@ describe.skip('USER CRUD TEST',  function () {
 
     userTestInputData.forEach(function (value,count){
         describe((count+1)+'번째 테스트 케이스',function () {
+            beforeEach(()=>{
+                getUserFromId.mockReset()
+                getUserFromEmail.mockReset()
+                getUserFromEmailAndID.mockReset()
+                createUser.mockReset()
+                updateUserPasswordFromId.mockReset()
+                updateUserEmailFromId.mockReset()
+                updateUserEmailAndPasswordFromId.mockReset()
+                deleteUserFromId.mockReset()
+            })
+
             test('CREATE USER',async function () {
                 let temp = await userModule.addUser(userTestInputData[count][0],userTestInputData[count][1],userTestInputData[count][2])
                 expect(temp.status).toBe(userTestAddResultData[count]);
