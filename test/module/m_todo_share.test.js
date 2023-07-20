@@ -1,22 +1,54 @@
-const {MongoMemoryServer} = require('mongodb-memory-server');
-const mongoose = require("mongoose")
+const todoShareOrigin = require("../../module/m_todo_share")
+let todoShare;
+
 let mongoMocking;
 let mariaMocking;
 
-beforeAll(async () => {
-    // maria DB mocking require
+let getUserFromId = jest.fn();
+let create = jest.fn();
+let find = jest.fn();
+let deleteOne = jest.fn();
+let updateOne = jest.fn();
 
-    const mongoServer  = await MongoMemoryServer.create();
-    mongoMocking = mongoose.createConnection(mongoServer.getUri(), {useNewUrlParser: true, dbName: "DATA" });
+
+beforeAll(async () => {
+    getUserFromId.mockReset()
+    create.mockReset()
+    find.mockReset()
+    deleteOne.mockReset()
+    updateOne.mockReset()
+
+    // maria DB mocking require
+    mariaMocking = {
+        user:{
+            getUserFromId:getUserFromId
+        }
+    }
+
+    // mongo DB mocking require
+    mongoMocking ={
+        shared:{
+            create:create,
+            find:find,
+            deleteOne:deleteOne,
+            updateOne:updateOne
+        }
+    }
+    todoShare = todoShareOrigin(mariaMocking,mongoMocking)
 });
 
 describe("TODO SHARE TEST",()=>{
-    const todoShareOrigin = require("../../module/m_todo_share")
-
-    let todoShare = todoShareOrigin(mariaMocking,mongoMocking)
     let todoShareData = [{REQUEST_ID:"chat_req_id",RESPONSE_ID:"chat_res_id"}]
 
     for(let i=0;i<todoShareData.length;i++){
+        beforeEach(()=>{
+            getUserFromId.mockResolvedValue(true)
+            create.mockResolvedValue(true)
+            find.mockResolvedValue(true)
+            deleteOne.mockResolvedValue(true)
+            updateOne.mockResolvedValue(true)
+        })
+
         let objId = undefined
         test("add request",async ()=>{
             let temp = await todoShare.addRequest(todoShareData[i].REQUEST_ID,todoShareData[i].RESPONSE_ID)
