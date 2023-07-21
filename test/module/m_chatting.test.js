@@ -1,5 +1,3 @@
-const {MongoMemoryServer} = require('mongodb-memory-server')
-const mongoose = require("mongoose")
 let chattingModuleOrigin = require("../../module/m_chatting")
 let chattingModule;
 let mongoMocking;
@@ -11,8 +9,6 @@ beforeAll(async () => {
     // mongo DB mocking require
     create.mockReset()
     find.mockReset()
-    create.mockResolvedValue(true)
-    find.mockResolvedValue([{MESSAGE:"test"}])
 
     mongoMocking = {
         chatting:{
@@ -26,6 +22,11 @@ beforeAll(async () => {
 
 describe("CHATTING TEST",()=>{
     let chattingData = [{REQUEST_ID:"chat_req_id",RESPONSE_ID:"chat_res_id",MESSAGE:"test"}]
+
+    beforeEach(()=>{
+        create.mockResolvedValue(true)
+        find.mockResolvedValue([{MESSAGE:"test"}])
+    })
 
     test("add chatting",async ()=>{
         let temp = await chattingModule.addChatting(chattingData[0].REQUEST_ID,chattingData[0].RESPONSE_ID,chattingData[0].MESSAGE)
