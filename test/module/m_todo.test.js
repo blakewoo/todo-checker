@@ -1,7 +1,5 @@
-const {MongoMemoryServer} = require('mongodb-memory-server')
-const mongoose = require("mongoose")
 const todoModuleOrigin = require("../../module/m_todo")
-let todoModule
+let todoModule;
 let mongoMocking;
 let mariaMocking;
 let create=jest.fn();
@@ -11,11 +9,9 @@ let deleteOne=jest.fn();
 let deleteMany=jest.fn();
 
 beforeAll(async () => {
-    create.mockReset()
     updateOne.mockReset()
     deleteOne.mockReset()
     deleteMany.mockReset()
-    create.mockResolvedValue(true)
     updateOne.mockResolvedValue(true)
     deleteOne.mockResolvedValue(true)
     deleteMany.mockResolvedValue(true)
@@ -40,7 +36,10 @@ describe("TODO TEST",()=>{
     todoTestInputData.forEach(function (value,count){
         describe((count+1)+'번째 테스트 케이스',function () {
             beforeEach(()=>{
+                create.mockReset()
                 find.mockReset()
+
+                create.mockResolvedValue(todoTestInputData[count][0])
                 find.mockResolvedValue(todoTestInputData[count])
             })
 
