@@ -42,15 +42,30 @@ describe("TODO SHARE TEST",()=>{
 
     for(let i=0;i<todoShareData.length;i++){
         beforeEach(()=>{
-            getUserFromId.mockResolvedValue(true)
-            create.mockResolvedValue(true)
-            find.mockResolvedValue(true)
+            getUserFromId.mockResolvedValue([{ID:"123123123",PASSWORD:"DFDFDFDF",EMAIL:"abc@naver.com"}])
             deleteOne.mockResolvedValue(true)
             updateOne.mockResolvedValue(true)
+            find.mockResolvedValue([{
+                OVERSEER_USER_ID: "chat_req_id",
+                OVERSEER_EMAIL: "abc@naver.com",
+                TARGET_USER_ID: "chat_res_id",
+                TARGET_EMAIL:"cba@naver.com",
+                CREATED_DATE: new Date(),
+                STATUS:"ACCEPT"
+            }])
         })
 
         let objId = undefined
         test("add request",async ()=>{
+            getUserFromId.mockImplementation(ID=> new Promise((resolve,reject)=>{
+                if(ID==="chat_req_id") {
+                    resolve([{ID:"chat_req_id",PASSWORD:"DFDFDFDF",EMAIL:"abc@naver.com"}])
+                }
+                else {
+                    resolve([{ID:"chat_res_id",PASSWORD:"DFDFDFDF",EMAIL:"abc@naver.com"}])
+                }
+            }))
+            create.mockResolvedValue([{ID:"123123123",PASSWORD:"DFDFDFDF",EMAIL:"abc@naver.com"}])
             let temp = await todoShare.addRequest(todoShareData[i].REQUEST_ID,todoShareData[i].RESPONSE_ID)
             expect(temp.status).toBe(true)
             objId = temp.result._id
@@ -58,27 +73,27 @@ describe("TODO SHARE TEST",()=>{
 
         test("get request", async ()=>{
             let temp = await todoShare.getRequest(todoShareData[i].RESPONSE_ID)
-            expect(temp[0].OVERSEER_USER_ID).toBe(todoShareData[i].REQUEST_ID)
+            expect(temp.result[0].OVERSEER_USER_ID).toBe(todoShareData[i].REQUEST_ID)
         })
 
         test("get receive", async ()=>{
             let temp = await todoShare.getReceive(todoShareData[i].RESPONSE_ID)
-            expect(temp[0].OVERSEER_USER_ID).toBe(todoShareData[i].REQUEST_ID)
+            expect(temp.result[0].OVERSEER_USER_ID).toBe(todoShareData[i].REQUEST_ID)
         })
 
         test("update receive", async ()=>{
             let temp = await todoShare.updateReceive(todoShareData[i].REQUEST_ID,todoShareData[i].RESPONSE_ID,"ACCEPT")
-            expect(temp[0].status).toBe(true)
+            expect(temp.status).toBe(true)
         })
 
         test("get share list", async ()=>{
             let temp = await todoShare.getChatList(todoShareData[i].RESPONSE_ID)
-            expect(temp[0].OVERSEER_USER_ID).toBe(todoShareData[i].REQUEST_ID)
+            expect(temp.result[0].OVERSEER_USER_ID).toBe(todoShareData[i].REQUEST_ID)
         })
 
         test("get accept request", async ()=>{
             let temp = await todoShare.getAcceptRequest(todoShareData[i].RESPONSE_ID)
-            expect(temp[0].OVERSEER_USER_ID).toBe(todoShareData[i].REQUEST_ID)
+            expect(temp.result[0].OVERSEER_USER_ID).toBe(todoShareData[i].REQUEST_ID)
         })
 
         test("delete request", async ()=>{
