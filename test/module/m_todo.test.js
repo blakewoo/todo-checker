@@ -1,4 +1,5 @@
 const todoModuleOrigin = require("../../module/m_todo")
+
 let todoModule;
 let mongoMocking;
 let mariaMocking;
@@ -39,8 +40,8 @@ describe("TODO TEST",()=>{
                 create.mockReset()
                 find.mockReset()
 
-                create.mockResolvedValue(todoTestInputData[count][0])
-                find.mockResolvedValue(todoTestInputData[count])
+                create.mockResolvedValue({USER_ID:todoTestInputData[count][0]})
+                find.mockResolvedValue({USER_ID:todoTestInputData[count][0]})
             })
 
             let currentId = null
