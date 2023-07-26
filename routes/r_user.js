@@ -32,7 +32,7 @@ module.exports=function (maria,mongo) {
                 return res.send({status:false,reason:"malformed email"})
             }
             let result = await m_user.addUser(req.body.ID,req.body.PASSWORD,req.body.EMAIL);
-            return res.send(result)
+            return res.status(400).send(result)
         }
         catch(e){
             console.log(e)

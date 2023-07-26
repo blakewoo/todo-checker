@@ -94,12 +94,7 @@ module.exports=function(maria,mongo) {
 
     module.verifyEmail = function (EMAIL) {
         let emailReg = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
-        if(emailReg.test(EMAIL)) {
-            return false
-        }
-        else {
-            return true
-        }
+        return !emailReg.test(EMAIL);
     }
 
     return module;
