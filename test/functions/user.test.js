@@ -1,5 +1,6 @@
 const request = require("supertest")
 const makeApp = require("../../app")
+let session = require('supertest-session');
 let getUserFromId = jest.fn()
 let getUserFromEmail = jest.fn()
 let getUserFromEmailAndID = jest.fn()
@@ -28,6 +29,8 @@ let mongoDB = {
 
 }
 const app = makeApp(mariaDB,mongoDB)
+const sessionApp = session(makeApp(mariaDB,mongoDB))
+let authenticatedSession = null
 
 describe("Test case when not authorized",()=>{
     //CRUD user test
@@ -51,9 +54,22 @@ describe("Test case when not authorized",()=>{
 
 
 describe("Test case when authorized",()=>{
+    beforeEach((done) =>{
+        getUserFromId.mockResolvedValue([{ID:"123123123",PASSWORD:"$2b$10$tb0sRFClT6x30JEhTM4lHeBw0lZFHcWBglzFEpbiMtbyFEJpI7NLe",EMAIL:""}])
+
+        sessionApp.post('/login/verified-user')
+            .send({ ID: '123123123', PASSWORD: 'cjswogns12!@' })
+            .expect(200)
+            .end(function (err) {
+                if (err) return done(err);
+                authenticatedSession = sessionApp;
+                return done()
+            });
+    })
     //CRUD user test
     test("GET /user/my", async () => {
-
+        let response = await authenticatedSession.get("/user/my")
+        expect(response.status).toBe(200)
     })
 
     test("POST /user/my : malformed email",async () => {
