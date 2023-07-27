@@ -29,10 +29,10 @@ module.exports=function (maria,mongo) {
     router.post('/my', async function(req, res, next) {
         try{
             if(m_user.verifyEmail(req.body.EMAIL)){
-                return res.send({status:false,reason:"malformed email"})
+                return res.status(400).send({status:false,reason:"malformed email"})
             }
             let result = await m_user.addUser(req.body.ID,req.body.PASSWORD,req.body.EMAIL);
-            return res.status(400).send(result)
+            return res.send(result)
         }
         catch(e){
             console.log(e)
