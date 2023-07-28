@@ -73,15 +73,33 @@ describe("Test case when authorized",()=>{
     })
 
     test("POST /user/my : malformed email",async () => {
-        let response = await request(app).post("/user/my").send({ID:"",PASSWORD:"",EMAIL:""})
+        let response = await authenticatedSession.post("/user/my").send({ID:"",PASSWORD:"",EMAIL:""})
         expect(response.status).toBe(400)
     })
 
-    test("PUT /user/my", () => {
-
+    test("PUT /user/my : malformed email", async () => {
+        deleteUserFromId.mockResolvedValue(true)
+        let response = await authenticatedSession.put("/user/my").send({ID:"123123123",PASSWORD:"testpass12!@",PASSWORD_CONFIRM:"testpass12!@",EMAIL:"testman"})
+        expect(response.status).toBe(400)
     })
 
-    test("DELETE /user/my", () => {
+    test("PUT /user/my : malformed password", async () => {
+        deleteUserFromId.mockResolvedValue(true)
+        let response = await authenticatedSession.put("/user/my").send({ID:"123123123",PASSWORD:"test",PASSWORD_CONFIRM:"test",EMAIL:"testman@naver.com"})
+        expect(response.status).toBe(400)
+    })
+
+    test("PUT /user/my : Not match password", async () => {
+        deleteUserFromId.mockResolvedValue(true)
+        let response = await authenticatedSession.put("/user/my").send({ID:"123123123",PASSWORD:"testpass12!@",PASSWORD_CONFIRM:"testpass12!",EMAIL:"testman@naver.com"})
+        expect(response.status).toBe(400)
+    })
+
+    test("DELETE /user/my", async () => {
+        deleteMany.mockResolvedValue(true)
+        deleteUserFromId.mockResolvedValue(true)
+        let response = await authenticatedSession.delete("/user/my").send({ID:"123123123"})
+        expect(response.status).toBe(200)
 
     })
 })
