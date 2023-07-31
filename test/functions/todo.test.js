@@ -10,6 +10,7 @@ let updateUserPasswordFromId = jest.fn()
 let updateUserEmailFromId = jest.fn()
 let deleteUserFromId = jest.fn()
 
+let create = jest.fn()
 let find = jest.fn()
 let updateOne = jest.fn()
 let updateMany = jest.fn()
@@ -29,6 +30,7 @@ let mariaDB = {
 }
 let mongoDB = {
     todo:{
+        create:create,
         find:find,
         updateOne:updateOne,
         updateMany:updateMany,
@@ -155,9 +157,19 @@ describe("Test case when not authorized",()=>{
     })
 })
 
-describe.skip("Test case when authorized",()=>{
+describe("Test case when authorized",()=>{
     beforeEach((done) =>{
         getUserFromId.mockResolvedValue([{ID:"123123123",PASSWORD:"$2b$10$tb0sRFClT6x30JEhTM4lHeBw0lZFHcWBglzFEpbiMtbyFEJpI7NLe",EMAIL:""}])
+        create.mockResolvedValue(true)
+        find.mockResolvedValue([{USER_ID: "123123123",
+            CREATED_DATE: new Date(),
+            TARGET_DATE: new Date(),
+            DEAD_LINE:new Date(),
+            DATA: "abcd",
+            ORDER: 1,
+            TYPE: "Daily",
+            IS_DONE: true
+        }])
 
         sessionApp.post('/login/verified-user')
             .send({ ID: '123123123', PASSWORD: 'cjswogns12!@' })
@@ -170,112 +182,112 @@ describe.skip("Test case when authorized",()=>{
     })
     //CRUD user test
     test("GET /my/daily", async () => {
-        let response = await authenticatedSession.get("/my/daily")
-        expect(response.status).toBe(401)
+        let response = await authenticatedSession.get("/todolist/my/daily").query("date=1690803684323")
+        expect(response.status).toBe(200)
     })
 
     test("POST /my/daily", async () => {
-        let response = await authenticatedSession.post("/my/daily")
-        expect(response.status).toBe(401)
+        let response = await authenticatedSession.post("/todolist/my/daily").send({CREATED_DATE:new Date(),TARGET_DATE:new Date(),DATA:"체크"})
+        expect(response.status).toBe(200)
     })
 
     test("PUT /my/daily",async () => {
-        let response = await authenticatedSession.put("/my/daily")
-        expect(response.status).toBe(401)
+        let response = await authenticatedSession.put("/todolist/my/daily").send({TODO_ID:"abcdef",TODO_DATA:{IS_DONE:false,DEAD_LINE:new Date(),DATA:"DDD"}})
+        expect(response.status).toBe(200)
     })
 
     test("DELETE /my/daily",async () => {
-        let response = await authenticatedSession.delete("/my/daily")
+        let response = await authenticatedSession.delete("/todolist/my/daily").send({TODO_ID:"abcdef"})
+        expect(response.status).toBe(200)
+    })
+
+    test.skip("GET /my/notification/daily",async () => {
+        let response = await authenticatedSession.get("/todolist/my/notification/daily")
         expect(response.status).toBe(401)
     })
 
-    test("GET /my/notification/daily",async () => {
-        let response = await authenticatedSession.get("/my/notification/daily")
+    test.skip("GET /my/notification/monthly",async () => {
+        let response = await authenticatedSession.get("/todolist/my/notification/monthly")
         expect(response.status).toBe(401)
     })
 
-    test("GET /my/notification/monthly",async () => {
-        let response = await authenticatedSession.get("/my/notification/monthly")
+    test.skip("POST /my/notification",async () => {
+        let response = await authenticatedSession.post("/todolist/my/notification")
         expect(response.status).toBe(401)
     })
 
-    test("POST /my/notification",async () => {
-        let response = await authenticatedSession.post("/my/notification")
+    test.skip("PUT /my/notification",async () => {
+        let response = await authenticatedSession.put("/todolist/my/notification")
         expect(response.status).toBe(401)
     })
 
-    test("PUT /my/notification",async () => {
-        let response = await authenticatedSession.put("/my/notification")
+    test.skip("DELETE /my/notification",async () => {
+        let response = await authenticatedSession.delete("/todolist/my/notification")
         expect(response.status).toBe(401)
     })
 
-    test("DELETE /my/notification",async () => {
-        let response = await authenticatedSession.delete("/my/notification")
+    test.skip("GET /my/weekly",async () => {
+        let response = await authenticatedSession.get("/todolist/my/weekly")
         expect(response.status).toBe(401)
     })
 
-    test("GET /my/weekly",async () => {
-        let response = await authenticatedSession.get("/my/weekly")
+    test.skip("POST /my/weekly",async () => {
+        let response = await authenticatedSession.post("/todolist/my/weekly")
         expect(response.status).toBe(401)
     })
 
-    test("POST /my/weekly",async () => {
-        let response = await authenticatedSession.post("/my/weekly")
+    test.skip("PUT /my/weekly",async () => {
+        let response = await authenticatedSession.put("/todolist/my/weekly")
         expect(response.status).toBe(401)
     })
 
-    test("PUT /my/weekly",async () => {
-        let response = await authenticatedSession.put("/my/weekly")
+    test.skip("DELETE /my/weekly",async () => {
+        let response = await authenticatedSession.delete("/todolist/my/weekly")
         expect(response.status).toBe(401)
     })
 
-    test("DELETE /my/weekly",async () => {
-        let response = await authenticatedSession.delete("/my/weekly")
+    test.skip("GET /my/monthly",async () => {
+        let response = await authenticatedSession.get("/todolist/my/monthly")
         expect(response.status).toBe(401)
     })
 
-    test("GET /my/monthly",async () => {
-        let response = await authenticatedSession.get("/my/monthly")
+    test.skip("POST /my/monthly",async () => {
+        let response = await authenticatedSession.post("/todolist/my/monthly")
         expect(response.status).toBe(401)
     })
 
-    test("POST /my/monthly",async () => {
-        let response = await authenticatedSession.post("/my/monthly")
+    test.skip("PUT /my/monthly",async () => {
+        let response = await authenticatedSession.put("/todolist/my/monthly")
         expect(response.status).toBe(401)
     })
 
-    test("PUT /my/monthly",async () => {
-        let response = await authenticatedSession.put("/my/monthly")
+    test.skip("DELETE /my/monthly",async () => {
+        let response = await authenticatedSession.delete("/todolist/my/monthly")
         expect(response.status).toBe(401)
     })
 
-    test("DELETE /my/monthly",async () => {
-        let response = await authenticatedSession.delete("/my/monthly")
+    test.skip("GET /target/daily",async () => {
+        let response = await authenticatedSession.get("/todolist/target/daily")
         expect(response.status).toBe(401)
     })
 
-    test("GET /target/daily",async () => {
-        let response = await authenticatedSession.get("/target/daily")
+    test.skip("GET /target/notification/daily",async () => {
+        let response = await authenticatedSession.get("/todolist/target/notification/daily")
         expect(response.status).toBe(401)
     })
 
-    test("GET /target/notification/daily",async () => {
-        let response = await authenticatedSession.get("/target/notification/daily")
+    test.skip("GET /target/notification/monthly",async () => {
+        let response = await authenticatedSession.get("/todolist/target/notification/monthly")
         expect(response.status).toBe(401)
     })
 
-    test("GET /target/notification/monthly",async () => {
-        let response = await authenticatedSession.get("/target/notification/monthly")
+    test.skip("GET /target/weekly",async () => {
+        let response = await authenticatedSession.get("/todolist/target/weekly")
         expect(response.status).toBe(401)
     })
 
-    test("GET /target/weekly",async () => {
-        let response = await authenticatedSession.get("/target/weekly")
-        expect(response.status).toBe(401)
-    })
-
-    test("GET /target/monthly",async () => {
-        let response = await authenticatedSession.get("/target/monthly")
+    test.skip("GET /target/monthly",async () => {
+        let response = await authenticatedSession.get("/todolist/target/monthly")
         expect(response.status).toBe(401)
     })
 })
