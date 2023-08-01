@@ -21,6 +21,7 @@ module.exports=function (maria,mongo) {
             }
         }
         catch(e){
+            console.error(e)
             return res.status(404).send({status:false})
         }
     });
@@ -205,13 +206,13 @@ module.exports=function (maria,mongo) {
     router.post('/my/weekly',verify.user_auth,async function(req, res, next) {
         try{
             // get my comment list
-            if(!req.body.CREATED_DATE) {
+            if(!req.body.TARGET_DATE) {
                 return res.status(400).send({status:false})
             }
             if(!req.body.DATA) {
                 return res.status(400).send({status:false})
             }
-            let result = await todoModule.addTodo(req.session.ID,req.body.CREATED_DATE,req.body.TARGET_DATE,req.body.DATA,"WEEKLY")
+            let result = await todoModule.addTodo(req.session.ID,new Date(),req.body.TARGET_DATE,req.body.DATA,"WEEKLY")
             if(!result) {
                 return res.send({status:false})
             }
