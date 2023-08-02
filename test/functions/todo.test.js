@@ -201,93 +201,93 @@ describe("Test case when authorized",()=>{
         expect(response.status).toBe(200)
     })
 
-    test.skip("GET /my/notification/daily",async () => {
-        let response = await authenticatedSession.get("/todolist/my/notification/daily")
-        expect(response.status).toBe(401)
+    test("GET /my/notification/daily",async () => {
+        let response = await authenticatedSession.get("/todolist/my/notification/daily").query("date=1690803684323")
+        expect(response.status).toBe(200)
     })
 
-    test.skip("GET /my/notification/monthly",async () => {
-        let response = await authenticatedSession.get("/todolist/my/notification/monthly")
-        expect(response.status).toBe(401)
+    test("GET /my/notification/monthly",async () => {
+        let response = await authenticatedSession.get("/todolist/my/notification/monthly").query("date=1690803684323")
+        expect(response.status).toBe(200)
     })
 
-    test.skip("POST /my/notification",async () => {
-        let response = await authenticatedSession.post("/todolist/my/notification")
-        expect(response.status).toBe(401)
+    test("POST /my/notification",async () => {
+        let response = await authenticatedSession.post("/todolist/my/notification").send({CREATED_DATE:new Date(),TARGET_DATE:new Date(),DATA:"체크"})
+        expect(response.status).toBe(200)
     })
 
-    test.skip("PUT /my/notification",async () => {
-        let response = await authenticatedSession.put("/todolist/my/notification")
-        expect(response.status).toBe(401)
+    test("PUT /my/notification",async () => {
+        let response = await authenticatedSession.put("/todolist/my/notification").send({TODO_ID:"abcdef",TODO_DATA:{DATA:"DDDD"}})
+        expect(response.status).toBe(200)
     })
 
-    test.skip("DELETE /my/notification",async () => {
-        let response = await authenticatedSession.delete("/todolist/my/notification")
-        expect(response.status).toBe(401)
+    test("DELETE /my/notification",async () => {
+        let response = await authenticatedSession.delete("/todolist/my/notification").send({TODO_ID:"abcdef"})
+        expect(response.status).toBe(200)
     })
 
-    test.skip("GET /my/weekly",async () => {
-        let response = await authenticatedSession.get("/todolist/my/weekly")
-        expect(response.status).toBe(401)
+    test("GET /my/weekly",async () => {
+        let response = await authenticatedSession.get("/todolist/my/weekly").query("date=1690803684323")
+        expect(response.status).toBe(200)
     })
 
-    test.skip("POST /my/weekly",async () => {
-        let response = await authenticatedSession.post("/todolist/my/weekly")
-        expect(response.status).toBe(401)
+    test("POST /my/weekly",async () => {
+        let response = await authenticatedSession.post("/todolist/my/weekly").send({CREATED_DATE:new Date(),TARGET_DATE:new Date(),DATA:"체크"})
+        expect(response.status).toBe(200)
     })
 
-    test.skip("PUT /my/weekly",async () => {
-        let response = await authenticatedSession.put("/todolist/my/weekly")
-        expect(response.status).toBe(401)
+    test("PUT /my/weekly",async () => {
+        let response = await authenticatedSession.put("/todolist/my/weekly").send({TODO_ID:"abcdef",TODO_DATA:{DATA:"DDDD"}})
+        expect(response.status).toBe(200)
     })
 
-    test.skip("DELETE /my/weekly",async () => {
-        let response = await authenticatedSession.delete("/todolist/my/weekly")
-        expect(response.status).toBe(401)
+    test("DELETE /my/weekly",async () => {
+        let response = await authenticatedSession.delete("/todolist/my/weekly").send({TODO_ID:"abcdef"})
+        expect(response.status).toBe(200)
     })
 
-    test.skip("GET /my/monthly",async () => {
-        let response = await authenticatedSession.get("/todolist/my/monthly")
-        expect(response.status).toBe(401)
+    test("GET /my/monthly",async () => {
+        let response = await authenticatedSession.get("/todolist/my/monthly").query("date=1690803684323")
+        expect(response.status).toBe(200)
     })
 
-    test.skip("POST /my/monthly",async () => {
-        let response = await authenticatedSession.post("/todolist/my/monthly")
-        expect(response.status).toBe(401)
+    test("POST /my/monthly",async () => {
+        let response = await authenticatedSession.post("/todolist/my/monthly").send({CREATED_DATE:new Date(),TARGET_DATE:new Date(),DATA:"체크"})
+        expect(response.status).toBe(200)
     })
 
-    test.skip("PUT /my/monthly",async () => {
-        let response = await authenticatedSession.put("/todolist/my/monthly")
-        expect(response.status).toBe(401)
+    test("PUT /my/monthly",async () => {
+        let response = await authenticatedSession.put("/todolist/my/monthly").send({TODO_ID:"abcdef",TODO_DATA:{DATA:"DDDD"}})
+        expect(response.status).toBe(200)
     })
 
-    test.skip("DELETE /my/monthly",async () => {
-        let response = await authenticatedSession.delete("/todolist/my/monthly")
-        expect(response.status).toBe(401)
+    test("DELETE /my/monthly",async () => {
+        let response = await authenticatedSession.delete("/todolist/my/monthly").send({TODO_ID:"abcdef"})
+        expect(response.status).toBe(200)
     })
 
-    test.skip("GET /target/daily",async () => {
-        let response = await authenticatedSession.get("/todolist/target/daily")
-        expect(response.status).toBe(401)
+    test("GET /target/daily",async () => {
+        let response = await authenticatedSession.get("/todolist/target/daily").query("ID=abcedef&date=1690803684323")
+        expect(response.status).toBe(200)
     })
 
-    test.skip("GET /target/notification/daily",async () => {
-        let response = await authenticatedSession.get("/todolist/target/notification/daily")
-        expect(response.status).toBe(401)
+    test("GET /target/notification/daily",async () => {
+        let response = await authenticatedSession.get("/todolist/target/notification/daily").query("ID=abcedef&date=1690803684323")
+        expect(response.status).toBe(200)
     })
 
-    test.skip("GET /target/notification/monthly",async () => {
-        let response = await authenticatedSession.get("/todolist/target/notification/monthly")
-        expect(response.status).toBe(401)
+    test("GET /target/notification/monthly",async () => {
+        let response = await authenticatedSession.get("/todolist/target/notification/monthly").query("ID=abcedef&date=1690803684323")
+        expect(response.status).toBe(200)
     })
 
-    test.skip("GET /target/weekly",async () => {
-        let response = await authenticatedSession.get("/todolist/target/weekly")
-        expect(response.status).toBe(401)
+    test("GET /target/weekly",async () => {
+        let response = await authenticatedSession.get("/todolist/target/weekly").query("ID=abcedef&date=1690803684323")
+        expect(response.status).toBe(200)
     })
 
-    test.skip("GET /target/monthly",async () => {
-        let response = await authenticatedSession.get("/todolist/target/monthly")
-        expect(response.status).toBe(401)
+    test("GET /target/monthly",async () => {
+        let response = await authenticatedSession.get("/todolist/target/monthly").query("ID=abcedef&date=1690803684323")
+        expect(response.status).toBe(200)
     })
 })
