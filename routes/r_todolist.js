@@ -30,13 +30,13 @@ module.exports=function (maria,mongo) {
     router.post('/my/daily',verify.user_auth,async function(req, res, next) {
         try{
             // get my comment list
-            if(!req.body.CREATED_DATE) {
+            if(!req.body.TARGET_DATE) {
                 return res.status(400).send({status:false})
             }
             if(!req.body.DATA) {
                 return res.status(400).send({status:false})
             }
-            let result = await todoModule.addTodo(req.session.ID,req.body.CREATED_DATE,req.body.TARGET_DATE,req.body.DATA,"DAILY")
+            let result = await todoModule.addTodo(req.session.ID,new Date(),req.body.TARGET_DATE,req.body.DATA,"DAILY")
             if(!result) {
                 return res.send({status:false})
             }
@@ -128,13 +128,13 @@ module.exports=function (maria,mongo) {
     router.post('/my/notification',verify.user_auth,async function(req, res, next) {
         try{
             // get my comment list
-            if(!req.body.CREATED_DATE) {
+            if(!req.body.TARGET_DATE) {
                 return res.status(400).send({status:false})
             }
             if(!req.body.DATA) {
                 return res.status(400).send({status:false})
             }
-            let result = await todoModule.addTodo(req.session.ID,req.body.CREATED_DATE,req.body.TARGET_DATE,req.body.DATA,"NOTIFICATION")
+            let result = await todoModule.addTodo(req.session.ID,new Date(),req.body.TARGET_DATE,req.body.DATA,"NOTIFICATION")
             if(!result) {
                 return res.send({status:false})
             }
@@ -284,13 +284,13 @@ module.exports=function (maria,mongo) {
     router.post('/my/monthly',verify.user_auth,async function(req, res, next) {
         try{
             // get my comment list
-            if(!req.body.CREATED_DATE) {
+            if(!req.body.TARGET_DATE) {
                 return res.status(400).send({status:false})
             }
             if(!req.body.DATA) {
                 return res.status(400).send({status:false})
             }
-            let result = await todoModule.addTodo(req.session.ID,req.body.CREATED_DATE,req.body.TARGET_DATE,req.body.DATA,"MONTHLY")
+            let result = await todoModule.addTodo(req.session.ID,new Date(),req.body.TARGET_DATE,req.body.DATA,"MONTHLY")
             if(!result) {
                 return res.send({status:false})
             }
@@ -341,6 +341,9 @@ module.exports=function (maria,mongo) {
 // TARGET TODO 불러들이기
     router.get('/target/daily',verify.user_auth,async function(req, res, next) {
         try{
+            if(!req.query.ID) {
+                return res.status(400).send({status:false})
+            }
             if(!req.query.date) {
                 return res.status(400).send({status:false})
             }
@@ -359,6 +362,9 @@ module.exports=function (maria,mongo) {
 
     router.get('/target/notification/daily',verify.user_auth,async function(req, res, next) {
         try{
+            if(!req.query.ID) {
+                return res.status(400).send({status:false})
+            }
             if(!req.query.date) {
                 return res.status(400).send({status:false})
             }
@@ -377,6 +383,9 @@ module.exports=function (maria,mongo) {
 
     router.get('/target/notification/monthly',verify.user_auth,async function(req, res, next) {
         try{
+            if(!req.query.ID) {
+                return res.status(400).send({status:false})
+            }
             if(!req.query.date) {
                 return res.status(400).send({status:false})
             }
@@ -395,6 +404,9 @@ module.exports=function (maria,mongo) {
 
     router.get('/target/weekly',verify.user_auth,async function(req, res, next) {
         try{
+            if(!req.query.ID) {
+                return res.status(400).send({status:false})
+            }
             if(!req.query.date) {
                 return res.status(400).send({status:false})
             }
@@ -413,6 +425,9 @@ module.exports=function (maria,mongo) {
 
     router.get('/target/monthly',verify.user_auth,async function(req, res, next) {
         try{
+            if(!req.query.ID) {
+                return res.status(400).send({status:false})
+            }
             if(!req.query.date) {
                 return res.status(400).send({status:false})
             }
