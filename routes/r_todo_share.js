@@ -4,8 +4,15 @@ const todoShareOrigin = require("../module/m_todo_share")
 
 module.exports = function (maria,mongo) {
     let todoShare = todoShareOrigin(maria,mongo)
+    let sessionCheck = function (req, res, next) {
+        if (req.session.isLogin) {
+            next()
+        } else {
+            return res.status(401).send({status: false, reason: "No auth"})
+        }
+    }
 
-    router.get('/request',async function(req, res, next) {
+    router.get('/request',sessionCheck, async function(req, res, next) {
         let result = await todoShare.getRequest(req.session.ID)
         if(result.status) {
             return res.send({status:true,result:result.result})
@@ -15,7 +22,7 @@ module.exports = function (maria,mongo) {
         }
     });
 
-    router.get('/request/accept',async function(req, res, next) {
+    router.get('/request/accept',sessionCheck, async function(req, res, next) {
         let result = await todoShare.getAcceptRequest(req.session.ID)
         if(result.status) {
             return res.send({status:true,result:result.result})
@@ -25,17 +32,23 @@ module.exports = function (maria,mongo) {
         }
     });
 
-    router.post('/request',async function(req, res, next) {
+    router.post('/request',sessionCheck, async function(req, res, next) {
+        if(!req.body.target){
+            return res.status(400).send({status:false})
+        }
         let result = await todoShare.addRequest(req.session.ID,req.body.target)
         if(result.status) {
-            return res.send({status:true,result:result.status})
+            return res.send({status:true,result:result.result})
         }
         else {
             return res.send({status:false})
         }
     });
 
-    router.delete('/request',async function(req, res, next) {
+    router.delete('/request',sessionCheck, async function(req, res, next) {
+        if(!req.body.target){
+            return res.status(400).send({status:false})
+        }
         let result = await todoShare.deleteRequest(req.body.target)
         if(result.status) {
             return res.send({status:true})
@@ -45,7 +58,7 @@ module.exports = function (maria,mongo) {
         }
     });
 
-    router.get('/receive',async function(req, res, next) {
+    router.get('/receive',sessionCheck, async function(req, res, next) {
         let result = await todoShare.getReceive(req.session.ID)
         if(result.status) {
             return res.send({status:true,result:result.result})
@@ -55,7 +68,13 @@ module.exports = function (maria,mongo) {
         }
     });
 
-    router.put('/receive',async function(req, res, next) {
+    router.put('/receive',sessionCheck, async function(req, res, next) {
+        if(!req.body.requester){
+            return res.status(400).send({status:false})
+        }
+        if(!req.body.state){
+            return res.status(400).send({status:false})
+        }
         let result = await todoShare.updateReceive(req.body.requester,req.session.ID,req.body.state)
         if(result.status) {
             return res.send({status:true,result:result.result})
@@ -65,7 +84,7 @@ module.exports = function (maria,mongo) {
         }
     });
 
-    router.get('/chatlist',async function(req, res, next) {
+    router.get('/chatlist',sessionCheck, async function(req, res, next) {
         let result = await todoShare.getChatList(req.session.ID)
         if(result.status) {
             return res.send({status:true,result:result.result,myId:req.session.ID})
