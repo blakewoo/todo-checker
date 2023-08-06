@@ -111,11 +111,17 @@ describe("Test case when authorized",()=>{
     test("POST /todo-share/request", async () => {
         let response = await authenticatedSession.post("/todo-share/request").send({target:"abcdef"})
         expect(response.status).toBe(200)
+
+        response = await authenticatedSession.post("/todo-share/request").send({})
+        expect(response.status).toBe(400)
     })
 
     test("DELETE /todo-share/request", async () => {
         let response = await authenticatedSession.delete("/todo-share/request").send({target:"abcdef"})
         expect(response.status).toBe(200)
+
+        response = await authenticatedSession.delete("/todo-share/request").send({})
+        expect(response.status).toBe(400)
     })
 
     test("GET /todo-share/receive", async () => {
@@ -126,6 +132,12 @@ describe("Test case when authorized",()=>{
     test("PUT /todo-share/receive", async () => {
         let response = await authenticatedSession.put("/todo-share/receive").send({requester:"abcdef",state:"ACCEPT"})
         expect(response.status).toBe(200)
+
+        response = await authenticatedSession.put("/todo-share/receive").send({state:"ACCEPT"})
+        expect(response.status).toBe(400)
+
+        response = await authenticatedSession.put("/todo-share/receive").send({requester:"abcdef"})
+        expect(response.status).toBe(400)
     })
 
     test("GET /todo-share/chatlist", async () => {
