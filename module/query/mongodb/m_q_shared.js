@@ -4,8 +4,7 @@ const md_shared = require("../../../model/md_shared-request")
 exports.create = async function (obj) {
     try{
         let share = mongo.model("SHARED_TODO_REQUEST",md_shared);
-        await share.create({obj})
-        return true
+        return await share.create(obj)
     }
     catch(e) {
         console.log(e)
@@ -16,8 +15,7 @@ exports.create = async function (obj) {
 exports.find = async function (obj) {
     try{
         let share = mongo.model("SHARED_TODO_REQUEST",md_shared);
-        let result = await share.find(obj)
-        return result
+        return await share.find(obj)
     }
     catch(e) {
         console.log(e)

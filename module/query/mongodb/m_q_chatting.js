@@ -4,8 +4,7 @@ const md_chatting = require("../../../model/md_chatting")
 exports.create = async function(obj) {
     try{
         let chat = mongo.model("CHATTING_LIST",md_chatting);
-        await chat.create(obj)
-        return true
+        return await chat.create(obj)
     }
     catch(e) {
         console.log(e)

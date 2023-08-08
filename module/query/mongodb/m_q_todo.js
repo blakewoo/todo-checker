@@ -4,8 +4,7 @@ const md_todo = require("../../../model/md_to-do")
 exports.create = async function (obj) {
     try{
         let todo = mongo.model("TODO_LIST",md_todo);
-        await todo.create(obj)
-        return true
+        return await todo.create(obj)
     }
     catch(e) {
         console.log(e)
@@ -16,8 +15,7 @@ exports.create = async function (obj) {
 exports.find = async function(obj) {
     try{
         let todo = mongo.model("TODO_LIST",md_todo);
-        await todo.find(obj)
-        return true
+        return await todo.find(obj)
     }
     catch(e) {
         console.log(e)
