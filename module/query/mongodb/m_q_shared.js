@@ -1,9 +1,9 @@
 const mongo = require("../../../connectors/mongodb")
-const shared = require("../../../model/md_shared-request")
+const md_shared = require("../../../model/md_shared-request")
 
 exports.create = async function (obj) {
     try{
-        let share = mongo.model("SHARED_TODO_REQUEST",shared);
+        let share = mongo.model("SHARED_TODO_REQUEST",md_shared);
         await share.create({obj})
         return true
     }
@@ -15,7 +15,7 @@ exports.create = async function (obj) {
 
 exports.find = async function (obj) {
     try{
-        let share = mongo.model("SHARED_TODO_REQUEST",shared);
+        let share = mongo.model("SHARED_TODO_REQUEST",md_shared);
         let result = await share.find(obj)
         return result
     }
@@ -27,7 +27,7 @@ exports.find = async function (obj) {
 
 exports.deleteOne = async function (obj) {
     try{
-        let share = mongo.model("SHARED_TODO_REQUEST",shared);
+        let share = mongo.model("SHARED_TODO_REQUEST",md_shared);
         await share.deleteOne(obj)
         return true
     }
@@ -39,7 +39,7 @@ exports.deleteOne = async function (obj) {
 
 exports.updateOne = async function (obj,updateObj) {
     try{
-        let share = mongo.model("SHARED_TODO_REQUEST",shared);
+        let share = mongo.model("SHARED_TODO_REQUEST",md_shared);
         await share.updateOne(obj,updateObj)
         return true
     }

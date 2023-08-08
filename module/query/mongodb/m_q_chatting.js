@@ -1,9 +1,9 @@
 const mongo = require("../../../connectors/mongodb")
-const chatting = require("../../../model/md_chatting")
+const md_chatting = require("../../../model/md_chatting")
 
 exports.create = async function(obj) {
     try{
-        let chat = mongo.model("CHATTING_LIST",chatting);
+        let chat = mongo.model("CHATTING_LIST",md_chatting);
         await chat.create(obj)
         return true
     }
@@ -15,7 +15,7 @@ exports.create = async function(obj) {
 
 exports.find = async function(obj,sort) {
     try{
-        let chat = mongo.model("CHATTING_LIST",chatting);
+        let chat = mongo.model("CHATTING_LIST",md_chatting);
         return await chat.find(obj).sort(sort)
     }
     catch(e) {
@@ -26,7 +26,7 @@ exports.find = async function(obj,sort) {
 
 exports.updateOne = async function(obj,updateObj) {
     try{
-        let chat = mongo.model("CHATTING_LIST",chatting);
+        let chat = mongo.model("CHATTING_LIST",md_chatting);
         await chat.updateOne(obj,updateObj)
         return true
     }
@@ -38,7 +38,7 @@ exports.updateOne = async function(obj,updateObj) {
 
 exports.deleteOne = async function(obj) {
     try{
-        let chat = mongo.model("CHATTING_LIST",chatting);
+        let chat = mongo.model("CHATTING_LIST",md_chatting);
         await chat.deleteOne(obj)
         return true
     }

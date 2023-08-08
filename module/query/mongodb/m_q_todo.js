@@ -1,9 +1,9 @@
 const mongo = require("../../../connectors/mongodb")
-const todo = require("../../../model/md_to-do")
+const md_todo = require("../../../model/md_to-do")
 
 exports.create = async function (obj) {
     try{
-        let todo = mongo.model("TODO_LIST",todo);
+        let todo = mongo.model("TODO_LIST",md_todo);
         await todo.create(obj)
         return true
     }
@@ -15,7 +15,7 @@ exports.create = async function (obj) {
 
 exports.find = async function(obj) {
     try{
-        let todo = mongo.model("TODO_LIST",todo);
+        let todo = mongo.model("TODO_LIST",md_todo);
         await todo.find(obj)
         return true
     }
@@ -27,7 +27,7 @@ exports.find = async function(obj) {
 
 exports.updateOne = async function (obj,updateObj) {
     try{
-        let todo = mongo.model("TODO_LIST",todo);
+        let todo = mongo.model("TODO_LIST",md_todo);
         await todo.updateOne(obj,updateObj)
         return true
     }
@@ -39,7 +39,7 @@ exports.updateOne = async function (obj,updateObj) {
 
 exports.deleteOne = async function (obj) {
     try{
-        let todo = mongo.model("TODO_LIST",todo);
+        let todo = mongo.model("TODO_LIST",md_todo);
         await todo.deleteOne(obj)
         return true
     }
