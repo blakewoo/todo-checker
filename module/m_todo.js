@@ -1,5 +1,3 @@
-const todoDataOrigin = require("../model/md_to-do")
-
 module.exports=function(maria,mongo) {
     let module = {}
 

@@ -1,5 +1,3 @@
-const sharedOrigin = require("../model/md_shared-request")
-
 module.exports=function(maria,mongo) {
     let module = {}
 

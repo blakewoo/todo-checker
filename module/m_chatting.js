@@ -1,5 +1,3 @@
-const chattingModelOrigin = require("../model/md_chatting")
-
 module.exports=function(maria,mongo) {
     let module = {}
 
