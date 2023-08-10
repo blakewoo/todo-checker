@@ -20,35 +20,72 @@ const JHCalendar = (function () {
         // This function is kind of interface function
     }
 
-    JHCalendar.prototype.setPaintTarget = function (targetDate) {
-        if(targetDate) {
-            this.targetDate = targetDate
-        }
-        this.paint(this.targetDate)
-        this.drawTbody(this.targetDate)
-        this.buttonEvent(this.targetDate)
-    }
-    JHCalendar.prototype.paint = function (targetDate) {
-        this.targetDiv.innerHTML = this.drawTable(targetDate.getFullYear(),targetDate.getMonth()+1)
+    JHCalendar.prototype.paint = function () {
+        let tableElement = this.drawTable(this.targetDate.getFullYear(),this.targetDate.getMonth()+1)
+        this.drawTbody(this.targetDate,tableElement.tbody)
+        this.buttonEvent(this.targetDate,tableElement.leftArrowTd,tableElement.rightArrowTd)
+        this.targetDiv.innerHTML = ""
+        this.targetDiv.appendChild(tableElement.table)
     }
 
     JHCalendar.prototype.drawTable = function (year,month) {
-        let html = "<table class='calendar_table'>" +
-            "<thead>" +
-            "<tr class='title_arrow_tr'>"+
-            "<td id='calendarPrevMonthTd'><label>< 이전달</label></td>" +
-            "<td class='current_month_td' colspan='5'>"+year+"년 "+month+"월</td>" +
-            "<td id='calendarNextMonthTd'><label>다음달 ></label></td>" +
-            "</tr>" +
-            "<tr class='day_head_tr'>" +
-            "<td class='red_td_font'>일</td><td>월</td><td>화</td><td>수</td><td>목</td><td>금</td><td class='blue_td_font'>토</td>" +
-            "</tr>" +
-            "</thead>" +
-            "<tbody id='calendarTableTbody'>" +
-            "</tbody>" +
-            "</table>"
+        let table = document.createElement("table")
+        table.classList.add("calendar_table")
 
-        return html;
+        let thead = document.createElement("thead")
+
+        let firstTr = document.createElement("tr")
+        firstTr.classList.add("title_arrow_tr")
+
+        let leftArrowTd = document.createElement("td")
+        leftArrowTd.id = "calendarPrevMonthTd"
+        leftArrowTd.innerHTML = "<label>< 이전달</label>"
+
+        let viewTd = document.createElement("td")
+        viewTd.classList.add("current_month_td")
+        viewTd.colSpan = 5
+        viewTd.innerText = year+"년 "+month+"월"
+
+        let rightArrowTd = document.createElement("td")
+        rightArrowTd.id = "calendarNextMonthTd"
+        rightArrowTd.innerHTML = "<label>다음달 ></label>"
+
+        let secondTr = document.createElement("tr")
+        secondTr.classList.add("day_head_tr")
+        secondTr.innerHTML =  "<td class='red_td_font'>일</td><td>월</td><td>화</td><td>수</td><td>목</td><td>금</td><td class='blue_td_font'>토</td>"
+
+        let tbody = document.createElement("tbody")
+        tbody.id = "calendarTableTbody"
+
+        firstTr.appendChild(leftArrowTd)
+        firstTr.appendChild(viewTd)
+        firstTr.appendChild(rightArrowTd)
+
+        thead.appendChild(firstTr)
+        thead.appendChild(secondTr)
+
+        table.appendChild(thead)
+        table.appendChild(tbody)
+
+        return {table:table, tbody:tbody, leftArrowTd:leftArrowTd, rightArrowTd:rightArrowTd}
+
+
+        // let html = "<table class='calendar_table'>" +
+        //     "<thead>" +
+        //     "<tr class='title_arrow_tr'>"+
+        //     "<td id='calendarPrevMonthTd'><label>< 이전달</label></td>" +
+        //     "<td class='current_month_td' colspan='5'>"+year+"년 "+month+"월</td>" +
+        //     "<td id='calendarNextMonthTd'><label>다음달 ></label></td>" +
+        //     "</tr>" +
+        //     "<tr class='day_head_tr'>" +
+        //     "<td class='red_td_font'>일</td><td>월</td><td>화</td><td>수</td><td>목</td><td>금</td><td class='blue_td_font'>토</td>" +
+        //     "</tr>" +
+        //     "</thead>" +
+        //     "<tbody id='calendarTableTbody'>" +
+        //     "</tbody>" +
+        //     "</table>"
+        //
+        // return html;
     }
 
     Object.defineProperty(this, "monthlyEvent", {
@@ -68,7 +105,7 @@ const JHCalendar = (function () {
         return str;
     }
 
-    JHCalendar.prototype.drawTbody = function (targetDate) {
+    JHCalendar.prototype.drawTbody = function (targetDate,tbody) {
         let monthlyEvent = this.monthlyEvent
         let thisMonthFirstDay = new Date(targetDate.getFullYear(), targetDate.getMonth(), 1);
         let thisMonthLastDay = new Date(targetDate.getFullYear(), targetDate.getMonth() + 1, 0);
@@ -78,7 +115,6 @@ const JHCalendar = (function () {
         let targetDay = ""
         let weekCount = 1
 
-        let tbody = document.getElementById("calendarTableTbody")
         let cnt = 0;
         let str = "<tr>"
         for(let i=0;i<thisMonthFirstDay.getDay();i++) {
@@ -127,12 +163,9 @@ const JHCalendar = (function () {
         }
     }
 
-    JHCalendar.prototype.buttonEvent = function (targetDate) {
-        document.getElementById("calendarPrevMonthTd").removeEventListener("click",this.prevMonthEvent.bind(this))
-        document.getElementById("calendarPrevMonthTd").addEventListener("click",this.prevMonthEvent.bind(this))
-
-        document.getElementById("calendarNextMonthTd").removeEventListener("click",this.nextMonthEvent.bind(this))
-        document.getElementById("calendarNextMonthTd").addEventListener("click",this.nextMonthEvent.bind(this))
+    JHCalendar.prototype.buttonEvent = function (targetDate,left,right) {
+        left.addEventListener("click",this.prevMonthEvent.bind(this))
+        right.addEventListener("click",this.nextMonthEvent.bind(this))
 
         let allDay = document.getElementsByClassName("day_td")
         for(let i=0;i<allDay.length;i++) {
@@ -144,13 +177,15 @@ const JHCalendar = (function () {
     JHCalendar.prototype.prevMonthEvent = async function (event) {
         let newTarget = new Date(this.targetDate.getFullYear(), this.targetDate.getMonth() - 1, 1);
         this.monthlyEvent = await this.getRecentMonthlyNotification(newTarget)
-        this.setPaintTarget(newTarget)
+        this.targetDate = newTarget
+        this.paint()
     }
 
     JHCalendar.prototype.nextMonthEvent = async function (event) {
         let newTarget = new Date(this.targetDate.getFullYear(), this.targetDate.getMonth() + 1, 1);
         this.monthlyEvent = await this.getRecentMonthlyNotification(newTarget)
-        this.setPaintTarget(newTarget)
+        this.targetDate = newTarget
+        this.paint()
     }
 
     JHCalendar.prototype.dailySelectEvent = function (event) {

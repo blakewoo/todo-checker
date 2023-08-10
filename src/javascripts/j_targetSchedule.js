@@ -22,7 +22,7 @@ window.onload = async function (event) {
 
         let monthEvent = await getNotificationTodo(sharedId,new Date())
         calendar.monthlyEvent = monthEvent
-        calendar.setPaintTarget()
+        calendar.paint()
     }
     else {
 

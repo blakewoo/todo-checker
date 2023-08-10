@@ -19,7 +19,7 @@ window.onload = async function (event) {
         todoObj.getDateTodo(day,false,null,id)
     }
 
-    calendar.setPaintTarget()
+    calendar.paint()
 
     document.getElementById("todoInputText").addEventListener("keyup", todoInputEvent)
 
@@ -69,7 +69,7 @@ window.onload = async function (event) {
                     tempMap.set(targetDate.getFullYear()+"-"+(targetDate.getMonth()+1)+"-"+targetDate.getDate(),[Data])
                 }
                 calendar.monthlyEvent = tempMap
-                calendar.setPaintTarget()
+                calendar.paint()
             }
         }
     }
