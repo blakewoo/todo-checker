@@ -22,8 +22,8 @@ const JHCalendar = (function () {
 
     JHCalendar.prototype.paint = function () {
         let tableElement = this.drawTable(this.targetDate.getFullYear(),this.targetDate.getMonth()+1)
-        this.drawTbody(this.targetDate,tableElement.tbody)
-        this.buttonEvent(this.targetDate,tableElement.leftArrowTd,tableElement.rightArrowTd)
+        let tdElements = this.drawTbody(this.targetDate,tableElement.tbody)
+        this.buttonEvent(this.targetDate,tableElement.leftArrowTd,tableElement.rightArrowTd,tdElements)
         this.targetDiv.innerHTML = ""
         this.targetDiv.appendChild(tableElement.table)
     }
@@ -68,24 +68,6 @@ const JHCalendar = (function () {
         table.appendChild(tbody)
 
         return {table:table, tbody:tbody, leftArrowTd:leftArrowTd, rightArrowTd:rightArrowTd}
-
-
-        // let html = "<table class='calendar_table'>" +
-        //     "<thead>" +
-        //     "<tr class='title_arrow_tr'>"+
-        //     "<td id='calendarPrevMonthTd'><label>< 이전달</label></td>" +
-        //     "<td class='current_month_td' colspan='5'>"+year+"년 "+month+"월</td>" +
-        //     "<td id='calendarNextMonthTd'><label>다음달 ></label></td>" +
-        //     "</tr>" +
-        //     "<tr class='day_head_tr'>" +
-        //     "<td class='red_td_font'>일</td><td>월</td><td>화</td><td>수</td><td>목</td><td>금</td><td class='blue_td_font'>토</td>" +
-        //     "</tr>" +
-        //     "</thead>" +
-        //     "<tbody id='calendarTableTbody'>" +
-        //     "</tbody>" +
-        //     "</table>"
-        //
-        // return html;
     }
 
     Object.defineProperty(this, "monthlyEvent", {
@@ -114,18 +96,21 @@ const JHCalendar = (function () {
         let targetMonth = targetDate.getMonth()+1
         let targetDay = ""
         let weekCount = 1
+        let tdArrays = []
 
         let cnt = 0;
-        let str = "<tr>"
+
+        let tr1 = document.createElement("tr")
         for(let i=0;i<thisMonthFirstDay.getDay();i++) {
-            str += "<td></td>"
+            tr1.appendChild(document.createElement("td"))
             cnt += 1
         }
 
+        let tempTr = tr1
         for(let i=1;i<=thisMonthLastDay.getDate();i++) {
             targetDay = i
             if(cnt%7===0) {
-                str += "<tr>"
+                tempTr = document.createElement("tr")
             }
             cnt+=1
             let classStr = "day_td"
@@ -142,35 +127,40 @@ const JHCalendar = (function () {
             }
 
             let dayEvent = monthlyEvent.get(targetYear+"-"+targetMonth+"-"+targetDay)
+            let tempTd = document.createElement("td")
             if(dayEvent && dayEvent.length !== 0) {
-                str += "<td class='"+classStr+"' id='day-"+thisMonthLastDay.getFullYear()+"-"+thisMonthLastDay.getMonth()+"-"+i+"'><br><label class='day_label'>"+i+"</label><br><div class='notifictaion_div'>" +
+                tempTd.classList.add(classStr)
+                tempTd.id = "day-"+thisMonthLastDay.getFullYear()+"-"+thisMonthLastDay.getMonth()+"-"+i
+                tempTd.innerHTML = "<br><label class='day_label'>"+i+"</label><br><div class='notifictaion_div'>" +
                     this.writeDailyEvent(dayEvent) +
-                    "</div></td>"
+                    "</div>"
             }
             else {
-                str += "<td class='"+classStr+"' id='day-"+thisMonthLastDay.getFullYear()+"-"+thisMonthLastDay.getMonth()+"-"+i+"'><br><label class='day_label'>"+i+"</label></td>"
+                tempTd.classList.add(classStr)
+                tempTd.id = "day-"+thisMonthLastDay.getFullYear()+"-"+thisMonthLastDay.getMonth()+"-"+i
+                tempTd.innerHTML = "<br><label class='day_label'>"+i+"</label>"
             }
+            tdArrays.push(tempTd)
 
             if(cnt%7===0) {
                 weekCount += 1
-                str += "</tr>"
+                tbody.appendChild(tempTr)
             }
         }
-        tbody.innerHTML = str;
-        let tds = document.getElementsByClassName("day_td")
-        for(let i=0;i<tds.length;i++) {
-            tds[i].style.height = "calc(100% /"+weekCount+")"
+
+        for(let i=0;i<tdArrays.length;i++) {
+            tdArrays[i].style.height = "calc(100% /"+weekCount+")"
         }
+
+        return tdArrays
     }
 
-    JHCalendar.prototype.buttonEvent = function (targetDate,left,right) {
+    JHCalendar.prototype.buttonEvent = function (targetDate,left,right,tdArray) {
         left.addEventListener("click",this.prevMonthEvent.bind(this))
         right.addEventListener("click",this.nextMonthEvent.bind(this))
 
-        let allDay = document.getElementsByClassName("day_td")
-        for(let i=0;i<allDay.length;i++) {
-            allDay[i].removeEventListener("click",this.dailySelectEvent.bind(this))
-            allDay[i].addEventListener("click",this.dailySelectEvent.bind(this))
+        for(let i=0;i<tdArray.length;i++) {
+            tdArray[i].addEventListener("click",this.dailySelectEvent.bind(this))
         }
     }
 
