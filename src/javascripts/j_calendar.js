@@ -113,40 +113,47 @@ const JHCalendar = (function () {
                 tempTr = document.createElement("tr")
             }
             cnt+=1
-            let classStr = "day_td"
+            let classStr = ["day_td"]
             if(cnt%7===0) {
-                classStr+=" blue_td_font"
+                classStr.push("blue_td_font")
             }
 
             if(cnt%7===1) {
-                classStr+=" red_td_font"
+                classStr.push("red_td_font")
             }
 
             if(currentNowYearMonth && i===(new Date()).getDate()) {
-                classStr+= " day_td_selected"
+                classStr.push("day_td_selected")
             }
 
             let dayEvent = monthlyEvent.get(targetYear+"-"+targetMonth+"-"+targetDay)
             let tempTd = document.createElement("td")
+            if(classStr.length !== 1){
+                for(let j=0;j<classStr.length;j++) {
+                    tempTd.classList.add(classStr[j])
+                }
+            }
+            else {
+                tempTd.classList.add(classStr[0])
+            }
+            tempTd.id = "day-"+thisMonthLastDay.getFullYear()+"-"+thisMonthLastDay.getMonth()+"-"+i
             if(dayEvent && dayEvent.length !== 0) {
-                tempTd.classList.add(classStr)
-                tempTd.id = "day-"+thisMonthLastDay.getFullYear()+"-"+thisMonthLastDay.getMonth()+"-"+i
                 tempTd.innerHTML = "<br><label class='day_label'>"+i+"</label><br><div class='notifictaion_div'>" +
                     this.writeDailyEvent(dayEvent) +
                     "</div>"
             }
             else {
-                tempTd.classList.add(classStr)
-                tempTd.id = "day-"+thisMonthLastDay.getFullYear()+"-"+thisMonthLastDay.getMonth()+"-"+i
                 tempTd.innerHTML = "<br><label class='day_label'>"+i+"</label>"
             }
             tdArrays.push(tempTd)
+            tempTr.appendChild(tempTd)
 
             if(cnt%7===0) {
                 weekCount += 1
                 tbody.appendChild(tempTr)
             }
         }
+        tbody.appendChild(tempTr)
 
         for(let i=0;i<tdArrays.length;i++) {
             tdArrays[i].style.height = "calc(100% /"+weekCount+")"
