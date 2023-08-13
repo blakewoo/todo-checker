@@ -1,16 +1,17 @@
 var express = require('express');
 var router = express.Router();
 const chatModuleOrigin = require("../module/m_chatting")
+let sessionCheck = require("../module/m_verify_user").user_auth
 
 module.exports=function (maria,mongo) {
     let chatModule = chatModuleOrigin(maria,mongo)
-    let sessionCheck = function (req, res, next) {
-        if (req.session.isLogin) {
-            next()
-        } else {
-            return res.status(401).send({status: false, reason: "No auth"})
-        }
-    }
+    // let sessionCheck = function (req, res, next) {
+    //     if (req.session.isLogin) {
+    //         next()
+    //     } else {
+    //         return res.status(401).send({status: false, reason: "No auth"})
+    //     }
+    // }
 
 
     router.get('/my',sessionCheck,async function(req, res, next) {
