@@ -1,12 +1,12 @@
 var express = require('express');
-let verify = require("../module/m_verify_user")
 const todoModuleOrigin = require("../module/m_todo")
+let sessionCheck = require("../module/m_verify_user").user_auth
 var router = express.Router();
 
 module.exports=function (maria,mongo) {
     let todoModule = todoModuleOrigin(maria,mongo)
 
-    router.get('/my/daily',verify.user_auth,async function(req, res, next) {
+    router.get('/my/daily',sessionCheck,async function(req, res, next) {
         try{
             // get my comment list
             if(!req.query.date) {
@@ -27,7 +27,7 @@ module.exports=function (maria,mongo) {
     });
 
 // 일일 TODO 추가
-    router.post('/my/daily',verify.user_auth,async function(req, res, next) {
+    router.post('/my/daily',sessionCheck,async function(req, res, next) {
         try{
             // get my comment list
             if(!req.body.TARGET_DATE) {
@@ -50,7 +50,7 @@ module.exports=function (maria,mongo) {
     });
 
 // 일일 TODO 업데이트
-    router.put('/my/daily',verify.user_auth,async function(req, res, next) {
+    router.put('/my/daily',sessionCheck,async function(req, res, next) {
         try{
             // get my comment list
             if(!req.body.TODO_ID) {
@@ -65,7 +65,7 @@ module.exports=function (maria,mongo) {
     });
 
 // 일일 TODO 삭제
-    router.delete('/my/daily',verify.user_auth,async function(req, res, next) {
+    router.delete('/my/daily',sessionCheck,async function(req, res, next) {
         try{
             // get my comment list
             if(!req.body.TODO_ID) {
@@ -85,7 +85,7 @@ module.exports=function (maria,mongo) {
     });
 
 // 표기될 TODO 불러들이기
-    router.get('/my/notification/daily',verify.user_auth,async function(req, res, next) {
+    router.get('/my/notification/daily',sessionCheck,async function(req, res, next) {
         try{
             // get my comment list
             if(!req.query.date) {
@@ -105,7 +105,7 @@ module.exports=function (maria,mongo) {
     });
 
 // 표기될 TODO 불러들이기
-    router.get('/my/notification/monthly',verify.user_auth,async function(req, res, next) {
+    router.get('/my/notification/monthly',sessionCheck,async function(req, res, next) {
         try{
             // get my comment list
             if(!req.query.date) {
@@ -125,7 +125,7 @@ module.exports=function (maria,mongo) {
     });
 
 // 표기될 TODO 추가
-    router.post('/my/notification',verify.user_auth,async function(req, res, next) {
+    router.post('/my/notification',sessionCheck,async function(req, res, next) {
         try{
             // get my comment list
             if(!req.body.TARGET_DATE) {
@@ -148,7 +148,7 @@ module.exports=function (maria,mongo) {
     });
 
 // 표기될 TODO 업데이트
-    router.put('/my/notification',verify.user_auth,async function(req, res, next) {
+    router.put('/my/notification',sessionCheck,async function(req, res, next) {
         try{
             // get my comment list
             if(!req.body.TODO_ID) {
@@ -163,7 +163,7 @@ module.exports=function (maria,mongo) {
     });
 
 // 표기될 TODO 삭제
-    router.delete('/my/notification',verify.user_auth,async function(req, res, next) {
+    router.delete('/my/notification',sessionCheck,async function(req, res, next) {
         try{
             // get my comment list
             if(!req.body.TODO_ID) {
@@ -183,7 +183,7 @@ module.exports=function (maria,mongo) {
     });
 
 // 주간 TODO 불러들이기
-    router.get('/my/weekly',verify.user_auth,async function(req, res, next) {
+    router.get('/my/weekly',sessionCheck,async function(req, res, next) {
         try{
             // get my comment list
             if(!req.query.date) {
@@ -203,7 +203,7 @@ module.exports=function (maria,mongo) {
     });
 
 // 주간 TODO 추가
-    router.post('/my/weekly',verify.user_auth,async function(req, res, next) {
+    router.post('/my/weekly',sessionCheck,async function(req, res, next) {
         try{
             // get my comment list
             if(!req.body.TARGET_DATE) {
@@ -226,7 +226,7 @@ module.exports=function (maria,mongo) {
     });
 
 // 주간 TODO 업데이트
-    router.put('/my/weekly',verify.user_auth,async function(req, res, next) {
+    router.put('/my/weekly',sessionCheck,async function(req, res, next) {
         try{
             // get my comment list
             if(!req.body.TODO_ID) {
@@ -241,7 +241,7 @@ module.exports=function (maria,mongo) {
     });
 
 // 주간 TODO 삭제
-    router.delete('/my/weekly',verify.user_auth,async function(req, res, next) {
+    router.delete('/my/weekly',sessionCheck,async function(req, res, next) {
         try{
             // get my comment list
             if(!req.body.TODO_ID) {
@@ -261,7 +261,7 @@ module.exports=function (maria,mongo) {
     });
 
 // 월간 TODO 불러들이기
-    router.get('/my/monthly',verify.user_auth,async function(req, res, next) {
+    router.get('/my/monthly',sessionCheck,async function(req, res, next) {
         try{
             // get my comment list
             if(!req.query.date) {
@@ -281,7 +281,7 @@ module.exports=function (maria,mongo) {
     });
 
 // 월간 TODO 추가
-    router.post('/my/monthly',verify.user_auth,async function(req, res, next) {
+    router.post('/my/monthly',sessionCheck,async function(req, res, next) {
         try{
             // get my comment list
             if(!req.body.TARGET_DATE) {
@@ -304,7 +304,7 @@ module.exports=function (maria,mongo) {
     });
 
 // 월간 TODO 업데이트
-    router.put('/my/monthly',verify.user_auth,async function(req, res, next) {
+    router.put('/my/monthly',sessionCheck,async function(req, res, next) {
         try{
             // get my comment list
             if(!req.body.TODO_ID) {
@@ -319,7 +319,7 @@ module.exports=function (maria,mongo) {
     });
 
 // 월간 TODO 삭제
-    router.delete('/my/monthly',verify.user_auth,async function(req, res, next) {
+    router.delete('/my/monthly',sessionCheck,async function(req, res, next) {
         try{
             // get my comment list
             if(!req.body.TODO_ID) {
@@ -339,7 +339,7 @@ module.exports=function (maria,mongo) {
     });
 
 // TARGET TODO 불러들이기
-    router.get('/target/daily',verify.user_auth,async function(req, res, next) {
+    router.get('/target/daily',sessionCheck,async function(req, res, next) {
         try{
             if(!req.query.ID) {
                 return res.status(400).send({status:false})
@@ -360,7 +360,7 @@ module.exports=function (maria,mongo) {
         }
     });
 
-    router.get('/target/notification/daily',verify.user_auth,async function(req, res, next) {
+    router.get('/target/notification/daily',sessionCheck,async function(req, res, next) {
         try{
             if(!req.query.ID) {
                 return res.status(400).send({status:false})
@@ -381,7 +381,7 @@ module.exports=function (maria,mongo) {
         }
     });
 
-    router.get('/target/notification/monthly',verify.user_auth,async function(req, res, next) {
+    router.get('/target/notification/monthly',sessionCheck,async function(req, res, next) {
         try{
             if(!req.query.ID) {
                 return res.status(400).send({status:false})
@@ -402,7 +402,7 @@ module.exports=function (maria,mongo) {
         }
     });
 
-    router.get('/target/weekly',verify.user_auth,async function(req, res, next) {
+    router.get('/target/weekly',sessionCheck,async function(req, res, next) {
         try{
             if(!req.query.ID) {
                 return res.status(400).send({status:false})
@@ -423,7 +423,7 @@ module.exports=function (maria,mongo) {
         }
     });
 
-    router.get('/target/monthly',verify.user_auth,async function(req, res, next) {
+    router.get('/target/monthly',sessionCheck,async function(req, res, next) {
         try{
             if(!req.query.ID) {
                 return res.status(400).send({status:false})

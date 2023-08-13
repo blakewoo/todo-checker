@@ -8,14 +8,6 @@ module.exports=function (maria,mongo) {
     let m_user = m_userOrigin(maria,mongo)
     let m_todo = m_todoOrigin(maria,mongo)
 
-    // let sessionCheck = function (req, res, next) {
-    //     if (req.session.isLogin) {
-    //         next()
-    //     } else {
-    //         return res.status(401).send({status: false, reason: "No auth"})
-    //     }
-    // }
-
     router.get('/my',sessionCheck, async function(req, res, next) {
         try{
             let result = await m_user.getUser(req.session.ID);
