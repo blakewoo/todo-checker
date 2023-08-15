@@ -57,6 +57,17 @@ window.onload = function(){
         })
     }
 
+    function requestDelete(id,callback) {
+        publicFunction.requestFunction("DELETE","/todo-share/request",{target:id},"JSON",function (result){
+            if(result.status){
+                callback(true)
+            }
+            else {
+                callback(false)
+            }
+        })
+    }
+
     function printSharedRequestStatus(list){
         if(list.length===0) {
             return
@@ -67,6 +78,7 @@ window.onload = function(){
 
         for(let i=0;i<list.length;i++) {
             let tempTr = document.createElement("tr")
+            tempTr.id = list[i]._id
             let tempId = document.createElement("td")
             tempId.innerText = list[i].TARGET_USER_ID
 
@@ -77,15 +89,30 @@ window.onload = function(){
             tempCreated.innerText = Intl.DateTimeFormat("ko",{dateStyle: 'full', timeStyle: 'short'}).format(new Date(list[i].CREATED_DATE))
 
             let tempStatus = document.createElement("td")
+            let tempCancelButton = document.createElement("input")
+            tempCancelButton.type="button"
             if(list[i].STATUS ==="Waiting") {
-                tempStatus.innerText = "대기중"
+                tempStatus.innerHTML = "대기중/"
+                tempCancelButton.value = "취소"
             }
             else if(list[i].STATUS ==="ACCEPT") {
-                tempStatus.innerText = "수락"
+                tempStatus.innerText = "수락/"
+                tempCancelButton.value = "취소"
             }
             else {
-                tempStatus.innerText = "거절"
+                tempStatus.innerText = "거절/"
+                tempCancelButton.value = "삭제"
             }
+            tempCancelButton.addEventListener("click",function (event){
+                let deleteId = event.currentTarget.parentNode.parentNode.getAttribute("id")
+
+                requestDelete(deleteId,function (result){
+                    if(result) {
+                        location.reload()
+                    }
+                })
+            })
+            tempStatus.appendChild(tempCancelButton)
 
             tempTr.appendChild(tempId)
             tempTr.appendChild(tempEmail)
