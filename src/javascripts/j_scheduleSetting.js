@@ -134,6 +134,7 @@ window.onload = function(){
 
         for(let i=0;i<list.length;i++) {
             let tempTr = document.createElement("tr")
+            tempTr.id = list[i]._id
             let tempId = document.createElement("td")
             tempId.innerText = list[i].OVERSEER_USER_ID
 
@@ -144,6 +145,8 @@ window.onload = function(){
             tempCreated.innerText = Intl.DateTimeFormat("ko",{dateStyle: 'full', timeStyle: 'short'}).format(new Date(list[i].CREATED_DATE))
 
             let tempSubmit = document.createElement("td")
+            let tempRemove = document.createElement("input")
+            tempRemove.type = "button"
             if(list[i].STATUS ==="Waiting") {
                 let submitButton = document.createElement("input")
                 submitButton.type = "button"
@@ -174,11 +177,23 @@ window.onload = function(){
                 tempSubmit.appendChild(declineButton)
             }
             else if(list[i].STATUS ==="DECLINE") {
-                tempSubmit.innerText = "거절"
+                tempSubmit.innerText = "거절/"
+                tempRemove.value = "삭제"
+                tempSubmit.appendChild(tempRemove)
             }
             else {
-                tempSubmit.innerText = "수락 완료"
+                tempSubmit.innerText = "수락 완료/"
+                tempRemove.value = "취소"
+                tempSubmit.appendChild(tempRemove)
             }
+            tempRemove.addEventListener("click",function (event){
+                let deleteId = event.currentTarget.parentNode.parentNode.getAttribute("id")
+                requestDelete(deleteId,function (result){
+                    if(result) {
+                        location.reload()
+                    }
+                })
+            })
 
             tempTr.appendChild(tempId)
             tempTr.appendChild(tempEmail)
