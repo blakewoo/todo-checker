@@ -1,8 +1,8 @@
 const m_userOrigin = require("../module/m_user")
+var express = require('express');
+var router = express.Router();
 
 module.exports=function (maria,mongo) {
-    var express = require('express');
-    var router = express.Router();
     let m_user = m_userOrigin(maria,mongo)
 
     // This function does not conform to the api specification
