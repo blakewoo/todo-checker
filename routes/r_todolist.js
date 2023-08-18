@@ -1,10 +1,12 @@
 var express = require('express');
 const todoModuleOrigin = require("../module/m_todo")
 let sessionCheck = require("../module/m_verify_user").user_auth
+let verifyModuleOrigin = require("../module/m_verify_user")
 var router = express.Router();
 
 module.exports=function (maria,mongo) {
     let todoModule = todoModuleOrigin(maria,mongo)
+    let sharedAuth = verifyModuleOrigin.target_auth(maria,mongo)
 
     router.get('/my/daily',sessionCheck,async function(req, res, next) {
         try{
@@ -339,7 +341,7 @@ module.exports=function (maria,mongo) {
     });
 
 // TARGET TODO 불러들이기
-    router.get('/target/daily',sessionCheck,async function(req, res, next) {
+    router.get('/target/daily',sessionCheck,sharedAuth,async function(req, res, next) {
         try{
             if(!req.query.ID) {
                 return res.status(400).send({status:false})
@@ -360,7 +362,7 @@ module.exports=function (maria,mongo) {
         }
     });
 
-    router.get('/target/notification/daily',sessionCheck,async function(req, res, next) {
+    router.get('/target/notification/daily',sessionCheck,sharedAuth,async function(req, res, next) {
         try{
             if(!req.query.ID) {
                 return res.status(400).send({status:false})
@@ -381,7 +383,7 @@ module.exports=function (maria,mongo) {
         }
     });
 
-    router.get('/target/notification/monthly',sessionCheck,async function(req, res, next) {
+    router.get('/target/notification/monthly',sessionCheck,sharedAuth,async function(req, res, next) {
         try{
             if(!req.query.ID) {
                 return res.status(400).send({status:false})
@@ -402,7 +404,7 @@ module.exports=function (maria,mongo) {
         }
     });
 
-    router.get('/target/weekly',sessionCheck,async function(req, res, next) {
+    router.get('/target/weekly',sessionCheck,sharedAuth,async function(req, res, next) {
         try{
             if(!req.query.ID) {
                 return res.status(400).send({status:false})
@@ -423,7 +425,7 @@ module.exports=function (maria,mongo) {
         }
     });
 
-    router.get('/target/monthly',sessionCheck,async function(req, res, next) {
+    router.get('/target/monthly',sessionCheck,sharedAuth,async function(req, res, next) {
         try{
             if(!req.query.ID) {
                 return res.status(400).send({status:false})

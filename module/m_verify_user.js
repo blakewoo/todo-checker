@@ -60,3 +60,27 @@ exports.admin_auth = async function (req,res,next) {
         return res.status(401).send({status:false})
     }
 }
+
+exports.target_auth = function (maria,mongo) {
+    return async function (req,res,next) {
+        try{
+            if(req.query.ID) {
+                let result = await mongo.shared.find({"$or":[{OVERSEER_USER_ID: req.query.ID, TARGET_USER_ID:req.session.ID},{OVERSEER_USER_ID: req.session.ID, TARGET_USER_ID:req.query.ID}]})
+                if(result.length!==0) {
+                    next()
+                }
+                else{
+                    return res.status(401).send({status:false})
+                }
+            }
+            else {
+                return res.status(400).send({status:false,reason:"malform request"})
+            }
+        }
+        catch(e){
+            console.log(e)
+            return res.status(401).send({status:false})
+        }
+    }
+}
+
