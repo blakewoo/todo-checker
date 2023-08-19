@@ -13,10 +13,6 @@ let TODO = (function () {
      * @constructor
      */
     function TODO (TODO_LIST,TODO_CONTAINER,READ_ONLY,TYPE) {
-        let tempMap = new Map();
-        for(let i=0;i<TODO_LIST.length;i++) {
-            tempMap.set(TODO_LIST[i].ID,TODO_LIST[i].DATA)
-        }
         // 이후 프론트 엔드 병합시 사용
         this.TODO_CONTAINER = TODO_CONTAINER
         this.READ_ONLY = READ_ONLY
@@ -55,7 +51,7 @@ let TODO = (function () {
         let sendData = {
             CREATED_DATE:new Date(),
             TARGET_DATE:TARGET_DATE,
-            DATA:TODO_OBJ.Value,
+            DATA:TODO_OBJ.Value
         }
 
         let result = await this.addBackTodo(sendData,TYPE)
