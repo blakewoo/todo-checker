@@ -45,22 +45,6 @@ exports.user_auth_page = function (req,res,next) {
     }
 }
 
-// 차후 관리자 페이지 제작 예정
-exports.admin_auth = async function (req,res,next) {
-    try{
-        if(req.session.isAdmin) {
-            next()
-        }
-        else {
-            return res.status(401).send({status:false})
-        }
-    }
-    catch(e){
-        console.log(e)
-        return res.status(401).send({status:false})
-    }
-}
-
 exports.target_auth = function (maria,mongo) {
     return async function (req,res,next) {
         try{

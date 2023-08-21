@@ -64,7 +64,6 @@ module.exports=function (maria,mongo) {
             // Remove session
             req.session.isLogin = null
             req.session.ID = null
-            req.session.isAdmin = null
             return res.send({status:true})
         }
         catch(e) {
